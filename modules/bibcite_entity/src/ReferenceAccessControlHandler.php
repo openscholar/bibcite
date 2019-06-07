@@ -21,10 +21,12 @@ class ReferenceAccessControlHandler extends EntityAccessControlHandler {
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     $type = $entity->bundle();
-    /** @var \Drupal\bibcite_entity\Entity\ReferenceInterface $entity */
+    /** @var \Drupal\bibcite_entity\Entity\Reference $entity */
     switch ($operation) {
       case 'view':
-        return AccessResult::allowedIfHasPermission($account, 'view bibcite_reference');
+        return AccessResult::allowedIf($entity->isPublished() && $account->hasPermission('view bibcite_reference'))
+          ->orIf(AccessResult::allowedIf(!$entity->isPublished() && $account->hasPermission('view own unpublished bibcite_reference') && $account->isAuthenticated() && $entity->getOwnerId() == $account->id()))
+          ->cachePerPermissions()->cachePerUser()->addCacheableDependency($entity);
 
       case 'update':
         return AccessResult::allowedIfHasPermission($account, 'edit any bibcite_reference')

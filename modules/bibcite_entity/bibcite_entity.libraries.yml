@@ -1,5 +1,9 @@
 widget:
-  version: VERSION
   css:
     theme:
       css/widget.css: {}
+
+reference.admin:
+  css:
+    theme:
+      css/reference.admin.css: {}

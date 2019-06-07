@@ -8,7 +8,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Defines the access control handler for the node type entity type.
+ * Defines the access control handler for the reference type entity type.
  *
  * @see \Drupal\bibcite_entity\Entity\ReferenceType
  */

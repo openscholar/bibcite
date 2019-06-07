@@ -37,5 +37,15 @@ class RouteSubscriber extends RouteSubscriberBase {
       $view_mode = $config->get('display_override.reference_page_view_mode');
       $route->setDefault('_entity_view', 'bibcite_reference.' . $view_mode);
     }
+    if ($route = $collection->get('entity.bibcite_reference.version_history')) {
+      $route->setOption('_admin_route', TRUE);
+    }
+    if ($route = $collection->get('entity.bibcite_reference.revision_revert_form')) {
+      $route->setOption('_admin_route', TRUE);
+    }
+    if ($route = $collection->get('bibcite_reference.revision_delete_confirm')) {
+      $route->setOption('_admin_route', TRUE);
+    }
   }
+
 }

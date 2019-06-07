@@ -38,6 +38,10 @@ INTRODUCTION
 REQUIREMENTS
 ------------
 
+This module requires the following modules:
+
+ * [Entity API](https://www.drupal.org/project/entity) - required by the **Bibliography & Citation - Entity**.
+
 This module requires the following libraries:
 
  * "academicpuma/citeproc-php": "~1.0",
@@ -55,6 +59,12 @@ RECOMMENDED MODULES
  * [Bibliography & Citation - Migrate](https://www.drupal.org/project/bibcite_migrate)  
    Allows to migrate your bibliographic data from the Bibliography (biblio) module.
 
+ * [Bibliography & Citation - Crossref](https://www.drupal.org/project/bibcite_crossref)  
+   Provides DOI lookup functionality.
+
+ * [Bibliography & Citation - PubMed](https://www.drupal.org/project/bibcite_pubmed)  
+   Provides PubMed import and lookup functionality.
+
  * [Bibliography & Citation - Altmetric](https://www.drupal.org/project/bibcite_altmetric)  
    Adds [Altmetric](https://www.altmetric.com) badges to reference entities.
 
@@ -70,13 +80,14 @@ INSTALLATION
    then the module's dependencies will be installed automatically once the module itself is installed
    via Composer.
 
- * In case you manage your site dependencies manually or via Drush,
-   install required libraries via [Composer](https://www.drupal.org/docs/8/extending-drupal/installing-modules-composer-dependencies)
+ * In case you manage your site dependencies manually or via Drush, install the
+   [Entity API](https://www.drupal.org/project/entity) module. Then install required libraries via
+   [Composer](https://www.drupal.org/docs/8/extending-drupal/installing-modules-composer-dependencies)
    using following command:
 
    `composer require academicpuma/citeproc-php:~1.0 adci/full-name-parser:^0.2 technosophos/LibRIS:~2.0 audiolabs/bibtexparser:dev-master caseyamcl/php-marc21:~1.0`
 
-   You can find a bit more info about Composer [here](https://www.drupal.org/node/2804889#comment-11651131)
+   You can find a bit more info about Composer [here](https://www.drupal.org/node/2804889#comment-11651131).
 
  * Install as you would normally install a contributed Drupal module. See:
    https://www.drupal.org/docs/8/extending-drupal/installing-contributed-modules
@@ -90,4 +101,4 @@ Current maintainers:
  * Anton Shubkin (antongp) - https://www.drupal.org/u/antongp
  * adci_contributor - https://www.drupal.org/u/adci_contributor
 
-This project has been sponsored by [ADCI Solutions](http://www.adcisolutions.com/)
+This project has been sponsored by [ADCI Solutions](https://www.adcisolutions.com/).

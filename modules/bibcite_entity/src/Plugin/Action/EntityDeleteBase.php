@@ -28,7 +28,7 @@ class EntityDeleteBase extends ActionBase implements ContainerFactoryPluginInter
   protected $currentUser;
 
   /**
-   * Constructs a new DeleteNode object.
+   * Constructs a new EntityDeleteBase object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.

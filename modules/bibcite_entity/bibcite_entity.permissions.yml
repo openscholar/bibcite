@@ -22,6 +22,18 @@ edit any bibcite_reference:
 view bibcite_reference:
   title: 'View Reference entities'
 
+view own unpublished bibcite_reference:
+  title: 'View own unpublished References'
+view all bibcite_reference revisions:
+  title: 'View all Reference revisions'
+  description: 'To view a revision, you also need permission to view the Reference item.'
+revert all bibcite_reference revisions:
+  title: 'Revert all Reference revisions'
+  description: 'To revert a revision, you also need permission to edit the Reference item.'
+delete all bibcite_reference revisions:
+  title: 'Delete all Reference revisions'
+  description: 'To delete a revision, you also need permission to delete the Reference item.'
+
 # Contributor
 administer bibcite_contributor:
   title: 'Administer Contributor entities'

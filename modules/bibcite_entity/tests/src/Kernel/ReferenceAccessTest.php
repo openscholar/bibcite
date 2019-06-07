@@ -27,7 +27,6 @@ class ReferenceAccessTest extends KernelTestBase {
    * {@inheritdoc}
    */
   public static $modules = [
-    'node',
     'bibcite',
     'bibcite_entity',
     'serialization',
@@ -325,12 +324,14 @@ class ReferenceAccessTest extends KernelTestBase {
    * Creates a reference based on default settings.
    *
    * @param array $settings
-   *   (optional) An associative array of settings for the node, as used in
-   *   entity_create(). Override the defaults by specifying the key and value
+   *   (optional) An associative array of settings for the reference, as used in
+   *   Reference::create(). Override the defaults by specifying the key and value
    *   in the array.
    *
    * @return \Drupal\bibcite_entity\Entity\ReferenceInterface
    *   The created reference entity.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   private function createReference(array $settings = []) {
     // Populate defaults array.

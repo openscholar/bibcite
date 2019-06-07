@@ -13,22 +13,6 @@ entity.bibcite_reference.admin:
   base_route: system.admin_content
   weight: 50
 
-entity.bibcite_reference.canonical:
-  route_name: entity.bibcite_reference.canonical
-  base_route: entity.bibcite_reference.canonical
-  title: 'View'
-
-entity.bibcite_reference.edit_form:
-  route_name: entity.bibcite_reference.edit_form
-  base_route: entity.bibcite_reference.canonical
-  title: Edit
-
-entity.bibcite_reference.delete_form:
-  route_name: entity.bibcite_reference.delete_form
-  base_route: entity.bibcite_reference.canonical
-  title: Delete
-  weight: 10
-
 entity.bibcite_reference.collection:
   route_name: entity.bibcite_reference.collection
   parent_id: entity.bibcite_reference.admin

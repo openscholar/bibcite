@@ -16,8 +16,9 @@ class ReferencePermissions {
    * Returns an array of Reference type permissions.
    *
    * @return array
-   *   The \Drupal\bibcite_entity\Entity\Reference type permissions.
-   *   @see \Drupal\user\PermissionHandlerInterface::getPermissions()
+   *   The Reference type permissions.
+   *
+   * @see \Drupal\user\PermissionHandlerInterface::getPermissions()
    */
   public function referenceTypePermissions() {
     $perms = [];
@@ -32,8 +33,8 @@ class ReferencePermissions {
   /**
    * Returns a list of Reference permissions for a given type.
    *
-   * @param ReferenceType $type
-   *   The node type.
+   * @param \Drupal\bibcite_entity\Entity\ReferenceType $type
+   *   The reference type.
    *
    * @return array
    *   An associative array of permission names and descriptions.
@@ -57,6 +58,18 @@ class ReferencePermissions {
       ],
       "delete any $type_id bibcite_reference" => [
         'title' => $this->t('%type_name: Delete any Reference entity', $type_params),
+      ],
+      "view bibcite_reference $type_id revisions" => [
+        'title' => $this->t('%type_name: View revisions', $type_params),
+        'description' => t('To view a revision, you also need permission to view the reference item.'),
+      ],
+      "revert bibcite_reference $type_id revisions" => [
+        'title' => $this->t('%type_name: Revert revisions', $type_params),
+        'description' => t('To revert a revision, you also need permission to edit the reference item.'),
+      ],
+      "delete bibcite_reference $type_id revisions" => [
+        'title' => $this->t('%type_name: Delete revisions', $type_params),
+        'description' => $this->t('To delete a revision, you also need permission to delete the reference item.'),
       ],
     ];
   }

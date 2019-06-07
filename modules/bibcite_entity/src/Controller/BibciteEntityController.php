@@ -19,6 +19,9 @@ class BibciteEntityController extends ControllerBase implements ContainerInjecti
    *
    * @return array
    *   A reference submission form.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function add(ReferenceTypeInterface $bibcite_reference_type) {
     $entity = $this->entityTypeManager()->getStorage('bibcite_reference')->create([

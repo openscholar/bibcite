@@ -28,7 +28,7 @@ class EntityMergeBase extends ActionBase implements ContainerFactoryPluginInterf
   protected $currentUser;
 
   /**
-   * Constructs a new DeleteNode object.
+   * Constructs a new EntityMergeBase object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.

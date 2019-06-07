@@ -2,8 +2,9 @@
 
 namespace Drupal\bibcite_entity\Entity;
 
+use Drupal\Core\Entity\EntityPublishedTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\EditorialContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -17,8 +18,11 @@ use Drupal\user\UserInterface;
  * @ContentEntityType(
  *   id = "bibcite_reference",
  *   label = @Translation("Reference"),
+ *   label_singular = @Translation("Reference"),
+ *   label_plural = @Translation("References"),
  *   bundle_label = @Translation("Reference type"),
  *   handlers = {
+ *     "storage_schema" = "Drupal\bibcite_entity\ReferenceStorageSchema",
  *     "view_builder" = "Drupal\bibcite_entity\ReferenceViewBuilder",
  *     "list_builder" = "Drupal\bibcite_entity\ReferenceListBuilder",
  *     "views_data" = "Drupal\bibcite_entity\ReferenceViewsData",
@@ -32,22 +36,41 @@ use Drupal\user\UserInterface;
  *     "access" = "Drupal\bibcite_entity\ReferenceAccessControlHandler",
  *     "route_provider" = {
  *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
+ *       "revision" = "Drupal\entity\Routing\RevisionRouteProvider",
+ *     },
+ *     "local_task_provider" = {
+ *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
  *     },
  *   },
+ *   show_revision_ui = TRUE,
  *   base_table = "bibcite_reference",
+ *   revision_table = "bibcite_reference_revision",
  *   admin_permission = "administer bibcite_reference",
+ *   permission_granularity = "bundle",
  *   entity_keys = {
  *     "id" = "id",
+ *     "revision" = "revision_id",
+ *     "status" = "status",
+ *     "published" = "status",
  *     "bundle" = "type",
  *     "label" = "title",
  *     "uuid" = "uuid",
  *     "langcode" = "langcode",
  *     "uid" = "uid",
  *   },
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_user",
+ *     "revision_created" = "revision_created",
+ *     "revision_log_message" = "revision_log_message"
+ *   },
  *   common_reference_target = TRUE,
  *   bundle_entity_type = "bibcite_reference_type",
  *   links = {
  *     "canonical" = "/bibcite/reference/{bibcite_reference}",
+ *     "version-history" = "/bibcite/reference/{bibcite_reference}/revisions",
+ *     "revision" = "/bibcite/reference/{bibcite_reference}/revisions/{bibcite_reference_revision}/view",
+ *     "revision-revert-form" = "/bibcite/reference/{bibcite_reference}/revisions/{bibcite_reference_revision}/revert",
+ *     "revision-delete-form" = "/bibcite/reference/{bibcite_reference}/revisions/{bibcite_reference_revision}/delete",
  *     "edit-form" = "/bibcite/reference/{bibcite_reference}/edit",
  *     "delete-form" = "/bibcite/reference/{bibcite_reference}/delete",
  *     "add-page" = "/bibcite/reference/add",
@@ -57,9 +80,11 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "entity.bibcite_reference_type.edit_form",
  * )
  */
-class Reference extends ContentEntityBase implements ReferenceInterface {
+class Reference extends EditorialContentEntityBase implements ReferenceInterface {
 
   use EntityChangedTrait;
+  use EntityPublishedTrait;
+  // @todo Also use \Drupal\user\EntityOwnerTrait ?
 
   /**
    * {@inheritdoc}
@@ -137,6 +162,7 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
     $fields['title'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Title'))
       ->setDescription(t('The title of the Reference.'))
+      ->setRevisionable(TRUE)
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
         'weight' => 2,
@@ -150,6 +176,7 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
       ->setDescription(t('The username of the content author.'))
+      ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
       ->setDefaultValueCallback('Drupal\bibcite_entity\Entity\Reference::getCurrentUserId')
       ->setDisplayOptions('form', [
@@ -166,6 +193,7 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
 
     $fields['author'] = BaseFieldDefinition::create('bibcite_contributor')
       ->setLabel(t('Author'))
+      ->setRevisionable(TRUE)
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayOptions('form', [
         'type' => 'bibcite_contributor_widget',
@@ -180,6 +208,7 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
 
     $fields['keywords'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Keywords'))
+      ->setRevisionable(TRUE)
       ->setSetting('target_type', 'bibcite_keyword')
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayOptions('view', [
@@ -216,6 +245,7 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
       return BaseFieldDefinition::create('string')
         ->setLabel($label)
         ->setDescription($hint)
+        ->setRevisionable(TRUE)
         ->setDisplayOptions('view', [
           'label' => 'above',
           'type' => 'string',
@@ -235,6 +265,7 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
       return BaseFieldDefinition::create('integer')
         ->setLabel($label)
         ->setDescription($hint)
+        ->setRevisionable(TRUE)
         ->setDisplayOptions('view', [
           'type' => 'number_integer',
           'weight' => $weight,
@@ -253,6 +284,7 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
       return BaseFieldDefinition::create('string_long')
         ->setLabel($label)
         ->setDescription($hint)
+        ->setRevisionable(TRUE)
         ->setDisplayOptions('view', [
           'type' => 'text_default',
           'weight' => $weight,
@@ -334,11 +366,23 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
-      ->setDescription(t('The time that the entity was created.'));
+      ->setDescription(t('The time that the entity was created.'))
+      ->setRevisionable(TRUE);
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the entity was last edited.'));
+      ->setDescription(t('The time that the entity was last edited.'))
+      ->setRevisionable(TRUE);
+
+    $fields['status']
+      ->setDisplayOptions('form', [
+        'type' => 'boolean_checkbox',
+        'settings' => [
+          'display_label' => TRUE,
+        ],
+        'weight' => 120,
+      ])
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }
@@ -353,6 +397,19 @@ class Reference extends ContentEntityBase implements ReferenceInterface {
    */
   public static function getCurrentUserId() {
     return [\Drupal::currentUser()->id()];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function urlRouteParameters($rel) {
+    $uri_route_parameters = parent::urlRouteParameters($rel);
+
+    if (strpos($this->getEntityType()->getLinkTemplate($rel), $this->getEntityTypeId() . '_revision') !== FALSE) {
+      $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
+    }
+
+    return $uri_route_parameters;
   }
 
 }

@@ -1,10 +1,20 @@
 # Changelog
 
 
+## [Unreleased]
+
+### Important
+- [#2832974] by kruhak, antongp: Make Reference entities revisionable  
+   **Bibliography & Citation - Entity** depends on the [Entity API](https://www.drupal.org/project/entity) module now.
+
+### Added
+- [#2832974] by kruhak, antongp: Make Reference entities revisionable
+
+
 ## [8.x-1.0-alpha10] - 2019-05-30
 
 ### Important
-- [#3047429] by gkaas: Endnote import not working
+- [#3047429] by gkaas: Endnote import not working  
   EndNote XML-based formats were wrongly named before. The one which was called Endnote 7 XML now is called
   EndNote X3 XML. Another one which was called Endnote X3 XML now is called EndNote 7 XML.
   No changes have been done to machine-names.
@@ -38,13 +48,13 @@
 ## [8.x-1.0-alpha8] - 2018-12-06
 
 ### Important
-- [#2974615] by trustypelletgun: Endnote 7 XML secondary-title field is not imported.
+- [#2974615] by trustypelletgun: Endnote 7 XML secondary-title field is not imported.  
   **Note: incorrect Endnote 7 XML title-secondary and title-short fields were renamed to correct secondary-title and
   short-title accordingly.**
   This means that data, exported to Endnote 7 XML format before this change, will lose these
   fields if imported back from that export after this change. In this case make sure database contains latest data
   before updating the module, i.e. import back from export file before updating if needed.
-- [#3013783] by flocondetoile: Provide a template for Reference entity to facilitate theming.
+- [#3013783] by flocondetoile: Provide a template for Reference entity to facilitate theming.  
   As a result, new wrapper element is added to rendered reference entity markup. In rare cases this may affect
   appearance depending on applied CSS styles.
 
@@ -75,7 +85,7 @@
 ## [8.x-1.0-alpha6] - 2018-04-09
 
 ### Important
-- [#2954101] by antongp: Routing cleanup
+- [#2954101] by antongp: Routing cleanup  
   **Note: menu items paths were changed.**
   Changed entities paths for Contributor, Keyword and Reference from "/admin/content/bibcite/\*" pattern to "/bibcite/\*".
   Changed path for managing references types.
@@ -101,7 +111,7 @@
 ## [8.x-1.0-alpha5] - 2018-02-03
 
 ### Important
-- [#2878975] Improve module permissions.
+- [#2878975] Improve module permissions.  
   **Note: Bibliography & Citation - Entity module's permissions were renamed.**
 
   **Both machine-names and labels:**
@@ -132,13 +142,13 @@
   please export/save configs before performing update and then import it after performing update,
   or just re-set needed access settings after update via UI.**
   Also new create/edit/delete permissions per reference entity bundle were added. Please note that "any type" permissions take a precedence over particular type permissions.
-- [#2865678] Improve view modes handling.
+- [#2865678] Improve view modes handling.  
   **Note: update creates new "Table" view mode which enforces Reference entity be outputted as table.**
   If you had "Display override" option from the settings page enabled before update
   and outputted Reference entities in "Default" view mode (as tables) somewhere else, 
   not only on Reference entity own page, then use new "Table" view mode instead of "Default"
   in those places after update.
-- [#2879865] Update mapping for RIS.
+- [#2879865] Update mapping for RIS.  
   **Note: update forces resetting mapping to new version, even if there were changes from
   defaults.** In most cases new mapping should work well. If you have custom mapping for RIS
   and want to preserve it on update, please export/save bibcite_entity.mapping.ris config
@@ -594,3 +604,7 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3047429]: https://www.drupal.org/node/3047429
 [#3058106]: https://www.drupal.org/node/3058106
 [#3055944]: https://www.drupal.org/node/3055944
+
+
+[//]: # "Issues links dev"
+[#2832974]: https://www.drupal.org/node/2832974

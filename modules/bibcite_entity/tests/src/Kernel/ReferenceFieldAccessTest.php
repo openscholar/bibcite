@@ -21,7 +21,7 @@ class ReferenceFieldAccessTest extends EntityKernelTestBase {
   public static $modules = ['bibcite', 'bibcite_entity'];
 
   /**
-   * Fields that only users with administer nodes permissions can change.
+   * Fields that only users with administer references permissions can change.
    *
    * @var array
    */
