@@ -5,7 +5,8 @@
 
 ### Important
 - [#2832974] by kruhak, antongp: Make Reference entities revisionable  
-   **Bibliography & Citation - Entity** depends on the [Entity API](https://www.drupal.org/project/entity) module now.
+   **Bibliography & Citation - Entity** depends on the [Entity API](https://www.drupal.org/project/entity) module now,
+   which has to be installed before performing an update.
 
 ### Added
 - [#2832974] by kruhak, antongp: Make Reference entities revisionable
