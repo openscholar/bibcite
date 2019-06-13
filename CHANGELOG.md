@@ -11,6 +11,9 @@
 ### Added
 - [#2832974] by kruhak, antongp: Make Reference entities revisionable
 
+### Fixed
+- [#3061462] by antongp: Revision specific fields like Revision ID, Revision log message, etc., appear on reference type edit forms and on mapping pages in options
+
 
 ## [8.x-1.0-alpha10] - 2019-05-30
 
@@ -609,3 +612,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 
 [//]: # "Issues links dev"
 [#2832974]: https://www.drupal.org/node/2832974
+[#3061462]: https://www.drupal.org/node/3061462

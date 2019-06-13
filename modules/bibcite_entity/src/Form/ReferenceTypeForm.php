@@ -81,6 +81,12 @@ class ReferenceTypeForm extends BundleEntityFormBase {
       'changed',
       'type',
       'author',
+      'revision_id',
+      'revision_created',
+      'revision_user',
+      'revision_log_message',
+      'status',
+      'revision_default',
     ];
 
     $fields_configuration = $reference_type->getFields();

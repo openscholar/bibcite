@@ -144,6 +144,12 @@ class MappingForm extends FormBase {
       'langcode',
       'created',
       'changed',
+      'revision_id',
+      'revision_created',
+      'revision_user',
+      'revision_log_message',
+      'status',
+      'revision_default',
     ];
 
     return array_map(function ($field) {
