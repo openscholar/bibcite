@@ -26,6 +26,7 @@
 ### Changed
 - [#3015616] by antongp, flocondetoile: Improve theming of Reference, Contributor and Keyword entities
 - [#3062706] by antongp: Rename "Bibliographic data" to "Bibliography" in menu
+- [#3062730] by antongp: Rename "Reference", "Contributor" and "Keyword" to "References", "Contributors" and "Keywords" in tabs
 
 ### Fixed
 - [#3061462] by antongp: Revision specific fields like Revision ID, Revision log message, etc., appear on reference type edit forms and on mapping pages in options
@@ -631,3 +632,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3061462]: https://www.drupal.org/node/3061462
 [#3015616]: https://www.drupal.org/node/3015616
 [#3062706]: https://www.drupal.org/node/3062706
+[#3062730]: https://www.drupal.org/node/3062730

@@ -6,7 +6,7 @@ dependencies:
     - system
     - user
 id: bibcite_contributor_admin
-label: 'Contributor (Admin)'
+label: 'Contributors (Admin)'
 module: views
 description: 'Find and manage contributors.'
 tag: default
@@ -655,7 +655,7 @@ display:
           entity_field: suffix
           plugin_id: string
       sorts: {  }
-      title: Contributor
+      title: Contributors
       header: {  }
       footer: {  }
       empty:

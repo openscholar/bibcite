@@ -41,7 +41,7 @@ entity.bibcite_reference_type.collection:
 entity.bibcite_reference.add_form:
   path: '/bibcite/reference/add/{bibcite_reference_type}'
   defaults:
-    _title: 'Add content'
+    _title: 'Add reference'
     _controller: '\Drupal\bibcite_entity\Controller\BibciteEntityController::add'
   requirements:
     _reference_add_access: 'bibcite_reference:{bibcite_reference_type}'
@@ -62,7 +62,7 @@ entity.bibcite_reference.collection:
   path: '/admin/content/bibcite/reference'
   defaults:
     _entity_list: 'bibcite_reference'
-    _title: 'Reference'
+    _title: 'References'
   requirements:
     _permission: 'view bibcite_reference'
   options:
@@ -82,7 +82,7 @@ entity.bibcite_keyword.collection:
   path: '/admin/content/bibcite/keyword'
   defaults:
     _entity_list: 'bibcite_keyword'
-    _title: 'Keyword'
+    _title: 'Keywords'
   requirements:
     _permission: 'view bibcite_keyword'
   options:
@@ -143,7 +143,7 @@ entity.bibcite_contributor.collection:
   path: '/admin/content/bibcite/contributor'
   defaults:
     _entity_list: 'bibcite_contributor'
-    _title: 'Contributor'
+    _title: 'Contributors'
   requirements:
     _permission: 'view bibcite_contributor'
   options:
@@ -204,7 +204,7 @@ entity.bibcite_contributor_category.collection:
   path: '/admin/config/bibcite/settings/contributor/category'
   defaults:
     _entity_list: 'bibcite_contributor_category'
-    _title: 'Contributor category'
+    _title: 'Contributor categories'
   requirements:
     _permission: 'administer bibcite_reference'
   options:
@@ -244,7 +244,7 @@ entity.bibcite_contributor_role.collection:
   path: '/admin/config/bibcite/settings/contributor/role'
   defaults:
     _entity_list: 'bibcite_contributor_role'
-    _title: 'Contributor role'
+    _title: 'Contributor roles'
   requirements:
     _permission: 'administer bibcite_reference'
   options:

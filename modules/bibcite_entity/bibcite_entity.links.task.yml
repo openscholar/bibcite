@@ -16,7 +16,7 @@ entity.bibcite_reference.admin:
 entity.bibcite_reference.collection:
   route_name: entity.bibcite_reference.collection
   parent_id: entity.bibcite_reference.admin
-  title: Reference
+  title: References
 
 # Contributor routing definition
 entity.bibcite_contributor.canonical:
@@ -38,7 +38,7 @@ entity.bibcite_contributor.delete_form:
 entity.bibcite_contributor.collection:
   route_name: entity.bibcite_contributor.collection
   parent_id: entity.bibcite_reference.admin
-  title: Contributor
+  title: Contributors
 
 # Keyword routing definition
 entity.bibcite_keyword.canonical:
@@ -60,12 +60,12 @@ entity.bibcite_keyword.delete_form:
 entity.bibcite_keyword.collection:
   route_name: entity.bibcite_keyword.collection
   parent_id: entity.bibcite_reference.admin
-  title: Keyword
+  title: Keywords
 
 # Admin routing definition
 bibcite_entity.reference:
   route_name: bibcite_entity.reference.settings
-  title: 'Reference'
+  title: 'References'
   base_route: bibcite.settings
 
 bibcite_entity.reference.settings:
@@ -85,7 +85,7 @@ bibcite_entity.reference.types:
 
 bibcite_entity.contributor:
   route_name: bibcite_entity.contributor.settings
-  title: 'Contributor'
+  title: 'Contributors'
   base_route: bibcite.settings
 
 bibcite_entity.contributor.settings:
@@ -95,12 +95,12 @@ bibcite_entity.contributor.settings:
 
 bibcite_entity.contributor.category:
   route_name: entity.bibcite_contributor_category.collection
-  title: 'Category'
+  title: 'Categories'
   parent_id: bibcite_entity.contributor
 
 bibcite_entity.contributor.role:
   route_name: entity.bibcite_contributor_role.collection
-  title: 'Role'
+  title: 'Roles'
   parent_id: bibcite_entity.contributor
 
 bibcite_entity.mapping:

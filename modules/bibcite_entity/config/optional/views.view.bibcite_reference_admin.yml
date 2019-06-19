@@ -6,7 +6,7 @@ dependencies:
     - system
     - user
 id: bibcite_reference_admin
-label: 'Reference (Admin)'
+label: 'References (Admin)'
 module: views
 description: 'Find and manage bibliographic references.'
 tag: default
@@ -577,7 +577,7 @@ display:
           entity_field: type
           plugin_id: bundle
       sorts: {  }
-      title: Reference
+      title: References
       header: {  }
       footer: {  }
       empty:
