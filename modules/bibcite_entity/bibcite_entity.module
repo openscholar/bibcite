@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 
 /**
@@ -32,7 +33,7 @@ function bibcite_entity_entity_operation(EntityInterface $entity) {
 }
 
 /**
- * Implements hook_preprocess_HOOK().
+ * Implements hook_preprocess_links().
  *
  * Destination query element break redirect between forms.
  */
@@ -50,8 +51,9 @@ function bibcite_entity_theme($existing, $type, $theme, $path) {
     'bibcite_reference' => [
       'render element' => 'elements',
     ],
-    'bibcite_reference_table' => [
+    'bibcite_reference__table' => [
       'render element' => 'elements',
+      'base hook' => 'bibcite_reference',
     ],
     'bibcite_contributor' => [
       'render element' => 'elements',
@@ -60,6 +62,24 @@ function bibcite_entity_theme($existing, $type, $theme, $path) {
       'render element' => 'elements',
     ],
   ];
+}
+
+/**
+ * Implements hook_theme_suggestions_bibcite_reference().
+ */
+function bibcite_entity_theme_suggestions_bibcite_reference(array $variables) {
+  $suggestions = [];
+  /** @var EntityInterface $entity */
+  $entity = $variables['elements']['#bibcite_reference'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'bibcite_reference__' . $sanitized_view_mode;
+  $suggestions[] = 'bibcite_reference__' . $entity->bundle();
+  $suggestions[] = 'bibcite_reference__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'bibcite_reference__' . $entity->id();
+  $suggestions[] = 'bibcite_reference__' . $entity->id() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
 }
 
 /**
@@ -87,66 +107,122 @@ function template_preprocess_bibcite_reference(&$variables) {
 }
 
 /**
- * Implements hook_theme_suggestions_HOOK().
+ * Prepares variables for reference, themed as table.
+ *
+ * Default template: bibcite-reference--table.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - attributes: HTML attributes for the containing element.
+ *   - bibcite_reference: The reference object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ *   - rows: Data rows for table view mode.
+ *
+ * @see template_preprocess_bibcite_reference()
  */
-function bibcite_entity_theme_suggestions_bibcite_reference(array $variables) {
-  $suggestions = [];
-  $entity = $variables['elements']['#bibcite_reference'];
-  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
-
-  $suggestions[] = 'bibcite_reference__' . $sanitized_view_mode;
-  $suggestions[] = 'bibcite_reference__' . $entity->bundle();
-  $suggestions[] = 'bibcite_reference__' . $entity->bundle() . '__' . $sanitized_view_mode;
-  $suggestions[] = 'bibcite_reference__' . $entity->id();
-  $suggestions[] = 'bibcite_reference__' . $entity->id() . '__' . $sanitized_view_mode;
-
-  return $suggestions;
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- */
-function bibcite_entity_preprocess_bibcite_reference_table(&$variables) {
-  $variables['content'] = [
-    '#type' => 'container',
-    'table' => [
-      '#type' => 'table',
-    ],
-  ];
+function template_preprocess_bibcite_reference__table(&$variables) {
+  $variables['rows'] = [];
 
   foreach (Element::children($variables['elements']) as $key) {
+    // Do not output empty values.
     if (Element::children($variables['elements'][$key])) {
       $title = '';
       if (isset($variables['elements'][$key]['#title']) && $variables['elements'][$key]['#label_display'] != 'hidden') {
         $title = $variables['elements'][$key]['#title'];
       }
       $variables['elements'][$key]['#title'] = '';
-      $variables['content']['table'][] = [
+      $variables['rows'][] = [
         'title' => [
           '#markup' => $title,
         ],
         'element' => $variables['elements'][$key],
+        'attributes' => new Attribute([]),
       ];
     }
   }
+
+  $variables['attributes']['class'][] = 'bibcite-reference-table';
 }
 
 /**
- * Implements hook_preprocess_HOOK().
+ * Implements hook_theme_suggestions_bibcite_contributor().
  */
-function bibcite_entity_preprocess_bibcite_contributor(array &$variables) {
-  foreach (Element::children($variables['elements']) as $key) {
-    $variables['content'][$key] = $variables['elements'][$key];
-  }
+function bibcite_entity_theme_suggestions_bibcite_contributor(array $variables) {
+  $suggestions = [];
+  /** @var EntityInterface $entity */
+  $entity = $variables['elements']['#bibcite_contributor'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'bibcite_contributor__' . $sanitized_view_mode;
+  $suggestions[] = 'bibcite_contributor__' . $entity->id();
+  $suggestions[] = 'bibcite_contributor__' . $entity->id() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
 }
 
 /**
- * Implements hook_preprocess_HOOK().
+ * Prepares variables for contributor templates.
+ *
+ * Default template: bibcite-contributor.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - attributes: HTML attributes for the containing element.
+ *   - bibcite_contributor: The contributor object.
+ *   - view_mode: View mode.
  */
-function bibcite_entity_preprocess_bibcite_keyword(array &$variables) {
+function template_preprocess_bibcite_contributor(array &$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  $variables['bibcite_contributor'] = $variables['elements']['#bibcite_contributor'];
+
+  $variables += ['content' => []];
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
+
+  $variables['attributes']['class'][] = 'bibcite-contributor';
+}
+
+/**
+ * Implements hook_theme_suggestions_bibcite_keyword().
+ */
+function bibcite_entity_theme_suggestions_bibcite_keyword(array $variables) {
+  $suggestions = [];
+  /** @var EntityInterface $entity */
+  $entity = $variables['elements']['#bibcite_keyword'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'bibcite_keyword__' . $sanitized_view_mode;
+  $suggestions[] = 'bibcite_keyword__' . $entity->id();
+  $suggestions[] = 'bibcite_keyword__' . $entity->id() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
+
+/**
+ * Prepares variables for keyword templates.
+ *
+ * Default template: bibcite-keyword.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - attributes: HTML attributes for the containing element.
+ *   - bibcite_keyword: The keyword object.
+ *   - view_mode: View mode.
+ */
+function template_preprocess_bibcite_keyword(array &$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  $variables['bibcite_keyword'] = $variables['elements']['#bibcite_keyword'];
+
+  $variables += ['content' => []];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+
+  $variables['attributes']['class'][] = 'bibcite-keyword';
 }
 
 /**

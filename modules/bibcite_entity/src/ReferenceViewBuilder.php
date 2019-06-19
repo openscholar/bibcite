@@ -3,7 +3,6 @@
 namespace Drupal\bibcite_entity;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityViewBuilder;
@@ -73,21 +72,6 @@ class ReferenceViewBuilder extends EntityViewBuilder {
         ];
       }
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getBuildDefaults(EntityInterface $entity, $view_mode) {
-    $build = parent::getBuildDefaults($entity, $view_mode);
-
-    switch ($view_mode) {
-      case 'table':
-        $build['#theme'] = 'bibcite_reference_table';
-        break;
-    }
-
-    return $build;
   }
 
 }

@@ -7,9 +7,24 @@
 - [#2832974] by kruhak, antongp: Make Reference entities revisionable  
    **Bibliography & Citation - Entity** depends on the [Entity API](https://www.drupal.org/project/entity) module now,
    which has to be installed before performing an update.
+- [#3015616] by antongp, flocondetoile: Improve theming of Reference, Contributor and Keyword entities  
+  Theming of entities, provided by the **Bibliography & Citation - Entity** module, was slightly changed. In some cases
+  this may affect applied CSS styling and JS scripting.
+  - In default reference entity template `<div>` wrapper element was replaced by `<article>`. Applied CSS classes are
+    preserved.
+  - In contributor and keyword entities templates CSS classes on wrapper elements was changed from
+    `bibcite_contributor` and `bibcite_keyword` to `bibcite-contributor` and `bibcite-keyword` respectively
+    to be consistent with reference entity.
+  - `bibcite_reference_table` theme implementation was renamed to `bibcite_reference__table` and defines
+    `bibcite_reference` as base hook now.
+  - Wrapper element for reference entity, rendered as table, contains 2 CSS classes now: `bibcite-reference` and
+    `bibcite-reference-table` - instead of just `bibcite-reference-table`.
 
 ### Added
 - [#2832974] by kruhak, antongp: Make Reference entities revisionable
+
+### Changed
+- [#3015616] by antongp, flocondetoile: Improve theming of Reference, Contributor and Keyword entities
 
 ### Fixed
 - [#3061462] by antongp: Revision specific fields like Revision ID, Revision log message, etc., appear on reference type edit forms and on mapping pages in options
@@ -613,3 +628,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [//]: # "Issues links dev"
 [#2832974]: https://www.drupal.org/node/2832974
 [#3061462]: https://www.drupal.org/node/3061462
+[#3015616]: https://www.drupal.org/node/3015616
