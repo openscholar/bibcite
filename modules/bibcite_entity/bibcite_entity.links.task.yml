@@ -8,7 +8,7 @@ entity.bibcite_reference_type.collection:
   route_name: entity.bibcite_reference_type.collection
   base_route: entity.bibcite_reference_type.collection
 entity.bibcite_reference.admin:
-  title: Bibliographic data
+  title: Bibliography
   route_name: entity.bibcite_reference.collection
   base_route: system.admin_content
   weight: 50

@@ -1,7 +1,7 @@
 # Reference menu items definition
 entity.bibcite_reference.collection:
-  title: 'Bibliographic data'
+  title: 'Bibliography'
   route_name: entity.bibcite_reference.collection
-  description: 'List bibliographic data'
+  description: 'Find and manage bibliographic references.'
   parent: system.admin_content
   weight: 100
