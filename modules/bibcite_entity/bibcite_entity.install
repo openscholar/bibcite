@@ -8,6 +8,7 @@
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Entity\Sql\SqlContentEntityStorageSchemaConverter;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Symfony\Component\Yaml\Yaml;
 
@@ -439,64 +440,208 @@ function bibcite_entity_update_8012() {
 }
 
 /**
- * Make reference revisionable.
+ * Make Reference entity type revisionable.
  */
 function bibcite_entity_update_8013() {
-    $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
 
-    // Add the published entity key and revisionable metadata fields to the
-    // my_entity entity type.
-    $entity_type = $definition_update_manager->getEntityType('bibcite_reference');
-    $entity_type_id = $entity_type->id();
+  // Add the published entity key and revisionable metadata fields to the
+  // my_entity entity type.
+  $entity_type = $definition_update_manager->getEntityType('bibcite_reference');
+  $entity_type_id = $entity_type->id();
 
-    $entity_keys = $entity_type->getKeys();
-    $entity_keys['published'] = 'status';
-    $entity_type->set('entity_keys', $entity_keys);
+  $entity_keys = $entity_type->getKeys();
+  $entity_keys['published'] = 'status';
+  $entity_type->set('entity_keys', $entity_keys);
 
-    $revision_metadata_keys = [
-      'revision_user' => 'revision_user',
-      'revision_created' => 'revision_created',
-      'revision_log_message' => 'revision_log_message'
-    ];
-    $entity_type->set('revision_metadata_keys', $revision_metadata_keys);
+  $revision_metadata_keys = [
+    'revision_user' => 'revision_user',
+    'revision_created' => 'revision_created',
+    'revision_log_message' => 'revision_log_message',
+  ];
+  $entity_type->set('revision_metadata_keys', $revision_metadata_keys);
 
-    $definition_update_manager->updateEntityType($entity_type);
+  $definition_update_manager->updateEntityType($entity_type);
 
-    // Add the status field.
-    $status = Drupal\Core\Field\BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating the published state.'))
-      ->setRevisionable(TRUE)
-      ->setDefaultValue(TRUE);
+  // Add the status field.
+  $status = Drupal\Core\Field\BaseFieldDefinition::create('boolean')
+    ->setLabel(t('Publishing status'))
+    ->setDescription(t('A boolean indicating the published state.'))
+    ->setRevisionable(TRUE)
+    ->setDefaultValue(TRUE);
 
-    $status->setInitialValue(TRUE);
-    $definition_update_manager->installFieldStorageDefinition('status', $entity_type_id, $entity_type_id, $status);
+  $status->setInitialValue(TRUE);
+  $definition_update_manager->installFieldStorageDefinition('status', $entity_type_id, $entity_type_id, $status);
 
-    // Add the revision metadata fields.
-    $revision_created = Drupal\Core\Field\BaseFieldDefinition::create('created')
-      ->setLabel(t('Revision create time'))
-      ->setDescription(t('The time that the current revision was created.'))
-      ->setRevisionable(TRUE);
-    $definition_update_manager->installFieldStorageDefinition('revision_created', $entity_type_id, $entity_type_id, $revision_created);
+  // Add the revision metadata fields.
+  $revision_created = Drupal\Core\Field\BaseFieldDefinition::create('created')
+    ->setLabel(t('Revision create time'))
+    ->setDescription(t('The time that the current revision was created.'))
+    ->setRevisionable(TRUE);
+  $definition_update_manager->installFieldStorageDefinition('revision_created', $entity_type_id, $entity_type_id, $revision_created);
 
-    $revision_user = Drupal\Core\Field\BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Revision user'))
-      ->setDescription(t('The user ID of the author of the current revision.'))
-      ->setSetting('target_type', 'user')
-      ->setRevisionable(TRUE);
-    $definition_update_manager->installFieldStorageDefinition('revision_user', $entity_type_id, $entity_type_id, $revision_user);
+  $revision_user = Drupal\Core\Field\BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Revision user'))
+    ->setDescription(t('The user ID of the author of the current revision.'))
+    ->setSetting('target_type', 'user')
+    ->setRevisionable(TRUE);
+  $definition_update_manager->installFieldStorageDefinition('revision_user', $entity_type_id, $entity_type_id, $revision_user);
 
-    $revision_log_message = Drupal\Core\Field\BaseFieldDefinition::create('string_long')
-      ->setLabel(t('Revision log message'))
-      ->setDescription(t('Briefly describe the changes you have made.'))
-      ->setRevisionable(TRUE)
-      ->setDefaultValue('')
-      ->setDisplayOptions('form', [
-        'type' => 'string_textarea',
-        'weight' => 25,
-        'settings' => [
-          'rows' => 4,
-        ],
-      ]);
-    $definition_update_manager->installFieldStorageDefinition('revision_log_message', $entity_type_id, $entity_type_id, $revision_log_message);
+  $revision_log_message = Drupal\Core\Field\BaseFieldDefinition::create('string_long')
+    ->setLabel(t('Revision log message'))
+    ->setDescription(t('Briefly describe the changes you have made.'))
+    ->setRevisionable(TRUE)
+    ->setDefaultValue('')
+    ->setDisplayOptions('form', [
+      'type' => 'string_textarea',
+      'weight' => 25,
+      'settings' => [
+        'rows' => 4,
+      ],
+    ]);
+  $definition_update_manager->installFieldStorageDefinition('revision_log_message', $entity_type_id, $entity_type_id, $revision_log_message);
+}
+
+/**
+ * Update existing reference entities data to be revisionable.
+ */
+function bibcite_entity_update_8014(&$sandbox) {
+  $database = \Drupal::database();
+
+  $schema_converter = new SqlContentEntityStorageSchemaConverter(
+    'bibcite_reference',
+    \Drupal::entityTypeManager(),
+    \Drupal::entityDefinitionUpdateManager(),
+    \Drupal::service('entity.last_installed_schema.repository'),
+    \Drupal::keyValue('entity.storage_schema.sql'),
+    $database
+  );
+
+  $schema_converter->convertToRevisionable($sandbox, [
+    'uid',
+    'title',
+    'created',
+    'changed',
+    'keywords',
+    'author',
+    'status',
+    'bibcite_abst_e',
+    'bibcite_abst_f',
+    'bibcite_notes',
+    'bibcite_custom1',
+    'bibcite_custom2',
+    'bibcite_custom3',
+    'bibcite_custom4',
+    'bibcite_custom5',
+    'bibcite_custom6',
+    'bibcite_custom7',
+    'bibcite_auth_address',
+    'bibcite_year',
+    'bibcite_secondary_title',
+    'bibcite_volume',
+    'bibcite_edition',
+    'bibcite_section',
+    'bibcite_issue',
+    'bibcite_number_of_volumes',
+    'bibcite_number',
+    'bibcite_pages',
+    'bibcite_date',
+    'bibcite_type_of_work',
+    'bibcite_lang',
+    'bibcite_reprint_edition',
+    'bibcite_publisher',
+    'bibcite_place_published',
+    'bibcite_issn',
+    'bibcite_isbn',
+    'bibcite_accession_number',
+    'bibcite_call_number',
+    'bibcite_other_number',
+    'bibcite_citekey',
+    'bibcite_url',
+    'bibcite_doi',
+    'bibcite_research_notes',
+    'bibcite_tertiary_title',
+    'bibcite_short_title',
+    'bibcite_alternate_title',
+    'bibcite_translated_title',
+    'bibcite_original_publication',
+    'bibcite_other_author_affiliations',
+    'bibcite_remote_db_name',
+    'bibcite_remote_db_provider',
+    'bibcite_label',
+    'bibcite_access_date',
+    'bibcite_refereed',
+    'bibcite_pmid',
+  ]);
+}
+
+/**
+ * Fill Revision create time and Revision user fields, which are left empty
+ * after making Reference entity type revisionable, by values from Created
+ * and Authored by fields respectively.
+ */
+function bibcite_entity_update_8015(&$sandbox) {
+  $database = \Drupal::database();
+  $type_manager = \Drupal::entityTypeManager();
+  $table_name = $type_manager->getStorage('bibcite_reference')->getEntityType()->getRevisionTable();
+  if (!isset($sandbox['total'])) {
+    $sandbox['processed'] = 0;
+    $sandbox['current_id'] = 0;
+    $count_query = $database->select($table_name);
+    $count_condition = $count_query->orConditionGroup()
+      ->isNull('revision_created')
+      ->isNull('revision_user');
+    $count_query->condition($count_condition);
+    $count_query = $count_query->countQuery();
+    $sandbox['total'] = $count_query->execute()->fetchField();
+  }
+
+  $select_query = $database->select($table_name, 'brr');
+  $select_query->fields('brr', ['revision_id', 'created', 'uid', 'revision_created', 'revision_user']);
+  $select_condition = $select_query->orConditionGroup()
+    ->isNull('revision_created')
+    ->isNull('revision_user');
+  $select_query->condition($select_condition);
+  $select_query->condition('revision_id', $sandbox['current_id'], '>');
+  $select_query->orderBy('revision_id');
+  $select_query->range(0, 50);
+  $rows = $select_query->execute()->fetchAll();
+
+  if ($rows) {
+    foreach ($rows as $row) {
+      $revision_created = isset($row->revision_created) ? $row->revision_created : $row->created;
+      $revision_user = isset($row->revision_user) ? $row->revision_user : $row->uid;
+      $database->update($table_name)
+        ->fields(['revision_created' => $revision_created, 'revision_user' => $revision_user])
+        ->condition('revision_id', $row->revision_id)
+        ->execute();
+      $sandbox['current_id'] = $row->revision_id;
+    }
+    $sandbox['processed'] += count($rows);
+    $sandbox['#finished'] = $sandbox['processed'] / $sandbox['total'];
+  }
+  else {
+    $sandbox['#finished'] = 1;
+  }
+}
+
+/**
+ * Force Revision user field storage definition update to fix
+ * "The Revision user field needs to be updated" error on Status report, which
+ * means that entity and field definitions became mismatched for some reason
+ * after making Reference entity type revisionable.
+ */
+function bibcite_entity_update_8016() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('bibcite_reference');
+  $entity_type_id = $entity_type->id();
+  $revision_user = BaseFieldDefinition::create('entity_reference')
+    ->setName('revision_user')
+    ->setTargetEntityTypeId($entity_type_id)
+    ->setTargetBundle(NULL)
+    ->setLabel(t('Revision user'))
+    ->setDescription(t('The user ID of the author of the current revision.'))
+    ->setSetting('target_type', 'user')
+    ->setRevisionable(TRUE);
+  $definition_update_manager->updateFieldStorageDefinition($revision_user);
 }
