@@ -13,7 +13,7 @@ use Drupal\user\RoleInterface;
 /**
  * Tests basic reference_access functionality.
  *
- * @group reference
+ * @group bibcite
  */
 class ReferenceAccessTest extends KernelTestBase {
 

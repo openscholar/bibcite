@@ -9,7 +9,7 @@ use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 /**
  * Tests reference field level access.
  *
- * @group reference
+ * @group bibcite
  */
 class ReferenceFieldAccessTest extends EntityKernelTestBase {
 
@@ -18,7 +18,7 @@ class ReferenceFieldAccessTest extends EntityKernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['bibcite', 'bibcite_entity'];
+  public static $modules = ['serialization', 'bibcite', 'bibcite_entity'];
 
   /**
    * Fields that only users with administer references permissions can change.
@@ -33,6 +33,16 @@ class ReferenceFieldAccessTest extends EntityKernelTestBase {
    * @var array
    */
   protected $readOnlyFields = ['changed'];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp();
+    $this->installEntitySchema('bibcite_reference_type');
+    $this->installEntitySchema('bibcite_reference');
+    $this->installConfig('bibcite_entity');
+  }
 
   /**
    * Test permissions on references status field.
@@ -63,12 +73,12 @@ class ReferenceFieldAccessTest extends EntityKernelTestBase {
     $reference1 = Reference::create([
       'title' => $this->randomMachineName(8),
       'uid' => $page_creator_user->id(),
-      'type' => 'page',
+      'type' => 'book',
     ]);
     $reference2 = Reference::create([
       'title' => $this->randomMachineName(8),
       'uid' => $page_manager_user->id(),
-      'type' => 'article',
+      'type' => 'book',
     ]);
 
     foreach ($this->administrativeFields as $field) {
