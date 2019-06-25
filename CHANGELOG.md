@@ -33,6 +33,7 @@
 - [#3061462] by antongp: Revision specific fields like Revision ID, Revision log message, etc., appear on reference type edit forms and on mapping pages in options
 - [#3063246] by antongp: Status report shows "Mismatched entity and/or field definitions" error after updating to revisionable references
 - [#3063600] by antongp: Test Drupal\Tests\bibcite_entity\Kernel\ReferenceFieldAccessTest fails
+- [#3063944] by antongp: Test \Drupal\Tests\bibcite_import\Functional\ImportTest never run because of typo in directory name
 
 
 ## [8.x-1.0-alpha10] - 2019-05-30
@@ -639,3 +640,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3063246]: https://www.drupal.org/node/3063246
 [#3063600]: https://www.drupal.org/node/3063600
 [#3063928]: https://www.drupal.org/node/3063928
+[#3063944]: https://www.drupal.org/node/3063944
