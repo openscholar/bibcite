@@ -85,25 +85,12 @@ class BibciteTest extends BrowserTestBase {
   }
 
   /**
-   * Test Config page.
-   */
-  public function testConfigPage() {
-    $this->drupalLogin($this->user);
-
-    $this->drupalGet('admin/config/bibcite');
-    $page = $this->getSession()->getPage();
-    $link = $page->findLink('Settings');
-    $link->click();
-    $this->assertSession()->statusCodeEquals(200);
-  }
-
-  /**
    * Test Settings form.
    */
   public function testSettingsBibciteForm() {
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/settings');
+    $this->drupalGet('admin/config/bibcite');
     $page = $this->getSession()->getPage();
     $page->selectFieldOption('edit-processor', 'citeproc-php');
     $page->selectFieldOption('edit-default-style', 'apa');

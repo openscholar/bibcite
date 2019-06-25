@@ -62,35 +62,35 @@ class BibciteEntityTest extends BrowserTestBase {
    * Test Reference type routes.
    */
   public function testReferenceTypeRoutes() {
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/add');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/add');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/book/delete');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/book/delete');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/book');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/book');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types');
     $this->assertSession()->statusCodeEquals(403);
 
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/add');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/add');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/book/delete');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/book/delete');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/book');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/book');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types');
     $this->assertSession()->statusCodeEquals(200);
 
     $this->drupalLogin($this->simpleUser);
 
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/add');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/add');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/book/delete');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/book/delete');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types/book');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types/book');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/reference/types');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/types');
     $this->assertSession()->statusCodeEquals(403);
   }
 
@@ -272,35 +272,35 @@ class BibciteEntityTest extends BrowserTestBase {
    * Test Contributor category routes.
    */
   public function testContributorCategoryRoutes() {
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/primary');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/primary');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/primary/delete');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/primary/delete');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/add');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/add');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category');
     $this->assertSession()->statusCodeEquals(403);
 
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/primary');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/primary');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/primary/delete');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/primary/delete');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/add');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/add');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category');
     $this->assertSession()->statusCodeEquals(200);
 
     $this->drupalLogin($this->simpleUser);
 
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/primary');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/primary');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/primary/delete');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/primary/delete');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category/add');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category/add');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/category');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/category');
     $this->assertSession()->statusCodeEquals(403);
   }
 
@@ -308,35 +308,35 @@ class BibciteEntityTest extends BrowserTestBase {
    * Test Contributor role routes.
    */
   public function testContributorRoleRoutes() {
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/author');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/author');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/author/delete');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/author/delete');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/add');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/add');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role');
     $this->assertSession()->statusCodeEquals(403);
 
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/author');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/author');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/author/delete');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/author/delete');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/add');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/add');
     $this->assertSession()->statusCodeEquals(200);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role');
     $this->assertSession()->statusCodeEquals(200);
 
     $this->drupalLogin($this->simpleUser);
 
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/author');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/author');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/author/delete');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/author/delete');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role/add');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role/add');
     $this->assertSession()->statusCodeEquals(403);
-    $this->drupalGet('admin/config/bibcite/settings/contributor/role');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings/role');
     $this->assertSession()->statusCodeEquals(403);
   }
 
@@ -362,7 +362,7 @@ class BibciteEntityTest extends BrowserTestBase {
   public function testSettingsReferenceForm() {
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/settings/reference/settings');
+    $this->drupalGet('admin/structure/bibcite/reference/settings');
     $page = $this->getSession()->getPage();
     $page->selectFieldOption('edit-view-mode-reference-page-view-mode', 'citation');
     $page->selectFieldOption('edit-view-mode-reference-page-view-mode', 'table');
@@ -379,7 +379,7 @@ class BibciteEntityTest extends BrowserTestBase {
   public function testSettingsLinksForm() {
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/settings/reference/settings/links');
+    $this->drupalGet('admin/structure/bibcite/reference/settings/links');
     $page = $this->getSession()->getPage();
     $page->uncheckField('edit-links-google-scholar-enabled');
     $page->uncheckField('edit-links-doi-enabled');
@@ -397,7 +397,7 @@ class BibciteEntityTest extends BrowserTestBase {
   public function testSettingsContributorForm() {
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/settings/contributor/settings');
+    $this->drupalGet('admin/structure/bibcite/contributor/settings');
     $page = $this->getSession()->getPage();
     $this->assertSession()->fieldValueEquals('edit-full-name-pattern', '@prefix @first_name @last_name @suffix');
     $page->pressButton('edit-submit');
@@ -413,6 +413,19 @@ class BibciteEntityTest extends BrowserTestBase {
   public function importDataProvider() {
     $yaml_text = file_get_contents(__DIR__ . '/data/testEntityList.data.yml');
     return Yaml::parse($yaml_text);
+  }
+
+  /**
+   * Test Config page.
+   */
+  public function testConfigPage() {
+    $this->drupalLogin($this->user);
+
+    $this->drupalGet('admin/structure/bibcite');
+    $page = $this->getSession()->getPage();
+    $link = $page->findLink('Reference');
+    $link->click();
+    $this->assertSession()->statusCodeEquals(200);
   }
 
 }

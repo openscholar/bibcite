@@ -1,42 +1,34 @@
 entity.bibcite_reference_type.add_form:
-  path: '/admin/config/bibcite/settings/reference/types/add'
+  path: '/admin/structure/bibcite/reference/settings/types/add'
   defaults:
     _entity_form: 'bibcite_reference_type.add'
     _title: 'Add reference type'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_reference_type.delete_form:
-  path: '/admin/config/bibcite/settings/reference/types/{bibcite_reference_type}/delete'
+  path: '/admin/structure/bibcite/reference/settings/types/{bibcite_reference_type}/delete'
   defaults:
     _entity_form: 'bibcite_reference_type.delete'
     _title: 'Delete reference type'
   requirements:
     _entity_access: 'bibcite_reference_type.delete'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_reference_type.edit_form:
-  path: '/admin/config/bibcite/settings/reference/types/{bibcite_reference_type}'
+  path: '/admin/structure/bibcite/reference/settings/types/{bibcite_reference_type}'
   defaults:
     _entity_form: 'bibcite_reference_type.edit'
     _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_reference_type.collection:
-  path: '/admin/config/bibcite/settings/reference/types'
+  path: '/admin/structure/bibcite/reference/settings/types'
   defaults:
     _entity_list: 'bibcite_reference_type'
     _title: 'Types'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_reference.add_form:
   path: '/bibcite/reference/add/{bibcite_reference_type}'
@@ -65,8 +57,6 @@ entity.bibcite_reference.collection:
     _title: 'References'
   requirements:
     _permission: 'view bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_reference.delete_multiple_form:
   path: '/admin/content/bibcite/reference/delete'
@@ -75,8 +65,6 @@ entity.bibcite_reference.delete_multiple_form:
     entity_type_id: 'bibcite_reference'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_keyword.collection:
   path: '/admin/content/bibcite/keyword'
@@ -85,8 +73,6 @@ entity.bibcite_keyword.collection:
     _title: 'Keywords'
   requirements:
     _permission: 'view bibcite_keyword'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_keyword.delete_multiple_form:
   path: '/admin/content/bibcite/keyword/delete'
@@ -95,8 +81,6 @@ entity.bibcite_keyword.delete_multiple_form:
     entity_type_id: 'bibcite_keyword'
   requirements:
     _permission: 'administer bibcite_keyword'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_keyword.bibcite_merge_form:
   path: '/admin/content/bibcite/keyword/{bibcite_keyword}/merge'
@@ -107,7 +91,6 @@ entity.bibcite_keyword.bibcite_merge_form:
     _permission: 'administer bibcite_keyword'
   options:
     _bibcite_entity_type_id: 'bibcite_keyword'
-    _admin_route: TRUE
     parameters:
       bibcite_keyword:
         type: 'entity:bibcite_keyword'
@@ -121,7 +104,6 @@ entity.bibcite_keyword.bibcite_merge_form_confirm:
     _permission: 'administer bibcite_keyword'
   options:
     _bibcite_entity_type_id: 'bibcite_keyword'
-    _admin_route: TRUE
     parameters:
       bibcite_keyword:
         type: 'entity:bibcite_keyword'
@@ -136,8 +118,6 @@ entity.bibcite_keyword.bibcite_merge_multiple_form:
     field_name: 'keyword'
   requirements:
     _permission: 'administer bibcite_keyword'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor.collection:
   path: '/admin/content/bibcite/contributor'
@@ -146,8 +126,6 @@ entity.bibcite_contributor.collection:
     _title: 'Contributors'
   requirements:
     _permission: 'view bibcite_contributor'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor.delete_multiple_form:
   path: '/admin/content/bibcite/contributor/delete'
@@ -156,8 +134,6 @@ entity.bibcite_contributor.delete_multiple_form:
     entity_type_id: 'bibcite_contributor'
   requirements:
     _permission: 'administer bibcite_keyword'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor.bibcite_merge_form:
   path: '/admin/content/bibcite/contributor/{bibcite_contributor}/merge'
@@ -168,7 +144,6 @@ entity.bibcite_contributor.bibcite_merge_form:
     _permission: 'administer bibcite_contributor'
   options:
     _bibcite_entity_type_id: 'bibcite_contributor'
-    _admin_route: TRUE
     parameters:
       bibcite_contributor:
         type: 'entity:bibcite_contributor'
@@ -182,7 +157,6 @@ entity.bibcite_contributor.bibcite_merge_form_confirm:
     _permission: 'administer bibcite_contributor'
   options:
     _bibcite_entity_type_id: 'bibcite_contributor'
-    _admin_route: TRUE
     parameters:
       bibcite_contributor:
         type: 'entity:bibcite_contributor'
@@ -197,91 +171,73 @@ entity.bibcite_contributor.bibcite_merge_multiple_form:
     field_name: 'author'
   requirements:
     _permission: 'administer bibcite_contributor'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor_category.collection:
-  path: '/admin/config/bibcite/settings/contributor/category'
+  path: '/admin/structure/bibcite/contributor/settings/category'
   defaults:
     _entity_list: 'bibcite_contributor_category'
     _title: 'Contributor categories'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor_category.add_form:
-  path: '/admin/config/bibcite/settings/contributor/category/add'
+  path: '/admin/structure/bibcite/contributor/settings/category/add'
   defaults:
     _entity_form: 'bibcite_contributor_category.add'
     _title: 'Add contributor category'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor_category.edit_form:
-  path: '/admin/config/bibcite/settings/contributor/category/{bibcite_contributor_category}'
+  path: '/admin/structure/bibcite/contributor/settings/category/{bibcite_contributor_category}'
   defaults:
     _entity_form: 'bibcite_contributor_category.edit'
     _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor_category.delete_form:
-  path: '/admin/config/bibcite/settings/contributor/category/{bibcite_contributor_category}/delete'
+  path: '/admin/structure/bibcite/contributor/settings/category/{bibcite_contributor_category}/delete'
   defaults:
     _entity_form: 'bibcite_contributor_category.delete'
     _title: 'Delete contributor category'
   requirements:
     _entity_access: 'bibcite_contributor_category.delete'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor_role.collection:
-  path: '/admin/config/bibcite/settings/contributor/role'
+  path: '/admin/structure/bibcite/contributor/settings/role'
   defaults:
     _entity_list: 'bibcite_contributor_role'
     _title: 'Contributor roles'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor_role.add_form:
-  path: '/admin/config/bibcite/settings/contributor/role/add'
+  path: '/admin/structure/bibcite/contributor/settings/role/add'
   defaults:
     _entity_form: 'bibcite_contributor_role.add'
     _title: 'Add contributor role'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor_role.edit_form:
-  path: '/admin/config/bibcite/settings/contributor/role/{bibcite_contributor_role}'
+  path: '/admin/structure/bibcite/contributor/settings/role/{bibcite_contributor_role}'
   defaults:
     _entity_form: 'bibcite_contributor_role.edit'
     _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
   requirements:
     _permission: 'administer bibcite_reference'
-  options:
-    _admin_route: TRUE
 
 entity.bibcite_contributor_role.delete_form:
-  path: '/admin/config/bibcite/settings/contributor/role/{bibcite_contributor_role}/delete'
+  path: '/admin/structure/bibcite/contributor/settings/role/{bibcite_contributor_role}/delete'
   defaults:
     _entity_form: 'bibcite_contributor_role.delete'
     _title: 'Delete contributor role'
   requirements:
     _entity_access: 'bibcite_contributor_role.delete'
-  options:
-    _admin_route: TRUE
 
 bibcite_entity.contributor.settings:
-  path: '/admin/config/bibcite/settings/contributor/settings'
+  path: '/admin/structure/bibcite/contributor/settings'
   defaults:
     _form: '\Drupal\bibcite_entity\Form\ContributorSettings'
     _title: 'Settings'
@@ -289,7 +245,7 @@ bibcite_entity.contributor.settings:
     _permission: 'administer bibcite'
 
 bibcite_entity.reference.settings:
-  path: '/admin/config/bibcite/settings/reference/settings'
+  path: '/admin/structure/bibcite/reference/settings'
   defaults:
     _form: '\Drupal\bibcite_entity\Form\ReferenceSettings'
     _title: 'Settings'
@@ -297,7 +253,7 @@ bibcite_entity.reference.settings:
     _permission: 'administer bibcite'
 
 bibcite_entity.reference.settings.links:
-  path: '/admin/config/bibcite/settings/reference/settings/links'
+  path: '/admin/structure/bibcite/reference/settings/links'
   defaults:
     _form: '\Drupal\bibcite_entity\Form\ReferenceSettingsLinksForm'
     _title: 'Links'
@@ -321,5 +277,13 @@ bibcite_entity.mapping.csl:
   defaults:
     _form: '\Drupal\bibcite_entity\Form\CslMappingForm'
     _title: 'Mapping for CSL format'
+  requirements:
+    _permission: 'administer bibcite'
+
+bibcite_entity.settings:
+  path: '/admin/structure/bibcite'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Bibliography'
   requirements:
     _permission: 'administer bibcite'

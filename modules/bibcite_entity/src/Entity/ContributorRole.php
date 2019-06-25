@@ -27,10 +27,10 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "weight" = "weight"
  *   },
  *   links = {
- *     "add-form" = "/admin/config/bibcite/settings/contributor/role/add",
- *     "edit-form" = "/admin/config/bibcite/settings/contributor/role/{bibcite_contributor_role}",
- *     "delete-form" = "/admin/config/bibcite/settings/contributor/role/{bibcite_contributor_role}/delete",
- *     "collection" = "/admin/config/bibcite/settings/contributor/role"
+ *     "add-form" = "/admin/structure/bibcite/contributor/settings/role/add",
+ *     "edit-form" = "/admin/structure/bibcite/contributor/settings/role/{bibcite_contributor_role}",
+ *     "delete-form" = "/admin/structure/bibcite/contributor/settings/role/{bibcite_contributor_role}/delete",
+ *     "collection" = "/admin/structure/bibcite/contributor/settings/role"
  *   }
  * )
  */

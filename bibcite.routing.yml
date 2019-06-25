@@ -3,7 +3,7 @@ entity.bibcite_csl_style.add_form:
   defaults:
     _entity_form: 'bibcite_csl_style.add'
     entity_type_id: 'bibcite_csl_style'
-    _title: 'Add csl style'
+    _title: 'Add CSL style'
   requirements:
     _permission: 'administer bibcite'
   options:
@@ -13,7 +13,7 @@ entity.bibcite_csl_style.delete_form:
   path: '/admin/config/bibcite/settings/csl_style/{bibcite_csl_style}/delete'
   defaults:
     _entity_form: 'bibcite_csl_style.delete'
-    _title: 'Delete csl style'
+    _title: 'Delete CSL style'
   requirements:
     _permission: 'administer bibcite'
   options:
@@ -33,7 +33,7 @@ entity.bibcite_csl_style.collection:
   path: '/admin/config/bibcite/settings/csl_style'
   defaults:
     _entity_list: 'bibcite_csl_style'
-    _title: 'CSL style'
+    _title: 'CSL styles'
   requirements:
     _permission: 'administer bibcite'
   options:
@@ -50,18 +50,8 @@ entity.bibcite_csl_style.add_from_file:
   options:
     _admin_route: TRUE
 
-bibcite.admin_config_bibcite:
-  path: '/admin/config/bibcite'
-  defaults:
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Bibliography & Citation'
-  requirements:
-    _permission: 'administer bibcite'
-  options:
-    _admin_route: TRUE
-
 bibcite.settings:
-  path: '/admin/config/bibcite/settings'
+  path: '/admin/config/bibcite'
   defaults:
     _form: '\Drupal\bibcite\Form\SettingsForm'
     _title: 'Processing'

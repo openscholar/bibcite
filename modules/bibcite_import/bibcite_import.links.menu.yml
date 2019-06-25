@@ -1,5 +1,10 @@
 bibcite_import.import:
   title: 'Import'
   description: 'Import reference data'
-  parent: bibcite.admin_config_bibcite
+  parent: entity.bibcite_reference.collection
   route_name: bibcite_import.import
+bibcite_import.settings:
+  title: 'Import'
+  parent: bibcite.settings
+  route_name: bibcite_import.settings
+  weight: 50

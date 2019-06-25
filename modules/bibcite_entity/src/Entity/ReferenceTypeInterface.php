@@ -26,7 +26,7 @@ interface ReferenceTypeInterface extends ConfigEntityInterface {
    * @return \Drupal\bibcite_entity\Entity\ReferenceTypeInterface
    *   Callable entity object.
    */
-  public function setDescription(string $desc);
+  public function setDescription($desc);
 
   /**
    * Get fields configuration array.

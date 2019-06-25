@@ -2,3 +2,4 @@ bibcite_import.settings:
   route_name: bibcite_import.settings
   title: 'Import'
   base_route: bibcite.settings
+  weight: 40

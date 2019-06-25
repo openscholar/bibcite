@@ -28,10 +28,10 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "add-form" = "/admin/config/bibcite/settings/reference/types/add",
- *     "edit-form" = "/admin/config/bibcite/settings/reference/types/{bibcite_reference_type}",
- *     "delete-form" = "/admin/config/bibcite/settings/reference/types/{bibcite_reference_type}/delete",
- *     "collection" = "/admin/config/bibcite/settings/reference/types"
+ *     "add-form" = "/admin/structure/bibcite/reference/settings/types/add",
+ *     "edit-form" = "/admin/structure/bibcite/reference/settings/types/{bibcite_reference_type}",
+ *     "delete-form" = "/admin/structure/bibcite/reference/settings/types/{bibcite_reference_type}/delete",
+ *     "collection" = "/admin/structure/bibcite/reference/settings/types"
  *   }
  * )
  */
@@ -68,7 +68,7 @@ class ReferenceType extends ConfigEntityBundleBase implements ReferenceTypeInter
   /**
    * {@inheritdoc}
    */
-  public function setDescription(string $desc) {
+  public function setDescription($desc) {
     $this->description = $desc;
     return $this;
   }
