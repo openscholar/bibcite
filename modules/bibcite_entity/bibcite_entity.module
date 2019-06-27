@@ -14,6 +14,31 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
+use Drupal\field\FieldStorageConfigInterface;
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function bibcite_entity_views_data_alter(array &$data) {
+  $data['bibcite_reference__keywords']['keywords_target_id']['filter']['id'] = 'bibcite_keyword_id';
+}
+
+/**
+ * Implements hook_field_views_data_alter().
+ *
+ * @see taxonomy_field_views_data_alter()
+ */
+function bibcite_entity_field_views_data_alter(array &$data, FieldStorageConfigInterface $field_storage) {
+  if ($field_storage->getType() == 'entity_reference' && $field_storage->getSetting('target_type') == 'bibcite_keyword') {
+    foreach ($data as $table_name => $table_data) {
+      foreach ($table_data as $field_name => $field_data) {
+        if (isset($field_data['filter']) && $field_name != 'delta') {
+          $data[$table_name][$field_name]['filter']['id'] = 'bibcite_keyword_id';
+        }
+      }
+    }
+  }
+}
 
 /**
  * Implements hook_entity_operation().

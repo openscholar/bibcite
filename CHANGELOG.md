@@ -19,9 +19,13 @@
     `bibcite_reference` as base hook now.
   - Wrapper element for reference entity, rendered as table, contains 2 CSS classes now: `bibcite-reference` and
     `bibcite-reference-table` - instead of just `bibcite-reference-table`.
+- [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views  
+  For all existing usages of the Keywords filter, as well as filters on custom entity reference fields, referencing
+  Keyword entity type, in views, filter settings need to be reviewed and updated/re-saved manually.
 
 ### Added
 - [#2832974] by kruhak, antongp: Make Reference entities revisionable
+- [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
 - [#3015616] by antongp, flocondetoile: Improve theming of Reference, Contributor and Keyword entities
@@ -641,3 +645,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3063600]: https://www.drupal.org/node/3063600
 [#3063928]: https://www.drupal.org/node/3063928
 [#3063944]: https://www.drupal.org/node/3063944
+[#3064397]: https://www.drupal.org/node/3064397
