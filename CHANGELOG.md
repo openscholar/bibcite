@@ -32,6 +32,7 @@
 - [#3062706] by antongp: Rename "Bibliographic data" to "Bibliography" in menu
 - [#3062730] by antongp: Rename "Reference", "Contributor" and "Keyword" to "References", "Contributors" and "Keywords" in tabs
 - [#3063928] by antongp: Restructure routing/pages
+- [#3065735] by antongp: Improve References (Admin) views
 
 ### Fixed
 - [#3061462] by antongp: Revision specific fields like Revision ID, Revision log message, etc., appear on reference type edit forms and on mapping pages in options
@@ -646,3 +647,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3063928]: https://www.drupal.org/node/3063928
 [#3063944]: https://www.drupal.org/node/3063944
 [#3064397]: https://www.drupal.org/node/3064397
+[#3065735]: https://www.drupal.org/node/3065735

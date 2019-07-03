@@ -90,7 +90,7 @@ INSTALLATION
    You can find a bit more info about Composer [here](https://www.drupal.org/node/2804889#comment-11651131).
 
  * Install as you would normally install a contributed Drupal module. See:
-   https://www.drupal.org/docs/8/extending-drupal/installing-contributed-modules
+   https://www.drupal.org/docs/8/extending-drupal-8/installing-drupal-8-modules
    for further information.
 
 
