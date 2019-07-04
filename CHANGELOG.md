@@ -34,6 +34,7 @@
 - [#3063928] by antongp: Restructure routing/pages
 - [#3065735] by antongp: Improve References (Admin) views
 - [#3065743] by antongp: Improve Keywords (Admin) views
+- [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
 - [#3061462] by antongp: Revision specific fields like Revision ID, Revision log message, etc., appear on reference type edit forms and on mapping pages in options
@@ -650,3 +651,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3064397]: https://www.drupal.org/node/3064397
 [#3065735]: https://www.drupal.org/node/3065735
 [#3065743]: https://www.drupal.org/node/3065743
+[#3065955]: https://www.drupal.org/node/3065955
