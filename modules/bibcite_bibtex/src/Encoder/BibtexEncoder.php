@@ -5,6 +5,7 @@ namespace Drupal\bibcite_bibtex\Encoder;
 use AudioLabs\BibtexParser\BibtexParser;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
 /**
  * BibTeX format encoder.
@@ -58,7 +59,8 @@ class BibtexEncoder implements EncoderInterface, DecoderInterface {
     $keys = array_keys($parsed);
     if (count($keys) === 0 || $keys[0] === -1) {
       $format_definition = \Drupal::service('plugin.manager.bibcite_format')->getDefinition($format);
-      throw new \Exception(t("Incorrect @format format or empty set.", ['@format' => $format_definition['label']]));
+      $format_label = $format_definition['label'];
+      throw new UnexpectedValueException("Incorrect '{$format_label}' format or empty set.");
     }
     $this->processEntries($parsed);
 

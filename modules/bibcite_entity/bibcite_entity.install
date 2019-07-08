@@ -407,8 +407,6 @@ function bibcite_entity_update_8010() {
 
 /**
  * Update contributor entity.
- *
- * @throws \Drupal\Core\Entity\EntityStorageException
  */
 function bibcite_entity_update_8011() {
   $definition_update_manager = \Drupal::entityDefinitionUpdateManager();

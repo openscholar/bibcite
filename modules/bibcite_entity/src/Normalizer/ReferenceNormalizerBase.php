@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Url;
 use Drupal\serialization\Normalizer\EntityNormalizer;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
 /**
  * Base normalizer class for bibcite formats.
@@ -169,17 +170,16 @@ abstract class ReferenceNormalizerBase extends EntityNormalizer {
     }
 
     $type_key = $this->getTypeKey();
-    if (!$data[$type_key]) {
-      throw new \Exception('Incorrect type of reference or not set.');
+    if (empty($data[$type_key])) {
+      throw new UnexpectedValueException("Reference type is incorrect or not set.");
     }
-    $converted_type = $this->convertFormatType($data[$type_key], $format);
+    $reference_type = $data[$type_key];
+    $converted_type = $this->convertFormatType($reference_type, $format);
+    // @todo Review logic of this exception because of $this->convertFormatType() always returns value.
     if (!$converted_type) {
-      $link = Url::fromRoute('bibcite_entity.mapping', ['bibcite_format' => $format])
+      $url = Url::fromRoute('bibcite_entity.mapping', ['bibcite_format' => $format])
         ->toString();
-      throw new \Exception(t('@data_type type is not mapped to reference type. <a href = ":url" > Check mapping. </a >', [
-        '@data_type' => $data[$type_key],
-        ':url' => $link,
-      ]));
+      throw new UnexpectedValueException("'{$reference_type}' type is not mapped to reference type. <a href='{$url}'>Check mapping configuration</a>.");
     }
     unset($data[$type_key]);
     $data = $this->convertKeys($data, $format);

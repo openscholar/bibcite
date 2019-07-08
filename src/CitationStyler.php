@@ -159,7 +159,7 @@ class CitationStyler implements CitationStylerInterface {
     $this->style = $this->cslStorage->load($style_id);
 
     if (!$this->style) {
-      throw new \Exception('You are trying to use non-existing style.');
+      throw new \UnexpectedValueException("CSL style '{$style_id}' does not exist.");
     }
 
     return $this;

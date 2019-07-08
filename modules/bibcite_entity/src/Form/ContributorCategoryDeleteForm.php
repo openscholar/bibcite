@@ -22,6 +22,7 @@ class ContributorCategoryDeleteForm extends EntityConfirmFormBase {
    * Find if author of this category is in reference entity.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function checkInReference() {
     $storage = $this->entityTypeManager->getStorage('bibcite_reference');

@@ -5,6 +5,7 @@ namespace Drupal\bibcite_ris\Encoder;
 use LibRIS\RISReader;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
 /**
  * RIS format encoder.
@@ -139,7 +140,8 @@ class RISEncoder implements EncoderInterface, DecoderInterface {
 
     if (count($records) === 0) {
       $format_definition = \Drupal::service('plugin.manager.bibcite_format')->getDefinition($format);
-      throw new \Exception(t("Incorrect @format format or empty set.", ['@format' => $format_definition['label']]));
+      $format_label = $format_definition['label'];
+      throw new UnexpectedValueException("Incorrect '{$format_label}' format or empty set.");
     }
 
     return $records;

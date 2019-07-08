@@ -201,7 +201,7 @@ class CslStyle extends ConfigEntityBase implements CslStyleInterface {
         ->execute();
 
       if (!$result) {
-        throw new \Exception('You can not save style without installed parent.');
+        throw new \Exception("CSL style cannot be saved without installed parent style.");
       }
 
       $parent_internal_id = reset($result);

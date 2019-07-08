@@ -5,6 +5,7 @@ namespace Drupal\bibcite_endnote\Encoder;
 use SimpleXMLElement;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
 /**
  * Endnote format encoder.
@@ -29,8 +30,6 @@ class EndnoteEncoder implements EncoderInterface, DecoderInterface {
 
   /**
    * {@inheritdoc}
-   *
-   * @throws \Exception
    */
   public function decode($data, $format, array $context = []) {
     if ($format === 'tagged') {
@@ -42,7 +41,8 @@ class EndnoteEncoder implements EncoderInterface, DecoderInterface {
     }
     catch (\Exception $ex) {
       $format_definition = \Drupal::service('plugin.manager.bibcite_format')->getDefinition($format);
-      throw new \Exception(t('Incorrect @format format.', ['@format' => $format_definition['label']]));
+      $format_label = $format_definition['label'];
+      throw new UnexpectedValueException("Incorrect '{$format_label}' format.");
     }
     $records = $sxml->records;
     $config = \Drupal::config('bibcite_entity.mapping.' . $format);

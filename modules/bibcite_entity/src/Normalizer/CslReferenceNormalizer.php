@@ -4,6 +4,7 @@ namespace Drupal\bibcite_entity\Normalizer;
 
 use Drupal\bibcite_entity\Entity\ReferenceInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Symfony\Component\Serializer\Exception\LogicException;
 
 /**
  * Normalizes/denormalizes reference entity to CSL format.
@@ -31,8 +32,7 @@ class CslReferenceNormalizer extends ReferenceNormalizerBase {
    * {@inheritdoc}
    */
   public function denormalize($data, $class, $format = NULL, array $context = []) {
-    // @todo Should throw \Symfony\Component\Serializer\Exception\LogicException
-    throw new \Exception("Can't denormalize from csl format.");
+    throw new LogicException("Cannot denormalize from 'CSL' format.");
   }
 
   /**

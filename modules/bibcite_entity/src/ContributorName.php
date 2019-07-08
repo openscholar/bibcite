@@ -52,7 +52,7 @@ class ContributorName extends FieldItemList {
    */
   public function get($index) {
     if ($index !== 0) {
-      throw new \InvalidArgumentException('A contributor entity can not have multiple names at the same time.');
+      throw new \InvalidArgumentException("A contributor entity cannot have multiple names at the same time.");
     }
     return $this->traitGet($index);
   }

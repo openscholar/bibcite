@@ -28,6 +28,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3066369] by antongp: Make exception messages not translated
 - [#3015616] by antongp, flocondetoile: Improve theming of Reference, Contributor and Keyword entities
 - [#3062706] by antongp: Rename "Bibliographic data" to "Bibliography" in menu
 - [#3062730] by antongp: Rename "Reference", "Contributor" and "Keyword" to "References", "Contributors" and "Keywords" in tabs
@@ -652,3 +653,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3065735]: https://www.drupal.org/node/3065735
 [#3065743]: https://www.drupal.org/node/3065743
 [#3065955]: https://www.drupal.org/node/3065955
+[#3066369]: https://www.drupal.org/node/3066369

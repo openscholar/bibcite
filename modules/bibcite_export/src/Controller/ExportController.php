@@ -122,8 +122,9 @@ class ExportController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\Response
    *   Response object contains serialized reference data.
    *
-   * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    *   Throw 404 error if Id parameter is not provided or entities not loaded.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function exportMultiple(BibciteFormatInterface $bibcite_format, $entity_type, Request $request) {
     if (!$bibcite_format->isExportFormat()) {

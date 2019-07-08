@@ -59,7 +59,7 @@ class BibciteFormatManager extends DefaultPluginManager implements BibciteFormat
     parent::processDefinition($definition, $plugin_id);
 
     if (empty($definition['id'])) {
-      throw new PluginException(sprintf('Example plugin property (%s) definition "is" is required.', $plugin_id));
+      throw new PluginException("Property 'id' is required for plugin '{$plugin_id}' definition.");
     }
   }
 
