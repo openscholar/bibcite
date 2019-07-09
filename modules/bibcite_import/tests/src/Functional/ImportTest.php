@@ -44,7 +44,7 @@ class ImportTest extends BrowserTestBase {
   public function testImportForm() {
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/import');
+    $this->drupalGet('admin/content/bibcite/reference/import');
     $page = $this->getSession()->getPage();
     $page->attachFileToField('edit-file', __DIR__ . '/data/zero_test.ris');
     $page->selectFieldOption('edit-format', 'RIS');

@@ -13,7 +13,7 @@ bibcite_export.export:
         type: entity:{entity_type}
 
 entity.bibcite_reference.export_multiple_form:
-  path: '/admin/content/bibcite/reference/export'
+  path: '/admin/content/bibcite/reference/export-action'
   defaults:
     _form: '\Drupal\bibcite_export\Form\ExportMultipleForm'
     _title: 'Export'
@@ -21,7 +21,7 @@ entity.bibcite_reference.export_multiple_form:
     _permission: 'access bibcite export'
 
 bibcite_export.export_all:
-  path: '/admin/config/bibcite/export'
+  path: '/admin/content/bibcite/reference/export'
   defaults:
     _form: '\Drupal\bibcite_export\Form\ExportAllForm'
     _title: 'Export all references'
@@ -29,7 +29,7 @@ bibcite_export.export_all:
     _permission: 'administer bibcite'
 
 bibcite_export.download:
-  path: '/admin/config/bibcite/export/download/{file}'
+  path: '/admin/content/bibcite/reference/export/download/{file}'
   defaults:
     _controller: '\Drupal\bibcite_export\Controller\ExportDownload::download'
     _title: 'Download export file'

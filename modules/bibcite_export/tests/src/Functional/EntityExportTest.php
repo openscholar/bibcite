@@ -76,7 +76,7 @@ class EntityExportTest extends BrowserTestBase {
   public function testExportAll($id, $format) {
     $this->drupalLogin($this->user);
 
-    $this->drupalGet('admin/config/bibcite/export');
+    $this->drupalGet('admin/content/bibcite/reference/export');
     $page = $this->getSession()->getPage();
     $page->selectFieldOption('edit-format', $format);
     $page->pressButton('edit-submit');
