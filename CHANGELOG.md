@@ -29,6 +29,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3066603] by antongp: Options in the "Reference Field" selectboxes on a mapping configuration form should be sorted alphabetically
 - [#3066369] by antongp: Make exception messages not translated
 - [#3015616] by antongp, flocondetoile: Improve theming of Reference, Contributor and Keyword entities
 - [#3062706] by antongp: Rename "Bibliographic data" to "Bibliography" in menu
@@ -660,3 +661,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3066405]: https://www.drupal.org/node/3066405
 [#3066411]: https://www.drupal.org/node/3066411
 [#3065990]: https://www.drupal.org/node/3065990
+[#3066603]: https://www.drupal.org/node/3066603

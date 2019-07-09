@@ -151,11 +151,19 @@ class MappingForm extends FormBase {
       'status',
       'revision_default',
     ];
-
-    return array_map(function ($field) {
+    $options = array_map(function ($field) {
       /** @var \Drupal\Core\Field\FieldDefinitionInterface $field */
       return $field->getLabel();
     }, array_diff_key($fields, array_flip($excluded_fields)));
+    // Sort options alphabetically.
+    asort($options);
+
+    // But 'Reference type' and 'Title' fields should go first.
+    $options = [
+      'type' => $options['type'],
+      'title' => $options['title'],
+    ] + $options;
+    return $options;
   }
 
   /**
