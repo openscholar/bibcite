@@ -38,6 +38,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3066411] by antongp: There is no easy way to access Import and Export pages without Admin Toolbar module
 - [#3066405] by antongp: Import and Export pages should have paths prefixed with /admin/content , not /admin/config
 - [#3061462] by antongp: Revision specific fields like Revision ID, Revision log message, etc., appear on reference type edit forms and on mapping pages in options
 - [#3063246] by antongp: Status report shows "Mismatched entity and/or field definitions" error after updating to revisionable references
@@ -656,3 +657,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3065955]: https://www.drupal.org/node/3065955
 [#3066369]: https://www.drupal.org/node/3066369
 [#3066405]: https://www.drupal.org/node/3066405
+[#3066411]: https://www.drupal.org/node/3066411

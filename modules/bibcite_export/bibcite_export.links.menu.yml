@@ -3,3 +3,4 @@ bibcite_export.export_all:
   description: 'Export all references'
   parent: entity.bibcite_reference.collection
   route_name: bibcite_export.export_all
+  weight: 60
