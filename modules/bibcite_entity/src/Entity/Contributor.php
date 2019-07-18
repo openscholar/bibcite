@@ -50,6 +50,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *     "delete-multiple-form" = "/admin/content/bibcite/contributor/delete",
  *     "collection" = "/admin/content/bibcite/contributor",
  *   },
+ *   field_ui_base_route = "bibcite_entity.contributor.settings"
  * )
  */
 class Contributor extends ContentEntityBase implements ContributorInterface {
@@ -209,7 +210,9 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
       ->setComputed(TRUE)
       ->setReadOnly(FALSE)
       ->setCustomStorage(TRUE)
-      ->setClass('\Drupal\bibcite_entity\ContributorName');
+      ->setClass('\Drupal\bibcite_entity\ContributorName')
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['leading_title'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Leading initial'))
@@ -222,7 +225,9 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
         'label' => 'inline',
         'type' => 'string',
         'weight' => 2,
-      ]);
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['prefix'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Prefix'))
@@ -235,7 +240,9 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
         'label' => 'inline',
         'type' => 'string',
         'weight' => 3,
-      ]);
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['first_name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('First name'))
@@ -248,7 +255,9 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
         'label' => 'inline',
         'type' => 'string',
         'weight' => 4,
-      ]);
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['middle_name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Middle name'))
@@ -261,7 +270,9 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
         'label' => 'inline',
         'type' => 'string',
         'weight' => 5,
-      ]);
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['last_name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Last name'))
@@ -275,7 +286,9 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
         'label' => 'inline',
         'type' => 'string',
         'weight' => 6,
-      ]);
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['nick'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Nickname'))
@@ -288,7 +301,9 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
         'label' => 'inline',
         'type' => 'string',
         'weight' => 7,
-      ]);
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['suffix'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Suffix'))
@@ -301,7 +316,9 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
         'label' => 'inline',
         'type' => 'string',
         'weight' => 8,
-      ]);
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))

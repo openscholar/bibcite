@@ -643,3 +643,13 @@ function bibcite_entity_update_8016() {
     ->setRevisionable(TRUE);
   $definition_update_manager->updateFieldStorageDefinition($revision_user);
 }
+
+/**
+ * Make Contributor entity type fieldable.
+ */
+function bibcite_entity_update_8017() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('bibcite_contributor');
+  $entity_type->set('field_ui_base_route', 'bibcite_entity.contributor.settings');
+  $definition_update_manager->updateEntityType($entity_type);
+}

@@ -240,7 +240,7 @@ bibcite_entity.contributor.settings:
   path: '/admin/structure/bibcite/contributor/settings'
   defaults:
     _form: '\Drupal\bibcite_entity\Form\ContributorSettings'
-    _title: 'Settings'
+    _title: 'Contributors'
   requirements:
     _permission: 'administer bibcite'
 
@@ -248,7 +248,7 @@ bibcite_entity.reference.settings:
   path: '/admin/structure/bibcite/reference/settings'
   defaults:
     _form: '\Drupal\bibcite_entity\Form\ReferenceSettings'
-    _title: 'Settings'
+    _title: 'References'
   requirements:
     _permission: 'administer bibcite'
 

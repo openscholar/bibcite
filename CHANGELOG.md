@@ -24,6 +24,7 @@
   Keyword entity type, in views, filter settings need to be reviewed and updated/re-saved manually.
 
 ### Added
+- [#3068783] by antongp: Make Contributor entities fieldable
 - [#3065990] by subhojit777: Contextual links for bibcite reference entities
 - [#2832974] by kruhak, antongp: Make Reference entities revisionable
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
@@ -662,3 +663,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3066411]: https://www.drupal.org/node/3066411
 [#3065990]: https://www.drupal.org/node/3065990
 [#3066603]: https://www.drupal.org/node/3066603
+[#3068783]: https://www.drupal.org/node/3068783

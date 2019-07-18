@@ -62,7 +62,7 @@ entity.bibcite_keyword.collection:
 bibcite_entity.reference:
   route_name: bibcite_entity.reference.settings
   title: 'References'
-  base_route: bibcite_entity.settings
+  base_route: bibcite_entity.reference.settings
 
 bibcite_entity.reference.settings:
   route_name: bibcite_entity.reference.settings
@@ -82,7 +82,7 @@ bibcite_entity.reference.types:
 bibcite_entity.contributor:
   route_name: bibcite_entity.contributor.settings
   title: 'Contributors'
-  base_route: bibcite_entity.settings
+  base_route: bibcite_entity.contributor.settings
 
 bibcite_entity.contributor.settings:
   route_name: bibcite_entity.contributor.settings
