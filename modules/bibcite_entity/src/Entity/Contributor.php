@@ -34,7 +34,6 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *   },
  *   base_table = "bibcite_contributor",
  *   admin_permission = "administer bibcite_contributor",
- *   fieldable = FALSE,
  *   entity_keys = {
  *     "id" = "id",
  *     "uuid" = "uuid",
