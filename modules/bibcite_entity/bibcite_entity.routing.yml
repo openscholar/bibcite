@@ -244,6 +244,14 @@ bibcite_entity.contributor.settings:
   requirements:
     _permission: 'administer bibcite'
 
+bibcite_entity.keyword.settings:
+  path: '/admin/structure/bibcite/keyword/settings'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Keywords'
+  requirements:
+    _permission: 'administer bibcite'
+
 bibcite_entity.reference.settings:
   path: '/admin/structure/bibcite/reference/settings'
   defaults:

@@ -99,6 +99,11 @@ bibcite_entity.contributor.role:
   title: 'Roles'
   parent_id: bibcite_entity.contributor
 
+bibcite_entity.keyword:
+  route_name: bibcite_entity.keyword.settings
+  title: 'Keywords'
+  base_route: bibcite_entity.keyword.settings
+
 bibcite_entity.mapping:
   route_name: bibcite_entity.mapping.csl
   title: 'Mapping'

@@ -653,3 +653,13 @@ function bibcite_entity_update_8017() {
   $entity_type->set('field_ui_base_route', 'bibcite_entity.contributor.settings');
   $definition_update_manager->updateEntityType($entity_type);
 }
+
+/**
+ * Make Keyword entity type fieldable.
+ */
+function bibcite_entity_update_8018() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('bibcite_keyword');
+  $entity_type->set('field_ui_base_route', 'bibcite_entity.keyword.settings');
+  $definition_update_manager->updateEntityType($entity_type);
+}

@@ -38,6 +38,11 @@ bibcite_entity.contributor.settings:
   parent: bibcite_entity.settings
   route_name: bibcite_entity.contributor.settings
   weight: 30
+bibcite_entity.keyword.settings:
+  title: 'Keywords'
+  parent: bibcite_entity.settings
+  route_name: bibcite_entity.keyword.settings
+  weight: 40
 
 bibcite_entity.mapping:
   title: 'Mapping'

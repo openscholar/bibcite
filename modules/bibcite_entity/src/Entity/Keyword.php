@@ -33,7 +33,6 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *   },
  *   base_table = "bibcite_keyword",
  *   admin_permission = "administer bibcite_keyword",
- *   fieldable = FALSE,
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "name",
@@ -50,6 +49,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *     "delete-multiple-form" = "/admin/content/bibcite/keyword/delete",
  *     "collection" = "/admin/content/bibcite/keyword",
  *   },
+ *   field_ui_base_route = "bibcite_entity.keyword.settings"
  * )
  */
 class Keyword extends ContentEntityBase implements KeywordInterface {
@@ -111,11 +111,8 @@ class Keyword extends ContentEntityBase implements KeywordInterface {
         'type' => 'string_textfield',
         'weight' => -4,
       ])
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -4,
-      ]);
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
