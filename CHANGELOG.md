@@ -43,6 +43,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3072164] by antongp: Page title should contain bundle name when editing reference entity
 - [#3072148] by antongp: Reset admin views to default state on update due to recent updates in them
 - [#3066603] by antongp: Options in the "Reference Field" selectboxes on a mapping configuration form should be sorted alphabetically
 - [#3066369] by antongp: Make exception messages not translated
@@ -682,3 +683,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#2951081]: https://www.drupal.org/node/2951081
 [#2947908]: https://www.drupal.org/node/2947908
 [#3072148]: https://www.drupal.org/node/3072148
+[#3072164]: https://www.drupal.org/node/3072164

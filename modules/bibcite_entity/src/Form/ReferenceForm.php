@@ -15,6 +15,20 @@ class ReferenceForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
+  public function form(array $form, FormStateInterface $form_state) {
+    $form = parent::form($form, $form_state);
+    $operation = $this->getOperation();
+    $form['#title'] = $this->t('<em>@operation @type</em> @title', [
+      '@operation' => $operation !== 'default' ? ucfirst($operation) : $this->t('Create'),
+      '@type' => $this->getBundleEntity()->label(),
+      '@title' => $this->getEntity()->label(),
+    ]);
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function save(array $form, FormStateInterface $form_state) {
     $entity = $this->entity;
     $status = parent::save($form, $form_state);
