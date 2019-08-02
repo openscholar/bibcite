@@ -663,3 +663,32 @@ function bibcite_entity_update_8018() {
   $entity_type->set('field_ui_base_route', 'bibcite_entity.keyword.settings');
   $definition_update_manager->updateEntityType($entity_type);
 }
+
+/**
+ * Add new Keyword view which shows list of related reference entities on a
+ * keyword entity page.
+ */
+function bibcite_entity_update_8019() {
+  $config_name = 'views.view.bibcite_keyword';
+
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable($config_name);
+
+  // @todo Is there a better way to validate that config dependencies are met?
+  if (!\Drupal::moduleHandler()->moduleExists('views')) {
+    return t('%module_name module is not installed. No changes have been applied.', ['%module_name' => 'Views']);
+  }
+  elseif (!$config->isNew()) {
+    return t('View with %machine_name machine name already exists. No changes have been applied.', ['%machine_name' => 'bibcite_keyword']);
+  }
+
+  $module_path = \Drupal::moduleHandler()->getModule('bibcite_entity')->getPath();
+  $path = $module_path . '/' . InstallStorage::CONFIG_OPTIONAL_DIRECTORY;
+  $file_storage = new FileStorage($path);
+  $data = ['uuid' => \Drupal::service('uuid')->generate()]
+    + $file_storage->read($config_name);
+  $config->setData($data);
+  $config->save(TRUE);
+
+  return t('%view_name view has been created.', ['%view_name' => 'Keyword']);
+}
