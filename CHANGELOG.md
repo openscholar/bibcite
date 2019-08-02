@@ -4,6 +4,16 @@
 ## [Unreleased]
 
 ### Important
+- [#3072148] by antongp: Reset admin views to default state on update due to recent updates in them
+   **Note: The following views will be reset to default state on update:**
+   - References (Admin)
+   - Contributors (Admin)
+   - Keywords (Admin)
+
+  If you made some changes in these views and want to preserve these changes on update,
+  please export/save configs before performing update and then import it after performing update,
+  or just re-set needed settings after update via UI.
+
 - [#2832974] by kruhak, antongp: Make Reference entities revisionable  
    **Bibliography & Citation - Entity** depends on the [Entity API](https://www.drupal.org/project/entity) module now,
    which has to be installed before performing an update.
@@ -33,6 +43,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3072148] by antongp: Reset admin views to default state on update due to recent updates in them
 - [#3066603] by antongp: Options in the "Reference Field" selectboxes on a mapping configuration form should be sorted alphabetically
 - [#3066369] by antongp: Make exception messages not translated
 - [#3015616] by antongp, flocondetoile: Improve theming of Reference, Contributor and Keyword entities
@@ -670,3 +681,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3070474]: https://www.drupal.org/node/3070474
 [#2951081]: https://www.drupal.org/node/2951081
 [#2947908]: https://www.drupal.org/node/2947908
+[#3072148]: https://www.drupal.org/node/3072148

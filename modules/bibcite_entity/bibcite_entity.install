@@ -720,3 +720,30 @@ function bibcite_entity_update_8020() {
 
   return t('%view_name view has been created.', ['%view_name' => 'Contributor']);
 }
+
+/**
+ * Reset admin views to default state on update due to recent updates in them.
+ */
+function bibcite_entity_update_8021() {
+  $config_names = [
+    'views.view.bibcite_reference_admin',
+    'views.view.bibcite_keyword_admin',
+    'views.view.bibcite_contributor_admin',
+  ];
+
+  $config_factory = \Drupal::configFactory();
+  $module_path = \Drupal::moduleHandler()->getModule('bibcite_entity')->getPath();
+  $path = $module_path . '/' . InstallStorage::CONFIG_OPTIONAL_DIRECTORY;
+  $file_storage = new FileStorage($path);
+
+  foreach ($config_names as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+
+    if (!$config->isNew()) {
+      $data = ['uuid' => $config->get('uuid')]
+        + $file_storage->read($config_name);
+      $config->setData($data);
+      $config->save(TRUE);
+    }
+  }
+}
