@@ -692,3 +692,31 @@ function bibcite_entity_update_8019() {
 
   return t('%view_name view has been created.', ['%view_name' => 'Keyword']);
 }
+
+/**
+ * Add new Contributor view which shows list of related reference entities on a
+ * contributor entity page.
+ */
+function bibcite_entity_update_8020() {
+  $config_name = 'views.view.bibcite_contributor';
+
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable($config_name);
+
+  if (!\Drupal::moduleHandler()->moduleExists('views')) {
+    return t('%module_name module is not installed. No changes have been applied.', ['%module_name' => 'Views']);
+  }
+  elseif (!$config->isNew()) {
+    return t('View with %machine_name machine name already exists. No changes have been applied.', ['%machine_name' => 'bibcite_contributor']);
+  }
+
+  $module_path = \Drupal::moduleHandler()->getModule('bibcite_entity')->getPath();
+  $path = $module_path . '/' . InstallStorage::CONFIG_OPTIONAL_DIRECTORY;
+  $file_storage = new FileStorage($path);
+  $data = ['uuid' => \Drupal::service('uuid')->generate()]
+    + $file_storage->read($config_name);
+  $config->setData($data);
+  $config->save(TRUE);
+
+  return t('%view_name view has been created.', ['%view_name' => 'Contributor']);
+}
