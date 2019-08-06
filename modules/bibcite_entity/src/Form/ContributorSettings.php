@@ -2,6 +2,7 @@
 
 namespace Drupal\bibcite_entity\Form;
 
+use Drupal\bibcite_entity\Entity\Contributor;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -40,9 +41,9 @@ class ContributorSettings extends ConfigFormBase {
     $form['description'] = [
       '#type' => 'item',
       '#markup' => $this->t("Available name parts:\n@tokens", [
-        '@tokens' => implode(", ", [
-          '@last_name', '@first_name', '@suffix', '@prefix',
-        ]),
+        '@tokens' => implode(", ", array_map(function ($part) {
+          return "@{$part}";
+        }, Contributor::getNameParts())),
       ]),
     ];
 

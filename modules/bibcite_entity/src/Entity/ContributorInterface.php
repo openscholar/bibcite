@@ -13,6 +13,14 @@ use Drupal\Core\Entity\EntityChangedInterface;
 interface ContributorInterface extends ContentEntityInterface, EntityChangedInterface {
 
   /**
+   * List machine names of entity fields which contain name parts.
+   *
+   * @return string[]
+   *   List of fields machine names.
+   */
+  public static function getNameParts();
+
+  /**
    * Gets the Contributor name.
    *
    * @return string

@@ -2,6 +2,7 @@
 
 namespace Drupal\bibcite_entity\Plugin\EntityReferenceSelection;
 
+use Drupal\bibcite_entity\Entity\Contributor;
 use Drupal\Core\Entity\Plugin\EntityReferenceSelection\DefaultSelection;
 
 /**
@@ -32,11 +33,10 @@ class ContributorSelection extends DefaultSelection {
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
     $query = parent::buildEntityQuery($match, $match_operator);
 
-    $group = $query->orConditionGroup()
-      ->condition('first_name', $match, $match_operator)
-      ->condition('last_name', $match, $match_operator)
-      ->condition('prefix', $match, $match_operator)
-      ->condition('suffix', $match, $match_operator);
+    $group = $query->orConditionGroup();
+    foreach (Contributor::getNameParts() as $part) {
+      $group->condition($part, $match, $match_operator);
+    }
 
     $query->condition($group);
 

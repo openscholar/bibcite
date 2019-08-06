@@ -57,6 +57,21 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
   use EntityChangedTrait;
 
   /**
+   * List of entity fields machine names which contain name parts.
+   *
+   * @var string[]
+   */
+  const NAME_PARTS = [
+    'prefix',
+    'leading_title',
+    'first_name',
+    'middle_name',
+    'last_name',
+    'nick',
+    'suffix',
+  ];
+
+  /**
    * {@inheritdoc}
    */
   public function label() {
@@ -66,15 +81,15 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
   /**
    * {@inheritdoc}
    */
-  public function getLeadingInitial() {
-    return $this->get('leading_title')->value;
+  public function getName() {
+    return $this->get('name')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getName() {
-    return $this->get('name')->value;
+  public function getLeadingInitial() {
+    return $this->get('leading_title')->value;
   }
 
   /**
@@ -328,6 +343,13 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
       ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getNameParts() {
+    return self::NAME_PARTS;
   }
 
 }

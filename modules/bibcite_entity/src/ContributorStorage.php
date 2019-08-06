@@ -32,7 +32,7 @@ class ContributorStorage extends SqlContentEntityStorage {
     if (isset($values['name'])) {
       $entity->set('name', $values['name']);
 
-      foreach (['first_name', 'leading_title', 'middle_name', 'last_name', 'nick', 'prefix', 'suffix'] as $property) {
+      foreach ($entity::getNameParts() as $property) {
         if (!empty($value = $entity->{$property}->value)) {
           $values[$property] = $value;
         }

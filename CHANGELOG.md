@@ -56,6 +56,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3013698] by antongp: Contributor full name pattern setting misses some of available name parts in description
 - [#3066411] by antongp: There is no easy way to access Import and Export pages without Admin Toolbar module
 - [#3066405] by antongp: Import and Export pages should have paths prefixed with /admin/content , not /admin/config
 - [#3061462] by antongp: Revision specific fields like Revision ID, Revision log message, etc., appear on reference type edit forms and on mapping pages in options
@@ -684,3 +685,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#2947908]: https://www.drupal.org/node/2947908
 [#3072148]: https://www.drupal.org/node/3072148
 [#3072164]: https://www.drupal.org/node/3072164
+[#3013698]: https://www.drupal.org/node/3013698

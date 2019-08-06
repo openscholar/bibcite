@@ -2,7 +2,6 @@
 
 namespace Drupal\bibcite_entity;
 
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\TypedData\ComputedItemListTrait;
 
@@ -22,15 +21,10 @@ class ContributorName extends FieldItemList {
     /** @var \Drupal\bibcite_entity\Entity\ContributorInterface $contributor */
     $contributor = $this->parent->getValue();
 
-    $arguments = [
-      '@leading_title' => $contributor->getLeadingInitial(),
-      '@last_name' => $contributor->getLastName(),
-      '@middle_name' => $contributor->getMiddleName(),
-      '@first_name' => $contributor->getFirstName(),
-      '@nick' => $contributor->getNickName(),
-      '@suffix' => $contributor->getSuffix(),
-      '@prefix' => $contributor->getPrefix(),
-    ];
+    $arguments = [];
+    foreach ($contributor::getNameParts() as $part) {
+      $arguments["@{$part}"] = $contributor->get($part)->value;
+    }
 
     // @todo Dependency injection.
     $format = \Drupal::config('bibcite_entity.contributor.settings')->get('full_name_pattern') ?: '@prefix @first_name @last_name @suffix';
@@ -118,9 +112,16 @@ class ContributorName extends FieldItemList {
       $name_parts = \Drupal::service('bibcite.human_name_parser')->parse(
         $name
       );
-      foreach ($name_parts as $key => $name_part) {
-        $entity->$key = $name_part;
-      }
+
+      // Explicitly map name parts. Entity fields names and keys returned by
+      // the name parser do not have to be the same.
+      $entity->prefix = $name_parts['prefix'];
+      $entity->leading_title = $name_parts['leading_title'];
+      $entity->first_name = $name_parts['first_name'];
+      $entity->middle_name = $name_parts['middle_name'];
+      $entity->last_name = $name_parts['last_name'];
+      $entity->nick = $name_parts['nick'];
+      $entity->suffix = $name_parts['suffix'];
     }
   }
 
