@@ -63,8 +63,9 @@ class ContributorName extends FieldItemList {
     // from old name parts i.e. old value in result.
     // If the parent should be notified about the change,
     // update the contributor entity.
-    if (isset($this->list[0]) && $notify) {
-      $this->updateContributorEntity($this->list[0]->value);
+    if ($notify) {
+      $value = isset($this->list[0]) ? $this->list[0]->value : NULL;
+      $this->updateContributorEntity($value);
     }
   }
 
@@ -106,9 +107,9 @@ class ContributorName extends FieldItemList {
    *   Full name string.
    */
   protected function updateContributorEntity($name) {
-    // @todo Handle setting empty string and NULL.
+    /** @var \Drupal\bibcite_entity\Entity\Contributor $entity */
+    $entity = $this->getEntity();
     if ($name) {
-      $entity = $this->getEntity();
       $name_parts = \Drupal::service('bibcite.human_name_parser')->parse(
         $name
       );
@@ -122,6 +123,12 @@ class ContributorName extends FieldItemList {
       $entity->last_name = $name_parts['last_name'];
       $entity->nick = $name_parts['nick'];
       $entity->suffix = $name_parts['suffix'];
+    }
+    else {
+      $part_value = ($name === '') ? '' : NULL;
+      foreach ($entity::getNameParts() as $name_part) {
+        $entity->set($name_part, $part_value);
+      }
     }
   }
 

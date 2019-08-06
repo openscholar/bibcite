@@ -34,6 +34,7 @@
   Keyword entity type, in views, filter settings need to be reviewed and updated/re-saved manually.
 
 ### Added
+- [#3010075] by antongp: \Drupal\bibcite_entity\ContributorName::updateContributorEntity should handle empty string and NULL values
 - [#2947908] by jcsp0003, adrianavaz: Link author to contributor entities and see their publications
 - [#2951081] by dbourrion, spurrierly: Keywords and link between references
 - [#3070474] by antongp: Make Keyword entities fieldable
@@ -686,3 +687,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3072148]: https://www.drupal.org/node/3072148
 [#3072164]: https://www.drupal.org/node/3072164
 [#3013698]: https://www.drupal.org/node/3013698
+[#3010075]: https://www.drupal.org/node/3010075
