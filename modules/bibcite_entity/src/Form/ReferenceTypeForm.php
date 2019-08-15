@@ -4,12 +4,42 @@ namespace Drupal\bibcite_entity\Form;
 
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Entity\BundleEntityFormBase;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Reference type form.
  */
 class ReferenceTypeForm extends BundleEntityFormBase {
+
+  /**
+   * The entity field manager.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
+
+  /**
+   * Constructs the NodeTypeForm object.
+   *
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   *   The entity field manager.
+   */
+  public function __construct(EntityFieldManagerInterface $entity_field_manager) {
+    $this->entityFieldManager = $entity_field_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager */
+    $entity_field_manager = $container->get('entity_field.manager');
+    return new static(
+      $entity_field_manager
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -130,6 +160,45 @@ class ReferenceTypeForm extends BundleEntityFormBase {
       ];
     }
 
+    /* @see \Drupal\node\NodeTypeForm::form() */
+    $form['additional_settings'] = [
+      '#type' => 'vertical_tabs',
+    ];
+    if ($this->operation == 'add') {
+      $form['#title'] = $this->t('Add reference type');
+      /**
+       * Create a reference with a fake bundle using the type's UUID so that we can
+       * get the default values for workflow settings.
+       * @todo Make it possible to get default values without an entity.
+       *   https://www.drupal.org/node/2318187
+       */
+      $reference = $this->entityTypeManager->getStorage('bibcite_reference')->create(['type' => $this->getEntity()->uuid()]);
+    }
+    else {
+      $form['#title'] = $this->t('Edit %label reference type', ['%label' => $reference_type->label()]);
+      // Create a reference to get the current values for workflow settings fields.
+      $reference = $this->entityTypeManager->getStorage('bibcite_reference')->create(['type' => $this->getEntity()->id()]);
+    }
+
+    $form['workflow'] = [
+      '#type' => 'details',
+      '#title' => t('Publishing options'),
+      '#group' => 'additional_settings',
+    ];
+    $form['status'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Published'),
+      '#default_value' => $reference->status->value,
+      '#group' => 'workflow',
+    ];
+    $form['revision'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Create new revision'),
+      '#default_value' => $reference_type->shouldCreateNewRevision(),
+      '#description' => t('Users with the <em>Administer Bibliography &amp; Citation</em> permission will be able to override these options.'),
+      '#group' => 'workflow',
+    ];
+
     return $this->protectBundleIdElement($form);
   }
 
@@ -139,17 +208,22 @@ class ReferenceTypeForm extends BundleEntityFormBase {
   public function save(array $form, FormStateInterface $form_state) {
     /** @var \Drupal\bibcite_entity\Entity\ReferenceTypeInterface $reference_type */
     $reference_type = $this->entity;
+    $reference_type->setNewRevision($form_state->getValue('revision'));
+    $fields = $this->entityFieldManager->getFieldDefinitions('bibcite_reference', $reference_type->id());
+    $fields['status']->getConfig($reference_type->id())
+      ->setDefaultValue($form_state->getValue('status'))
+      ->save();
     $status = $reference_type->save();
 
     switch ($status) {
       case SAVED_NEW:
-        $this->messenger()->addStatus($this->t('Created the %label Reference type.', [
+        $this->messenger()->addStatus($this->t('The %label Reference type has been added.', [
           '%label' => $reference_type->label(),
         ]));
         break;
 
       default:
-        $this->messenger()->addStatus($this->t('Saved the %label Reference type.', [
+        $this->messenger()->addStatus($this->t('The %label Reference type has been updated.', [
           '%label' => $reference_type->label(),
         ]));
     }

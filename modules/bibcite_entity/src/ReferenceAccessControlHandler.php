@@ -61,8 +61,10 @@ class ReferenceAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkFieldAccess($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL) {
-    $administrative_fields = ['uid', 'created'];
-    if ($operation == 'edit' && in_array($field_definition->getName(), $administrative_fields, TRUE)) {
+    $administrative_fields = ['uid', 'status', 'created'];
+    $editing_administative = $operation == 'edit' && in_array($field_definition->getName(), $administrative_fields, TRUE);
+    $updating_revision = $operation == 'update' && $field_definition->getName() === 'revision_id';
+    if ($editing_administative || $updating_revision) {
       return AccessResult::allowedIfHasPermission($account, 'administer bibcite_reference');
     }
     return parent::checkFieldAccess($operation, $field_definition, $account, $items);

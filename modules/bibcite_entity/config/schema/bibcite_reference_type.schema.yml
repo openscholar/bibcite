@@ -11,6 +11,9 @@ bibcite_entity.bibcite_reference_type.*:
     description:
       type: string
       label: 'Description'
+    new_revision:
+      type: boolean
+      label: 'Whether a new revision should be created by default'
     override:
       type: boolean
       label: 'Override default properties'

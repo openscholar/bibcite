@@ -416,6 +416,18 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
   /**
    * {@inheritdoc}
    */
+  public function preSaveRevision(EntityStorageInterface $storage, \stdClass $record) {
+
+    parent::preSaveRevision($storage, $record);
+    /* @see \Drupal\node\Entity\Node::preSaveRevision() */
+    if (!$this->isNewRevision() && isset($this->original) && (!isset($record->revision_log_message) || $record->revision_log_message === '')) {
+      $record->revision_log_message = $this->original->revision_log_message->value;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function urlRouteParameters($rel) {
     $uri_route_parameters = parent::urlRouteParameters($rel);
 

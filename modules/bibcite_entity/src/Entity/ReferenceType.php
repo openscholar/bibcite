@@ -59,6 +59,27 @@ class ReferenceType extends ConfigEntityBundleBase implements ReferenceTypeInter
   protected $description;
 
   /**
+   * Default value of the 'Create new revision' checkbox of this reference type.
+   *
+   * @var bool
+   */
+  protected $new_revision = FALSE;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setNewRevision($new_revision) {
+    $this->new_revision = $new_revision;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function shouldCreateNewRevision() {
+    return $this->new_revision;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getDescription() {

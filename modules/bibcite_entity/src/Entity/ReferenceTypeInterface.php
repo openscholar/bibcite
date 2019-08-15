@@ -3,11 +3,20 @@
 namespace Drupal\bibcite_entity\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 
 /**
  * Provides an interface for defining Reference type entities.
  */
-interface ReferenceTypeInterface extends ConfigEntityInterface {
+interface ReferenceTypeInterface extends ConfigEntityInterface, RevisionableEntityBundleInterface {
+
+  /**
+   * Sets whether a new revision should be created by default.
+   *
+   * @param bool $new_revision
+   *   TRUE if a new revision should be created by default.
+   */
+  public function setNewRevision($new_revision);
 
   /**
    * Get description.
