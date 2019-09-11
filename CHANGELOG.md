@@ -45,6 +45,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3080569] by antongp, adci_contributor: More types and fields can be mapped to references in RIS format
 - [#3072164] by antongp: Page title should contain bundle name when editing reference entity
 - [#3072148] by antongp: Reset admin views to default state on update due to recent updates in them
 - [#3066603] by antongp: Options in the "Reference Field" selectboxes on a mapping configuration form should be sorted alphabetically
@@ -690,3 +691,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3013698]: https://www.drupal.org/node/3013698
 [#3010075]: https://www.drupal.org/node/3010075
 [#3074455]: https://www.drupal.org/node/3074455
+[#3080569]: https://www.drupal.org/node/3080569

@@ -1,46 +1,46 @@
 format: ris
 types:
-  ABST: miscellaneous
+  ABST: journal_article
   ADVS: audiovisual
-  AGGR: ''
-  ANCIENT: ''
+  AGGR: database
+  ANCIENT: miscellaneous
   ART: artwork
   BILL: bill
-  BLOG: ''
+  BLOG: miscellaneous
   BOOK: book
   CASE: case
   CHAP: book_chapter
-  CHART: ''
-  CLSWK: ''
+  CHART: chart
+  CLSWK: classical
   COMP: software
-  CONF: conference_paper
-  CPAPER: ''
+  CONF: conference_proceedings
+  CPAPER: conference_paper
   CTLG: miscellaneous
-  DATA: database
-  DBASE: ''
-  DICT: ''
-  EBOOK: ''
-  ECHAP: ''
-  EDBOOK: ''
-  EJOUR: ''
-  ELEC: miscellaneous
-  ENCYC: ''
-  EQUA: ''
-  FIGURE: ''
+  DATA: software
+  DBASE: database
+  DICT: book
+  EBOOK: book
+  ECHAP: book_chapter
+  EDBOOK: book
+  EJOUR: journal_article
+  ELEC: web_project_page
+  ENCYC: book
+  EQUA: miscellaneous
+  FIGURE: miscellaneous
   GEN: miscellaneous
-  GOVDOC: ''
-  GRANT: ''
+  GOVDOC: government_report
+  GRANT: miscellaneous
   HEAR: hearing
   ICOMM: web_article
-  INPR: miscellaneous
-  JFULL: miscellaneous
+  INPR: journal_article
+  JFULL: journal
   JOUR: journal_article
-  LEGAL: ''
+  LEGAL: legal_ruling
   MANSCPT: manuscript
   MAP: map
   MGZN: magazine_article
   MPCT: film
-  MULTI: ''
+  MULTI: audiovisual
   MUSIC: miscellaneous
   NEWS: newspaper_article
   PAMP: miscellaneous
@@ -48,13 +48,13 @@ types:
   PCOMM: personal
   RPRT: report
   SER: book
-  SLIDE: miscellaneous
+  SLIDE: presentation
   SOUND: miscellaneous
-  STAND: ''
-  STAT: database
+  STAND: miscellaneous
+  STAT: statute
   THES: thesis
   UNPB: unpublished
-  VIDEO: miscellaneous
+  VIDEO: film
 fields:
   TY: type
   A1: ''
@@ -63,10 +63,10 @@ fields:
   A4: ''
   AB: bibcite_abst_e
   AD: bibcite_auth_address
-  AN: ''
+  AN: bibcite_accession_number
   AU: author
   AV: ''
-  BT: ''
+  BT: bibcite_secondary_title
   C1: bibcite_custom1
   C2: bibcite_custom2
   C3: bibcite_custom3
@@ -76,21 +76,21 @@ fields:
   C7: bibcite_custom7
   C8: ''
   CA: ''
-  CN: ''
+  CN: bibcite_call_number
   CP: ''
   CT: ''
   CY: bibcite_place_published
-  DA: ''
-  DB: ''
-  DO: ''
-  DP: ''
+  DA: bibcite_date
+  DB: bibcite_remote_db_name
+  DO: bibcite_doi
+  DP: bibcite_remote_db_provider
   ED: ''
   EP: ''
-  ET: ''
+  ET: bibcite_edition
   ID: ''
   IS: bibcite_issue
   J1: ''
-  J2: ''
+  J2: bibcite_alternate_title
   JA: ''
   JF: ''
   JO: ''
@@ -100,7 +100,7 @@ fields:
   L3: ''
   L4: ''
   LA: bibcite_lang
-  LB: ''
+  LB: bibcite_label
   LK: ''
   M1: bibcite_number
   M2: ''
@@ -108,13 +108,13 @@ fields:
   N1: bibcite_notes
   N2: bibcite_abst_e
   NV: bibcite_number_of_volumes
-  OP: ''
+  OP: bibcite_original_publication
   PB: bibcite_publisher
-  PP: ''
+  PP: bibcite_place_published
   PY: bibcite_year
   RI: ''
   RN: bibcite_research_notes
-  RP: ''
+  RP: bibcite_reprint_edition
   SE: bibcite_section
   SN: bibcite_isbn
   SP: bibcite_pages
@@ -134,8 +134,7 @@ fields:
   VL: bibcite_volume
   VO: ''
   Y1: ''
-  Y2: ''
-
+  Y2: bibcite_access_date
 dependencies:
   enforced:
     module:
