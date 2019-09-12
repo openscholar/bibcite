@@ -112,7 +112,7 @@ function bibcite_ris_update_8002() {
     $config_key = 'types.' . $key;
     // Update values if mapping wasn't changed from default.
     if ($config->get($config_key) === $value[0]) {
-      $config->set($config_key, $types_mapping[$key][1]);
+      $config->set($config_key, $value[1]);
     }
   }
   foreach ($fields_mapping as $key => $value) {
