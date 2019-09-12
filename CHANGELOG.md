@@ -59,6 +59,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3080686] by ablum: Contributor form does not save, thinks last name field is always null
 - [#3013698] by antongp: Contributor full name pattern setting misses some of available name parts in description
 - [#3066411] by antongp: There is no easy way to access Import and Export pages without Admin Toolbar module
 - [#3066405] by antongp: Import and Export pages should have paths prefixed with /admin/content , not /admin/config
@@ -692,3 +693,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3010075]: https://www.drupal.org/node/3010075
 [#3074455]: https://www.drupal.org/node/3074455
 [#3080569]: https://www.drupal.org/node/3080569
+[#3080686]: https://www.drupal.org/node/3080686

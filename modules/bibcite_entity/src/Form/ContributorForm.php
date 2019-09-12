@@ -19,9 +19,11 @@ class ContributorForm extends ContentEntityForm {
     /* @var $entity \Drupal\bibcite_entity\Entity\Contributor */
     $entity = $this->entity;
 
-    $form['name'] = [
-      '#type' => 'item',
+    $form['name_label'] = [
+      '#type' => 'label',
       '#title' => $this->t('Full Name'),
+    ];
+    $form['name'] = [
       '#markup' => $entity->getName(),
     ];
 
