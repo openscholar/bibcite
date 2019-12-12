@@ -34,6 +34,7 @@
   Keyword entity type, in views, filter settings need to be reviewed and updated/re-saved manually.
 
 ### Added
+- [#3100514] by antongp: Add related/recommended modules to composer.json suggest section
 - [#3074455] by antongp: Make default values for "Published" and "Create new revision" fields on reference forms configurable
 - [#3010075] by antongp: \Drupal\bibcite_entity\ContributorName::updateContributorEntity should handle empty string and NULL values
 - [#2947908] by jcsp0003, adrianavaz: Link author to contributor entities and see their publications
@@ -694,3 +695,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3074455]: https://www.drupal.org/node/3074455
 [#3080569]: https://www.drupal.org/node/3080569
 [#3080686]: https://www.drupal.org/node/3080686
+[#3100514]: https://www.drupal.org/node/3100514

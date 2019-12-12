@@ -19,7 +19,7 @@ function bibcite_ris_requirements($phase) {
       if (!class_exists('\LibRIS\RISReader')) {
         $requirements['bibcite_ris_dependencies'] = [
           'title' => t('RIS dependencies'),
-          'description' => t("Bibliography &amp; Citation - RIS requires the technosophos/LibRIS library. See the module's README.md file for more information."),
+          'description' => t("Bibliography &amp; Citation - RIS requires the technosophos/libris library. See the module's README.md file for more information."),
           'severity' => REQUIREMENT_ERROR,
         ];
       }
