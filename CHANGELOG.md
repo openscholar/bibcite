@@ -60,6 +60,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3102734] by Corn696: View filter by keywords not possible, throws an error on view save
 - [#3080686] by ablum: Contributor form does not save, thinks last name field is always null
 - [#3013698] by antongp: Contributor full name pattern setting misses some of available name parts in description
 - [#3066411] by antongp: There is no easy way to access Import and Export pages without Admin Toolbar module
@@ -696,3 +697,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3080569]: https://www.drupal.org/node/3080569
 [#3080686]: https://www.drupal.org/node/3080686
 [#3100514]: https://www.drupal.org/node/3100514
+[#3102734]: https://www.drupal.org/node/3102734
