@@ -8,17 +8,17 @@ services:
     class: Drupal\bibcite_entity\Normalizer\ContributorNormalizer
     tags:
       - { name: normalizer, priority: 5 }
-    arguments: ['@entity.manager']
+    arguments: ['@entity_type.manager']
   bibcite_entity.normalizer.keyword:
     class: Drupal\bibcite_entity\Normalizer\KeywordNormalizer
     tags:
       - { name: normalizer, priority: 5 }
-    arguments: ['@entity.manager']
+    arguments: ['@entity_type.manager']
   bibcite_entity.normalizer.reference:
     class: Drupal\bibcite_entity\Normalizer\CslReferenceNormalizer
     tags:
       - { name: normalizer, priority: 5 }
-    arguments: ['@entity.manager', '@config.factory']
+    arguments: ['@entity_type.manager', '@config.factory']
     calls:
       - [setFormat, ['csl']]
     properties:
@@ -27,7 +27,7 @@ services:
       keywordKey: 'keywords'
   bibcite.ui_override_provider:
     class: Drupal\bibcite_entity\UIOverrideProvider
-    arguments: ['@entity.manager', '@config.factory']
+    arguments: ['@entity_type.manager', '@config.factory']
   plugin.manager.bibcite_link:
     class: Drupal\bibcite_entity\Plugin\BibciteLinkPluginManager
     parent: default_plugin_manager
@@ -38,10 +38,10 @@ services:
     arguments: ['@config.factory']
   bibcite_entity.contributor_properties_service:
     class: Drupal\bibcite_entity\ContributorPropertiesService
-    arguments: ['@entity.manager']
+    arguments: ['@entity_type.manager']
   reference_entity.form_builder:
     class: Drupal\bibcite_entity\ReferenceEntityFormBuilder
-    arguments: ['@entity.manager', '@reference.form_builder']
+    arguments: ['@entity_type.manager', '@reference.form_builder']
   reference.form_builder:
     class: Drupal\bibcite_entity\ReferenceFormBuilder
     arguments: ['@form_validator', '@form_submitter', '@form_cache', '@module_handler', '@event_dispatcher', '@request_stack', '@class_resolver', '@element_info', '@theme.manager', '@?csrf_token']

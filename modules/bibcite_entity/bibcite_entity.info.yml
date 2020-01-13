@@ -3,6 +3,7 @@ type: module
 description: Storage for your bibliographic data.
 package: Bibliography & Citation
 core: 8.x
+core_version_requirement: ^8 || ^9
 configure: bibcite_entity.reference.settings
 dependencies:
   - bibcite:bibcite

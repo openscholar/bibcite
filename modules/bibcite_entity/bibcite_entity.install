@@ -8,7 +8,6 @@
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Database\Database;
-use Drupal\Core\Entity\Sql\SqlContentEntityStorageSchemaConverter;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Symfony\Component\Yaml\Yaml;
 
@@ -201,7 +200,7 @@ function bibcite_entity_update_8006() {
   else {
     // If table view mode.
     $config_list = $config_factory->listAll('core.entity_view_display.bibcite_reference');
-    $default_config_list = preg_grep('^.*default$', $config_list);
+    $default_config_list = preg_grep('/^.*default$/', $config_list);
     foreach ($default_config_list as $default_config_name) {
       $table_config_name = str_replace('default', 'table', $default_config_list);
       $default_config = $config_factory->getEditable($default_config_name);
@@ -226,7 +225,7 @@ function bibcite_entity_update_8006() {
     }
 
     // Write config for all not exist table view modes.
-    $table_config_list = preg_grep('^.*table$', $config_list);
+    $table_config_list = preg_grep('/^.*table$/', $config_list);
     foreach ($table_config_list as $table_config_name) {
       $table_config = $config_factory->getEditable($table_config_name);
       if ($table_config->isNew()) {
@@ -462,7 +461,7 @@ function bibcite_entity_update_8013() {
   $definition_update_manager->updateEntityType($entity_type);
 
   // Add the status field.
-  $status = Drupal\Core\Field\BaseFieldDefinition::create('boolean')
+  $status = BaseFieldDefinition::create('boolean')
     ->setLabel(t('Publishing status'))
     ->setDescription(t('A boolean indicating the published state.'))
     ->setRevisionable(TRUE)
@@ -472,20 +471,20 @@ function bibcite_entity_update_8013() {
   $definition_update_manager->installFieldStorageDefinition('status', $entity_type_id, $entity_type_id, $status);
 
   // Add the revision metadata fields.
-  $revision_created = Drupal\Core\Field\BaseFieldDefinition::create('created')
+  $revision_created = BaseFieldDefinition::create('created')
     ->setLabel(t('Revision create time'))
     ->setDescription(t('The time that the current revision was created.'))
     ->setRevisionable(TRUE);
   $definition_update_manager->installFieldStorageDefinition('revision_created', $entity_type_id, $entity_type_id, $revision_created);
 
-  $revision_user = Drupal\Core\Field\BaseFieldDefinition::create('entity_reference')
+  $revision_user = BaseFieldDefinition::create('entity_reference')
     ->setLabel(t('Revision user'))
     ->setDescription(t('The user ID of the author of the current revision.'))
     ->setSetting('target_type', 'user')
     ->setRevisionable(TRUE);
   $definition_update_manager->installFieldStorageDefinition('revision_user', $entity_type_id, $entity_type_id, $revision_user);
 
-  $revision_log_message = Drupal\Core\Field\BaseFieldDefinition::create('string_long')
+  $revision_log_message = BaseFieldDefinition::create('string_long')
     ->setLabel(t('Revision log message'))
     ->setDescription(t('Briefly describe the changes you have made.'))
     ->setRevisionable(TRUE)
@@ -505,18 +504,15 @@ function bibcite_entity_update_8013() {
  */
 function bibcite_entity_update_8014(&$sandbox) {
   $database = \Drupal::database();
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
 
-  $schema_converter = new SqlContentEntityStorageSchemaConverter(
-    'bibcite_reference',
-    \Drupal::entityTypeManager(),
-    \Drupal::entityDefinitionUpdateManager(),
-    \Drupal::service('entity.last_installed_schema.repository'),
-    \Drupal::keyValue('entity.storage_schema.sql'),
-    $database
-  );
-
-  $schema_converter->convertToRevisionable($sandbox, [
+  // Mark various fields as revisionable.
+  /** @var \Drupal\Core\Entity\EntityLastInstalledSchemaRepositoryInterface $last_installed_schema_repository */
+  $last_installed_schema_repository = \Drupal::service('entity.last_installed_schema.repository');
+  $field_storage_definitions = $last_installed_schema_repository->getLastInstalledFieldStorageDefinitions('bibcite_reference');
+  $fields_to_update = [
     'uid',
+    'langcode',
     'title',
     'created',
     'changed',
@@ -570,7 +566,48 @@ function bibcite_entity_update_8014(&$sandbox) {
     'bibcite_access_date',
     'bibcite_refereed',
     'bibcite_pmid',
-  ]);
+  ];
+  foreach ($fields_to_update as $field_name) {
+    $field_storage_definitions[$field_name]->setRevisionable(TRUE);
+  }
+
+  $field_storage_definitions['revision_id'] = BaseFieldDefinition::create('integer')
+    ->setName('revision_id')
+    ->setTargetEntityTypeId('bibcite_reference')
+    ->setTargetBundle(NULL)
+    ->setLabel(t('Revision ID'))
+    ->setReadOnly(TRUE)
+    ->setSetting('unsigned', TRUE);
+
+  $field_storage_definitions['revision_default'] = BaseFieldDefinition::create('boolean')
+    ->setName('revision_default')
+    ->setTargetEntityTypeId('bibcite_reference')
+    ->setTargetBundle(NULL)
+    ->setLabel(t('Default revision'))
+    ->setDescription(t('A flag indicating whether this was a default revision when it was saved.'))
+    ->setStorageRequired(TRUE)
+    ->setInternal(TRUE)
+    ->setTranslatable(FALSE)
+    ->setRevisionable(TRUE);
+
+  $entity_type = $definition_update_manager->getEntityType('bibcite_reference');
+  $entity_keys = $entity_type->getKeys();
+  $entity_keys['revision'] = 'revision_id';
+  $entity_type->set('entity_keys', $entity_keys);
+
+  $revision_metadata_keys = [
+    'revision_default' => 'revision_default',
+    'revision_user' => 'revision_user',
+    'revision_created' => 'revision_created',
+    'revision_log_message' => 'revision_log_message',
+  ];
+  $entity_type->set('revision_metadata_keys', $revision_metadata_keys);
+  $entity_type->set('revision_table', 'bibcite_reference_revision');
+  $definition_update_manager->updateFieldableEntityType(
+    $entity_type,
+    $field_storage_definitions,
+    $sandbox
+  );
 }
 
 /**

@@ -7,7 +7,7 @@ services:
     class: Drupal\bibcite_bibtex\Normalizer\BibtexReferenceNormalizer
     tags:
       - { name: normalizer, priority: 5 }
-    arguments: ['@entity.manager', '@config.factory']
+    arguments: ['@entity_type.manager', '@config.factory']
     calls:
       - [setFormat, ['bibtex']]
     properties:

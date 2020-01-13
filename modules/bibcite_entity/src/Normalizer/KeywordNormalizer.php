@@ -21,8 +21,7 @@ class KeywordNormalizer extends EntityNormalizer {
    */
   public function denormalize($data, $class, $format = NULL, array $context = []) {
     $entity = parent::denormalize($data, $class, $format, $context);
-    // @todo Use $this->entityTypeManager only, once Drupal 8.8.0 is released.
-    $entity_manager = isset($this->entityTypeManager) ? $this->entityTypeManager : $this->entityManager;
+    $entity_manager = $this->getEntityTypeManager();
 
     if (!empty($context['keyword_deduplication'])) {
       $storage = $entity_manager->getStorage('bibcite_keyword');

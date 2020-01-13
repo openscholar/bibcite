@@ -6,7 +6,7 @@ use Drupal\bibcite_entity\Entity\Contributor;
 use Drupal\bibcite_entity\Entity\Keyword;
 use Drupal\bibcite_entity\Entity\ReferenceInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Url;
 use Drupal\serialization\Normalizer\EntityNormalizer;
@@ -112,12 +112,12 @@ abstract class ReferenceNormalizerBase extends EntityNormalizer {
   /**
    * Construct new BibliographyNormalizer object.
    *
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    *   The entity manager.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Config factory.
    */
-  public function __construct(EntityManagerInterface $entity_manager, ConfigFactoryInterface $config_factory) {
+  public function __construct(EntityTypeManagerInterface $entity_manager, ConfigFactoryInterface $config_factory) {
     parent::__construct($entity_manager);
 
     $this->configFactory = $config_factory;

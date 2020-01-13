@@ -35,9 +35,11 @@ class KeywordSelection extends DefaultSelection {
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
     $target_type = $this->configuration['target_type'];
     $handler_settings = $this->configuration['handler_settings'];
-    $entity_type = $this->entityManager->getDefinition($target_type);
+    // @todo Use $this->entityTypeManager only, once Drupal 8.9.0 is released.
+    $entity_manager = isset($this->entityTypeManager) ? $this->entityTypeManager : $this->entityManager;
+    $entity_type = $entity_manager->getDefinition($target_type);
 
-    $query = $this->entityManager->getStorage($target_type)->getQuery();
+    $query = $entity_manager->getStorage($target_type)->getQuery();
 
     if (isset($match) && $label_key = $entity_type->getKey('label')) {
       $query->condition($label_key, $match, $match_operator);

@@ -22,8 +22,7 @@ class ContributorNormalizer extends EntityNormalizer {
   public function denormalize($data, $class, $format = NULL, array $context = []) {
     /** @var \Drupal\bibcite_entity\Entity\ContributorInterface $entity */
     $entity = parent::denormalize($data, $class, $format, $context);
-    // @todo Use $this->entityTypeManager only, once Drupal 8.8.0 is released.
-    $entity_manager = isset($this->entityTypeManager) ? $this->entityTypeManager : $this->entityManager;
+    $entity_manager = $this->getEntityTypeManager();
 
     if (!empty($context['contributor_deduplication'])) {
       $storage = $entity_manager->getStorage('bibcite_contributor');

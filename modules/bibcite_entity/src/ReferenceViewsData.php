@@ -86,7 +86,9 @@ class ReferenceViewsData extends EntityViewsData {
       ],
     ];
 
-    $entity_type = $this->entityManager->getDefinition('bibcite_keyword');
+    // @todo Use $this->entityTypeManager only, once Drupal 8.9.0 is released.
+    $entity_manager = isset($this->entityTypeManager) ? $this->entityTypeManager : $this->entityManager;
+    $entity_type = $entity_manager->getDefinition('bibcite_keyword');
     $data['bibcite_reference__keywords']['keywords_target_id']['relationship'] = [
       'base' => $this->getViewsTableForEntityType($entity_type),
       'base field' => $entity_type->getKey('id'),
@@ -162,7 +164,8 @@ class ReferenceViewsData extends EntityViewsData {
       ],
     ];
 
-    $entity_type = $this->entityManager->getDefinition('bibcite_contributor');
+    $entity_manager = isset($this->entityTypeManager) ? $this->entityTypeManager : $this->entityManager;
+    $entity_type = $entity_manager->getDefinition('bibcite_contributor');
     $data['bibcite_reference__author']['author_target_id']['relationship'] = [
       'base' => $this->getViewsTableForEntityType($entity_type),
       'base field' => $entity_type->getKey('id'),
