@@ -12,7 +12,7 @@
   },
   "require": {
     "academicpuma/citeproc-php": "~1.0",
-    "adci/full-name-parser": "^0.2",
+    "adci/full-name-parser": "^0.2.4",
     "technosophos/libris": "~2.0",
     "audiolabs/bibtexparser": "dev-master",
     "caseyamcl/php-marc21": "~1.0",

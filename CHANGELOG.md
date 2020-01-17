@@ -46,6 +46,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3096859] by Roderik de Langen: Remove middle name constraint following added option in ADCI/full-name-parser
 - [#3080569] by antongp, adci_contributor: More types and fields can be mapped to references in RIS format
 - [#3072164] by antongp: Page title should contain bundle name when editing reference entity
 - [#3072148] by antongp: Reset admin views to default state on update due to recent updates in them
@@ -702,3 +703,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3102734]: https://www.drupal.org/node/3102734
 [#3106019]: https://www.drupal.org/node/3106019
 [#3014068]: https://www.drupal.org/node/3014068
+[#3096859]: https://www.drupal.org/node/3096859

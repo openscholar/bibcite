@@ -22,6 +22,7 @@ class HumanNameParser implements HumanNameParserInterface {
   public function __construct() {
     $this->parser = new Parser([
       'mandatory_last_name' => FALSE,
+      'mandatory_middle_name' => FALSE,
     ]);
   }
 
