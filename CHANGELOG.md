@@ -60,6 +60,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3014068] by antongp, tostinni: Notice in AcademicPuma\CiteProc\Date->render() when rendering reference entity as citation
 - [#3102734] by Corn696: View filter by keywords not possible, throws an error on view save
 - [#3106019] by antongp: Drupal 9 compatibility
 - [#3080686] by ablum: Contributor form does not save, thinks last name field is always null
@@ -700,3 +701,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3100514]: https://www.drupal.org/node/3100514
 [#3102734]: https://www.drupal.org/node/3102734
 [#3106019]: https://www.drupal.org/node/3106019
+[#3014068]: https://www.drupal.org/node/3014068

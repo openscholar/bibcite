@@ -19,6 +19,7 @@ class CslReferenceNormalizer extends ReferenceNormalizerBase {
   protected $dateFields = [
     'bibcite_year',
     'bibcite_access_date',
+    'bibcite_date',
   ];
 
   /**
