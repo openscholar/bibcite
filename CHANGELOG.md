@@ -32,6 +32,10 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views  
   For all existing usages of the Keywords filter, as well as filters on custom entity reference fields, referencing
   Keyword entity type, in views, filter settings need to be reviewed and updated/re-saved manually.
+- [#3096859] by Roderik de Langen: Remove middle name constraint following added option in ADCI/full-name-parser  
+  Minimum adci/full-name-parser package requirement was bumped to 0.2.4. Users who do not manage site dependencies
+  via Composer should update adci/full-name-parser package accordingly. Not updating the package won't break the
+  module's functionality, just middle name constraint won't be removed (as requested in the issue).
 
 ### Added
 - [#3100514] by antongp: Add related/recommended modules to composer.json suggest section
