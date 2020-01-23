@@ -10,16 +10,31 @@ entity.bibcite_reference.collection:
   route_name: entity.bibcite_reference.collection
   parent: bibcite.bibliography
   weight: 10
+entity.bibcite_reference.add:
+  title: 'Add Reference'
+  route_name: entity.bibcite_reference.add_page
+  parent: entity.bibcite_reference.collection
+  weight: 10
 entity.bibcite_contributor.collection:
   title: 'Contributors'
   route_name: entity.bibcite_contributor.collection
   parent: bibcite.bibliography
   weight: 20
+entity.bibcite_contributor.add:
+  title: 'Add Contributor'
+  route_name: entity.bibcite_contributor.add_form
+  parent: entity.bibcite_contributor.collection
+  weight: 10
 entity.bibcite_keyword.collection:
   title: 'Keywords'
   route_name: entity.bibcite_keyword.collection
   parent: bibcite.bibliography
   weight: 30
+entity.bibcite_keyword.add:
+  title: 'Add Keyword'
+  route_name: entity.bibcite_keyword.add_form
+  parent: entity.bibcite_keyword.collection
+  weight: 10
 
 bibcite_entity.settings:
   title: 'Bibliography'
