@@ -2,6 +2,7 @@
 
 namespace Drupal\bibcite_entity;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
@@ -86,6 +87,13 @@ class ReferenceViewBuilder extends EntityViewBuilder {
         ];
       }
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    return Cache::mergeTags(parent::getCacheTags(), ['config:bibcite_entity.reference.settings', 'config:bibcite.settings']);
   }
 
 }

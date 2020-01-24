@@ -35,7 +35,15 @@ class RouteSubscriber extends RouteSubscriberBase {
     if ($route = $collection->get('entity.bibcite_reference.canonical')) {
       $config = $this->configFactory->get('bibcite_entity.reference.settings');
       $view_mode = $config->get('display_override.reference_page_view_mode');
+      // Let's leave it for now for compatibility with default controller.
+      // @todo Remove it (and 3 previous lines)?
       $route->setDefault('_entity_view', 'bibcite_reference.' . $view_mode);
+      // View mode is cached on the route level when passed as route param.
+      // Clearing routes' cache is required in this case to apply
+      // "Reference page view mode" setting changes.
+      // So, let's move Reference page view mode logic to custom controller
+      // instead.
+      $route->setDefault('_controller', '\Drupal\bibcite_entity\Controller\ReferenceViewController::view');
     }
     if ($route = $collection->get('entity.bibcite_reference.version_history')) {
       $route->setOption('_admin_route', TRUE);
