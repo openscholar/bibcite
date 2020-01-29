@@ -39,6 +39,24 @@ class CslReferenceNormalizer extends ReferenceNormalizerBase {
   /**
    * {@inheritdoc}
    */
+  public function normalize($reference, $format = NULL, array $context = []) {
+    /** @var \Drupal\bibcite_entity\Entity\ReferenceInterface $reference */
+
+    $attributes = parent::normalize($reference, $format, $context);
+
+    $contributor_key = $this->getContributorKey();
+    if (isset($attributes[$contributor_key])) {
+      $authors = $attributes[$contributor_key];
+      foreach ($authors as $role => $contributors) {
+        $attributes[$role] = $contributors;
+      }
+    }
+    return $attributes;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function extractFields(ReferenceInterface $reference, $format = NULL) {
     $attributes = [];
 
@@ -72,15 +90,45 @@ class CslReferenceNormalizer extends ReferenceNormalizerBase {
     foreach ($field_item_list as $field) {
       /** @var \Drupal\bibcite_entity\Entity\ContributorInterface $contributor */
       if ($contributor = $field->entity) {
-        $authors[] = [
-          'category' => $field->category,
-          'role' => $field->role,
-          'family' => $contributor->getLastName(),
-          'given' => $contributor->getFirstName() . ' ' . $contributor->getMiddleName(),
-          'suffix' => $contributor->getSuffix(),
-          'literal' => $contributor->getName(),
-          // @todo Implement other fields.
-        ];
+        switch ($field->role) {
+          case 'editor':
+          case 'series_editor':
+            $authors['editor'][] = [
+              'category' => $field->category,
+              'role' => $field->role,
+              'family' => $contributor->getLastName(),
+              'given' => $contributor->getFirstName() . ' ' . $contributor->getMiddleName(),
+              'suffix' => $contributor->getSuffix(),
+              'literal' => $contributor->getName(),
+              // @todo Implement other fields.
+            ];
+            break;
+
+          case 'recipient':
+          case 'translator':
+            $authors[$field->role][] = [
+              'category' => $field->category,
+              'role' => $field->role,
+              'family' => $contributor->getLastName(),
+              'given' => $contributor->getFirstName() . ' ' . $contributor->getMiddleName(),
+              'suffix' => $contributor->getSuffix(),
+              'literal' => $contributor->getName(),
+              // @todo Implement other fields.
+            ];
+            break;
+
+          default:
+            $authors['author'][] = [
+              'category' => $field->category,
+              'role' => $field->role,
+              'family' => $contributor->getLastName(),
+              'given' => $contributor->getFirstName() . ' ' . $contributor->getMiddleName(),
+              'suffix' => $contributor->getSuffix(),
+              'literal' => $contributor->getName(),
+              // @todo Implement other fields.
+            ];
+            break;
+        }
       }
     }
 
