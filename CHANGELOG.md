@@ -66,6 +66,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3111534] by antongp: There are differences in last installed entity schema between clean installation and updated installation
 - [#3108476] by antongp: Reference entity output on its page doesn't change when "Reference page view mode" setting is changed
 - [#3014068] by antongp, tostinni: Notice in AcademicPuma\CiteProc\Date->render() when rendering reference entity as citation
 - [#3102734] by Corn696: View filter by keywords not possible, throws an error on view save
@@ -712,3 +713,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3096859]: https://www.drupal.org/node/3096859
 [#3108220]: https://www.drupal.org/node/3108220
 [#3108476]: https://www.drupal.org/node/3108476
+[#3111534]: https://www.drupal.org/node/3111534

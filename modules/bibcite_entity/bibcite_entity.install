@@ -784,3 +784,91 @@ function bibcite_entity_update_8021() {
     }
   }
 }
+
+/**
+ * Fix last installed schema differences between clean module installation and updated from previous releases version.
+ */
+function bibcite_entity_update_8022() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  // Make Contributor fields configurable.
+  $fields_to_update = [
+    'leading_title',
+    'prefix',
+    'first_name',
+    'middle_name',
+    'last_name',
+    'nick',
+    'suffix',
+  ];
+  foreach ($fields_to_update as $field_name) {
+    /** @var BaseFieldDefinition $field_storage_definition */
+    $field_storage_definition = $definition_update_manager->getFieldStorageDefinition($field_name, 'bibcite_contributor');
+    $field_storage_definition->setDisplayConfigurable('view', TRUE);
+    $field_storage_definition->setDisplayConfigurable('form', TRUE);
+    $definition_update_manager->updateFieldStorageDefinition($field_storage_definition);
+  }
+
+  $contributor = $definition_update_manager->getEntityType('bibcite_contributor');
+  $contributor->set('fieldable', TRUE);
+  $definition_update_manager->updateEntityType($contributor);
+
+  // Make Keyword field configurable.
+  $field_storage_definition = $definition_update_manager->getFieldStorageDefinition('name', 'bibcite_keyword');
+  $field_storage_definition->setDisplayConfigurable('view', TRUE);
+  $field_storage_definition->setDisplayConfigurable('form', TRUE);
+  $field_storage_definition->setDisplayOptions('view', ['region' => 'hidden']);
+  $definition_update_manager->updateFieldStorageDefinition($field_storage_definition);
+  $keyword = $definition_update_manager->getEntityType('bibcite_keyword');
+  $keyword->set('fieldable', TRUE);
+  $definition_update_manager->updateEntityType($keyword);
+
+  // Update Provider options for fields.
+  $reference = $definition_update_manager->getEntityType('bibcite_reference');
+  /** @var \Drupal\Core\Entity\EntityLastInstalledSchemaRepositoryInterface $last_installed_schema_repository */
+  $last_installed_schema_repository = \Drupal::service('entity.last_installed_schema.repository');
+  $field_storage_definitions = $last_installed_schema_repository->getLastInstalledFieldStorageDefinitions('bibcite_reference');
+  $fields_to_update = [
+    'revision_id',
+    'revision_created',
+    'revision_user',
+    'revision_log_message',
+    'revision_default',
+    'status',
+  ];
+  foreach ($fields_to_update as $field_name) {
+    $field_storage_definitions[$field_name]->setProvider('bibcite_entity');
+  }
+  $definition_update_manager->updateFieldableEntityType(
+    $reference,
+    $field_storage_definitions,
+    $sandbox
+  );
+
+  // Update status field options.
+  $field_storage_definition = $definition_update_manager->getFieldStorageDefinition('status', 'bibcite_reference');
+  $field_storage_definition->setTranslatable(FALSE);
+  $field_storage_definition->setDisplayOptions('form', ['type' => 'boolean_checkbox', 'settings' => ['display_label' => TRUE], 'weight' => 120]);
+  $field_storage_definition->setDisplayConfigurable('form', TRUE);
+  $field_storage_definition->setInitialValue(NULL);
+  $definition_update_manager->updateFieldStorageDefinition($field_storage_definition);
+
+  // Fix last installed Reference entity schema differences.
+  $reference = $definition_update_manager->getEntityType('bibcite_reference');
+  $reference->set('show_revision_ui', TRUE);
+  $reference->set('label_singular', t('Reference'));
+  $reference->set('label_plural', t('References'));
+  $entity_keys = $reference->getKeys();
+  $entity_keys['status'] = 'status';
+  $reference->set('entity_keys', $entity_keys);
+  $reference->setHandlerClass('storage_schema', 'Drupal\bibcite_entity\ReferenceStorageSchema');
+  $route_providers = $reference->getRouteProviderClasses();
+  $route_providers['revision'] = 'Drupal\entity\Routing\RevisionRouteProvider';
+  $reference->setHandlerClass('route_provider', $route_providers);
+  $reference->setHandlerClass('local_task_provider', ['default' => 'Drupal\entity\Menu\DefaultEntityLocalTaskProvider']);
+  $reference->setLinkTemplate('version-history', '/bibcite/reference/{bibcite_reference}/revisions');
+  $reference->setLinkTemplate('revision', '/bibcite/reference/{bibcite_reference}/revisions/{bibcite_reference_revision}/view');
+  $reference->setLinkTemplate('revision-revert-form', '/bibcite/reference/{bibcite_reference}/revisions/{bibcite_reference_revision}/revert');
+  $reference->setLinkTemplate('revision-delete-form', '/bibcite/reference/{bibcite_reference}/revisions/{bibcite_reference_revision}/delete');
+  $reference->set('permission_granularity', 'bundle');
+  $definition_update_manager->updateEntityType($reference);
+}

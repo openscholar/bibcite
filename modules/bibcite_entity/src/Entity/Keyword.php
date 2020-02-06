@@ -33,6 +33,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *   },
  *   base_table = "bibcite_keyword",
  *   admin_permission = "administer bibcite_keyword",
+ *   fieldable = TRUE,
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "name",

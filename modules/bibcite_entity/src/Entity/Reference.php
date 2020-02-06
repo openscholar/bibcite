@@ -40,7 +40,7 @@ use Drupal\user\UserInterface;
  *       "revision" = "Drupal\entity\Routing\RevisionRouteProvider",
  *     },
  *     "local_task_provider" = {
- *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
+ *       "default" = "Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
  *     },
  *   },
  *   show_revision_ui = TRUE,
@@ -48,6 +48,7 @@ use Drupal\user\UserInterface;
  *   revision_table = "bibcite_reference_revision",
  *   admin_permission = "administer bibcite_reference",
  *   permission_granularity = "bundle",
+ *   fieldable = TRUE,
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "revision_id",
@@ -376,6 +377,7 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
       ->setRevisionable(TRUE);
 
     $fields['status']
+      ->setTranslatable(FALSE)
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox',
         'settings' => [
