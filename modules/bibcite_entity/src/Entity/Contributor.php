@@ -227,7 +227,11 @@ class Contributor extends ContentEntityBase implements ContributorInterface {
       ->setCustomStorage(TRUE)
       ->setClass('\Drupal\bibcite_entity\ContributorName')
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'bibcite_parse_name',
+        'weight' => 0,
+      ]);
 
     $fields['leading_title'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Leading initial'))

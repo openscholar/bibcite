@@ -872,3 +872,23 @@ function bibcite_entity_update_8022() {
   $reference->set('permission_granularity', 'bundle');
   $definition_update_manager->updateEntityType($reference);
 }
+
+/**
+ * Add "Name" field to the Contributor entity default form mode and use "Parse name" widget for it.
+ */
+function bibcite_entity_update_8023() {
+  $config_name = 'core.entity_form_display.bibcite_contributor.bibcite_contributor.default';
+
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable($config_name);
+
+  if (!$config->isNew()) {
+    $content = $config->get('content');
+    $content['name'] = ['type' => 'bibcite_parse_name', 'region' => 'content', 'weight' => -1, 'settings' => [], 'third_party_settings' => []];
+    $config->set('content', $content);
+    $hidden = $config->get('hidden');
+    unset($hidden['name']);
+    $config->set('hidden', $hidden);
+    $config->save();
+  }
+}

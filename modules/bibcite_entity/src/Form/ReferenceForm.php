@@ -12,7 +12,6 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class ReferenceForm extends ContentEntityForm {
 
-
   /**
    * {@inheritdoc}
    */

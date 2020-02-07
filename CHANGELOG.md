@@ -38,6 +38,7 @@
   module's functionality, just middle name constraint won't be removed (as requested in the issue).
 
 ### Added
+- [#3072839] by antongp: Contributor creation/edition form should allow to create or update contributor entity by entering full name
 - [#3108220] by antongp: Show Add Reference/Contributor/Keyword and Populate Reference menu items in Admin Toolbar
 - [#3100514] by antongp: Add related/recommended modules to composer.json suggest section
 - [#3074455] by antongp: Make default values for "Published" and "Create new revision" fields on reference forms configurable
@@ -714,3 +715,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3108220]: https://www.drupal.org/node/3108220
 [#3108476]: https://www.drupal.org/node/3108476
 [#3111534]: https://www.drupal.org/node/3111534
+[#3072839]: https://www.drupal.org/node/3072839
