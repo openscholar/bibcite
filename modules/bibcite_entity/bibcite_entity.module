@@ -6,6 +6,7 @@
  */
 
 use Drupal\bibcite_entity\Entity\ReferenceType;
+use Drupal\bibcite_entity\Form\ReferencePreviewForm;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -117,7 +118,7 @@ function bibcite_entity_theme_suggestions_bibcite_reference(array $variables) {
  *   - elements: An array of elements to display in view mode.
  *   - attributes: HTML attributes for the containing element.
  *   - bibcite_reference: The reference object.
- *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ *   - view_mode: View mode; e.g., 'default', 'citation', etc.
  */
 function template_preprocess_bibcite_reference(&$variables) {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
@@ -437,6 +438,25 @@ function bibcite_entity_form_entity_form_display_edit_form_alter(&$form, FormSta
 function bibcite_entity_modules_installed($modules) {
   if (in_array('bibcite_entity', $modules)) {
     \Drupal::service('entity_type.bundle.info')->clearCachedBundles();
+  }
+}
+
+/**
+ * Implements hook_page_top().
+ */
+function bibcite_entity_page_top(array &$page) {
+  // Add 'Back to content editing' link on preview page.
+  $route_match = \Drupal::routeMatch();
+  if ($route_match->getRouteName() == 'entity.bibcite_reference.preview') {
+    $page['page_top']['bibcite_reference_preview'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => ['reference-preview-container', 'container-inline'],
+      ],
+    ];
+
+    $form = \Drupal::formBuilder()->getForm(ReferencePreviewForm::class, $route_match->getParameter('bibcite_reference_preview'));
+    $page['page_top']['bibcite_reference_preview']['view_mode'] = $form;
   }
 }
 

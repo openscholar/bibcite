@@ -64,4 +64,20 @@ interface ReferenceTypeInterface extends ConfigEntityInterface, RevisionableEnti
    */
   public function isRequiredOverride();
 
+  /**
+   * Gets the preview mode.
+   *
+   * @return int
+   *   DRUPAL_DISABLED, DRUPAL_OPTIONAL or DRUPAL_REQUIRED.
+   */
+  public function getPreviewMode();
+
+  /**
+   * Sets the preview mode.
+   *
+   * @param int $preview_mode
+   *   DRUPAL_DISABLED, DRUPAL_OPTIONAL or DRUPAL_REQUIRED.
+   */
+  public function setPreviewMode($preview_mode);
+
 }

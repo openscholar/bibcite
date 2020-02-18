@@ -199,6 +199,22 @@ class ReferenceTypeForm extends BundleEntityFormBase {
       '#group' => 'workflow',
     ];
 
+    $form['submission'] = [
+      '#type' => 'details',
+      '#title' => t('Submission form settings'),
+      '#group' => 'additional_settings',
+      '#open' => TRUE,
+    ];
+    $form['submission']['preview_mode'] = [
+      '#type' => 'radios',
+      '#title' => t('Preview before submitting'),
+      '#default_value' => $reference_type->getPreviewMode(),
+      '#options' => [
+        DRUPAL_DISABLED => t('Disabled'),
+        DRUPAL_OPTIONAL => t('Optional'),
+        DRUPAL_REQUIRED => t('Required'),
+      ],
+    ];
     return $this->protectBundleIdElement($form);
   }
 

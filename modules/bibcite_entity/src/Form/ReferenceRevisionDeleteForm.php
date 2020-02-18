@@ -47,7 +47,7 @@ class ReferenceRevisionDeleteForm extends ConfirmFormBase {
   protected $dateFormatter;
 
   /**
-   * Constructs a new NodeRevisionDeleteForm.
+   * Constructs a new ReferenceRevisionDeleteForm.
    *
    * @param \Drupal\Core\Entity\EntityStorageInterface $referenceStorage
    *   The reference storage.

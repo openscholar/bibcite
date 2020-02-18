@@ -89,6 +89,17 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
   // @todo Also use \Drupal\user\EntityOwnerTrait ?
 
   /**
+   * Whether the reference is being previewed or not.
+   *
+   * The variable is set to public as it will give a considerable performance
+   * improvement. See https://www.drupal.org/node/2498919.
+   *
+   * @var true|null
+   *   TRUE if the reference is being previewed and NULL if it is not.
+   */
+  public $inPreview = NULL;
+
+  /**
    * {@inheritdoc}
    */
   public function cite($style = NULL) {

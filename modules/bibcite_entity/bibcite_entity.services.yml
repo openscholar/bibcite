@@ -45,3 +45,14 @@ services:
   reference.form_builder:
     class: Drupal\bibcite_entity\ReferenceFormBuilder
     arguments: ['@form_validator', '@form_submitter', '@form_cache', '@module_handler', '@event_dispatcher', '@request_stack', '@class_resolver', '@element_info', '@theme.manager', '@?csrf_token']
+
+  access_check.bibcite_reference.preview:
+    class: Drupal\bibcite_entity\Access\ReferencePreviewAccessCheck
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: access_check, applies_to: _bibcite_reference_preview_access }
+  bibcite_reference_preview:
+    class: Drupal\bibcite_entity\ParamConverter\ReferencePreviewConverter
+    arguments: ['@tempstore.private']
+    tags:
+      - { name: paramconverter }

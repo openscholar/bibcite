@@ -295,3 +295,15 @@ bibcite_entity.settings:
     _title: 'Bibliography'
   requirements:
     _permission: 'administer bibcite'
+
+entity.bibcite_reference.preview:
+  path: '/bibcite/reference/preview/{bibcite_reference_preview}/{view_mode_id}'
+  defaults:
+    _controller: '\Drupal\bibcite_entity\Controller\BibciteEntityPreviewController::view'
+    _title_callback: '\Drupal\bibcite_entity\Controller\BibciteEntityPreviewController::title'
+  requirements:
+    _bibcite_reference_preview_access: '{bibcite_reference_preview}'
+  options:
+    parameters:
+      bibcite_reference_preview:
+        type: 'bibcite_reference_preview'

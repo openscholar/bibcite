@@ -102,6 +102,13 @@ class ReferenceType extends ConfigEntityBundleBase implements ReferenceTypeInter
   protected $override = FALSE;
 
   /**
+   * The preview mode.
+   *
+   * @var int
+   */
+  protected $preview_mode = DRUPAL_OPTIONAL;
+
+  /**
    * The Reference fields configuration.
    *
    * @var array
@@ -128,6 +135,20 @@ class ReferenceType extends ConfigEntityBundleBase implements ReferenceTypeInter
    */
   public function isRequiredOverride() {
     return $this->override;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPreviewMode() {
+    return $this->preview_mode;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setPreviewMode($preview_mode) {
+    $this->preview_mode = $preview_mode;
   }
 
 }
