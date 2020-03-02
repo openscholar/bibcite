@@ -41,6 +41,7 @@ REQUIREMENTS
 This module requires the following modules:
 
  * [Entity API](https://www.drupal.org/project/entity) - required by the **Bibliography & Citation - Entity**.
+ * [Token](https://www.drupal.org/project/token) - required by the **Bibliography & Citation - Entity**.
 
 This module requires the following libraries:
 
@@ -80,8 +81,9 @@ INSTALLATION
    then the module's dependencies will be installed automatically once the module itself is installed
    via Composer.
 
- * In case you manage your site dependencies manually or via Drush, install the
-   [Entity API](https://www.drupal.org/project/entity) module. Then install required libraries via
+ * In case you manage your site dependencies manually or via Drush, install
+   [Entity API](https://www.drupal.org/project/entity) and [Token](https://www.drupal.org/project/token) modules.
+   Then install required libraries via
    [Composer](https://www.drupal.org/docs/8/extending-drupal/installing-modules-composer-dependencies)
    using following command:
 

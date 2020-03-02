@@ -20,6 +20,9 @@ bibcite_entity.bibcite_reference_type.*:
     preview_mode:
       type: integer
       label: 'Preview before submitting'
+    citekey_pattern:
+      type: string
+      label: 'Citation key pattern'
     fields:
       type: sequence
       label: 'Fields'

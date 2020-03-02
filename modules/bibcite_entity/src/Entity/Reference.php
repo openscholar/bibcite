@@ -24,6 +24,7 @@ use Drupal\user\UserInterface;
  *   bundle_label = @Translation("Reference type"),
  *   handlers = {
  *     "storage_schema" = "Drupal\bibcite_entity\ReferenceStorageSchema",
+ *     "storage" = "Drupal\bibcite_entity\ReferenceStorage",
  *     "view_builder" = "Drupal\bibcite_entity\ReferenceViewBuilder",
  *     "list_builder" = "Drupal\bibcite_entity\ReferenceListBuilder",
  *     "views_data" = "Drupal\bibcite_entity\ReferenceViewsData",
@@ -356,6 +357,7 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
     $fields['bibcite_call_number'] = $default_string(t('Call Number'));
     $fields['bibcite_other_number'] = $default_string(t('Other Numbers'));
     $fields['bibcite_citekey'] = $default_string(t('Citation Key'));
+    $fields['bibcite_citekey']->setCustomStorage(TRUE);
     $fields['bibcite_url'] = $default_string(t('URL'));
     $fields['bibcite_doi'] = $default_string(t('DOI'));
     $fields['bibcite_research_notes'] = $default_string(t('Research Notes'));
@@ -449,6 +451,23 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
     }
 
     return $uri_route_parameters;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function generateCitekey() {
+    $pattern = '';
+
+    $type_storage = $this->entityTypeManager()->getStorage('bibcite_reference_type');
+    /** @var \Drupal\bibcite_entity\Entity\ReferenceTypeInterface $bundle */
+    $bundle = $type_storage->load($this->bundle());
+    if ($bundle && !$pattern = $bundle->getCitekeyPattern()) {
+      // Fallback to global pattern if it's not configured on bundle level.
+      $pattern = \Drupal::config('bibcite_entity.reference.settings')->get('citekey.pattern');
+    }
+
+    return \Drupal::token()->replace($pattern, ['bibcite_reference' => $this]);
   }
 
 }

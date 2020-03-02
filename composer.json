@@ -8,7 +8,7 @@
   "minimum-stability": "dev",
   "support": {
     "issues": "https://www.drupal.org/project/issues/bibcite",
-    "source": "http://cgit.drupalcode.org/bibcite"
+    "source": "https://git.drupalcode.org/project/bibcite"
   },
   "require": {
     "academicpuma/citeproc-php": "~1.0",
@@ -16,7 +16,8 @@
     "technosophos/libris": "~2.0",
     "audiolabs/bibtexparser": "dev-master",
     "caseyamcl/php-marc21": "~1.0",
-    "drupal/entity": "^1.0"
+    "drupal/entity": "^1.0",
+    "drupal/token": "^1.0"
   },
   "suggest": {
     "drupal/bibcite_migrate": "Migrate your bibliographic data from the Bibliography (biblio) module",

@@ -14,6 +14,12 @@ bibcite_entity.reference.settings:
         reference_page_view_mode:
           type: string
           label: 'Reference view mode'
+    citekey:
+      type: mapping
+      mapping:
+        pattern:
+          type: string
+          label: 'Citation key pattern'
     links:
       type: sequence
       sequence:

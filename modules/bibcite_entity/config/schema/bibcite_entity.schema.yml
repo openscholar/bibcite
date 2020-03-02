@@ -16,6 +16,9 @@ action.configuration.bibcite_entity_reference_delete:
 action.configuration.bibcite_entity_reference_save:
   type: action_configuration_default
 
+action.configuration.bibcite_entity_reference_regenerate_citekey:
+  type: action_configuration_default
+
 action.configuration.bibcite_entity_keyword_merge:
   type: action_configuration_default
 

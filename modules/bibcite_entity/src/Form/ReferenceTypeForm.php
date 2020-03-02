@@ -6,6 +6,7 @@ use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Entity\BundleEntityFormBase;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -74,6 +75,20 @@ class ReferenceTypeForm extends BundleEntityFormBase {
         'exists' => '\Drupal\bibcite_entity\Entity\ReferenceType::load',
       ],
       '#disabled' => !$reference_type->isNew(),
+    ];
+
+    $form['citekey_pattern'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Citation key pattern'),
+      '#description' => $this->t('Pattern for citation key automatic generation if value is not set. If pattern is not set <a href=":settings">global pattern</a> will be used.', [':settings' => Url::fromRoute('bibcite_entity.reference.settings')->toString()]),
+      '#maxlength' => 255,
+      '#default_value' => $reference_type->getCitekeyPattern(),
+    ];
+
+    $form['token_help'] = [
+      '#theme' => 'token_tree_link',
+      '#token_types' => ['bibcite_reference'],
+      '#global_types' => TRUE,
     ];
 
     $form['override'] = [
@@ -169,6 +184,7 @@ class ReferenceTypeForm extends BundleEntityFormBase {
       /**
        * Create a reference with a fake bundle using the type's UUID so that we can
        * get the default values for workflow settings.
+       *
        * @todo Make it possible to get default values without an entity.
        *   https://www.drupal.org/node/2318187
        */

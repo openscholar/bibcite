@@ -83,7 +83,8 @@ function bibcite_entity_update_8003() {
 }
 
 /**
- * Enable "Override default properties" in reference types and enable UI overrides.
+ * Enable "Override default properties" in reference types and enable UI
+ * overrides.
  */
 function bibcite_entity_update_8004() {
   $config_factory = \Drupal::configFactory();
@@ -503,7 +504,6 @@ function bibcite_entity_update_8013() {
  * Update existing reference entities data to be revisionable.
  */
 function bibcite_entity_update_8014(&$sandbox) {
-  $database = \Drupal::database();
   $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
 
   // Mark various fields as revisionable.
@@ -890,5 +890,225 @@ function bibcite_entity_update_8023() {
     unset($hidden['name']);
     $config->set('hidden', $hidden);
     $config->save();
+  }
+}
+
+/**
+ * Add custom storage for citation key and set custom entity storage for Reference entity type.
+ * Update Reference entity base fields definition to mark citation key as using custom storage.
+ * Migrate citation key data to new storage.
+ * Remove citation key field from default Reference entity storage.
+ * Add action to regenerate citekey.
+ * Enable token module.
+ */
+function bibcite_entity_update_8024() {
+  // Enable Token module.
+  /** @var \Drupal\Core\Extension\ModuleInstallerInterface $module_installer */
+  $module_installer = \Drupal::service('module_installer');
+  $module_installer->install(['token']);
+
+  // Add tables for citation key and update Reference storage.
+  /** @see \Drupal\Core\Entity\Sql\SqlContentEntityStorageSchema::getDedicatedTableSchema */
+  $citekey_table = 'bibcite_reference__bibcite_citekey';
+  $citekey_revision_table = 'bibcite_reference_revision__bibcite_citekey';
+
+  $fields = [
+    'bundle' =>
+      [
+        'type' => 'varchar_ascii',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The field instance bundle to which this row belongs, used when deleting a field instance',
+      ],
+    'deleted' =>
+      [
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'A boolean indicating whether this data item has been deleted',
+      ],
+    'entity_id' =>
+      [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The entity id this data is attached to',
+      ],
+    'revision_id' =>
+      [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The entity revision id this data is attached to',
+      ],
+    'langcode' =>
+      [
+        'type' => 'varchar_ascii',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The language code for this data item.',
+      ],
+    'delta' =>
+      [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The sequence number for this data item, used for multi-value fields',
+      ],
+    'bibcite_citekey_value' =>
+      [
+        'type' => 'varchar',
+        'length' => 255,
+        'binary' => FALSE,
+        'not null' => TRUE,
+      ],
+    /**
+     * Add bibcite_citekey field because of on update field process
+     * EntityTypeManager get storage handler from entity class annotation
+     * and entity updater try to read data from dedicated table but data is in old storage.
+     * @see \Drupal\Core\Field\FieldStorageDefinitionListener::onFieldStorageDefinitionCreate
+     */
+    'bibcite_citekey' =>
+      [
+        'type' => 'varchar',
+        'length' => 255,
+        'binary' => FALSE,
+        'not null' => TRUE,
+      ],
+  ];
+
+  $citekey_schema = [
+    'description' => 'Data storage for bibcite_reference field bibcite_citekey.',
+    'fields' => $fields,
+    'primary key' =>
+      [
+        'entity_id',
+        'deleted',
+        'delta',
+        'langcode',
+      ],
+    'indexes' =>
+      [
+        'bundle' => ['bundle'],
+        'revision_id' => ['revision_id'],
+        'value' => ['bibcite_citekey_value'],
+      ],
+  ];
+  $citekey_revision_schema = [
+    'description' => 'Revision archive storage for bibcite_reference field bibcite_citekey.',
+    'fields' => $fields,
+    'primary key' =>
+      [
+        'entity_id',
+        'revision_id',
+        'deleted',
+        'delta',
+        'langcode',
+      ],
+    'indexes' =>
+      [
+        'bundle' => ['bundle'],
+        'revision_id' => ['revision_id'],
+        'value' => ['bibcite_citekey_value'],
+      ],
+  ];
+  $schema = Database::getConnection()->schema();
+  $schema->createTable($citekey_table, $citekey_schema);
+  $schema->createTable($citekey_revision_table, $citekey_revision_schema);
+
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  // Mark citekey field to store in custom table.
+  $field_storage_definition = $definition_update_manager->getFieldStorageDefinition('bibcite_citekey', 'bibcite_reference');
+  $field_storage_definition->setCustomStorage(TRUE);
+  $definition_update_manager->updateFieldStorageDefinition($field_storage_definition);
+
+  // Drop fields which needed only for update field definition.
+  $schema->dropField($citekey_table, 'bibcite_citekey');
+  $schema->dropField($citekey_revision_table, 'bibcite_citekey');
+
+  // Update entity type storage handler.
+  $entity_type = $definition_update_manager->getEntityType('bibcite_reference');
+  $handlers = $entity_type->get('handlers');
+  $handlers['storage'] = 'Drupal\bibcite_entity\ReferenceStorage';
+  $entity_type->set('handlers', $handlers);
+  $definition_update_manager->updateEntityType($entity_type);
+
+  $database = \Drupal::database();
+  $table_name = $entity_type->getBaseTable();
+
+  // Migrate citation key data.
+  $citekey_query = $database->select($table_name, 'br')
+    ->fields('br', [
+      'id',
+      'revision_id',
+      'langcode',
+      'type',
+      'bibcite_citekey',
+    ]);
+  $citekey_query->addExpression(':deleted', 'deleted', [':deleted' => 0]);
+  $citekey_query->addExpression(':delta', 'delta', [':delta' => 0]);
+  $citekey_query->condition('bibcite_citekey', NULL, 'IS NOT NULL');
+  $insert_query = $database->insert('bibcite_reference__bibcite_citekey')
+    ->fields([
+      'entity_id',
+      'revision_id',
+      'langcode',
+      'bundle',
+      'bibcite_citekey_value',
+      'deleted',
+      'delta',
+    ]);
+  $insert_query->from($citekey_query);
+  $insert_query->execute();
+
+  // Migrate citation key revisions data.
+  $revision_table_name = $entity_type->getRevisionTable();
+  $citekey_revision_query = $database->select($revision_table_name, 'brr')
+    ->fields('brr', [
+      'id',
+      'revision_id',
+      'langcode',
+      'bibcite_citekey',
+    ]);
+  $citekey_revision_query->join($table_name, 'br', 'br.id = brr.id');
+  $citekey_revision_query->fields('br', ['type']);
+  $citekey_revision_query->condition('brr.bibcite_citekey', NULL, 'IS NOT NULL');
+  $citekey_revision_query->addExpression(':deleted', 'deleted', [':deleted' => 0]);
+  $citekey_revision_query->addExpression(':delta', 'delta', [':delta' => 0]);
+  $insert_revision_query = $database->insert('bibcite_reference_revision__bibcite_citekey')
+    ->fields([
+      'entity_id',
+      'revision_id',
+      'langcode',
+      'bibcite_citekey_value',
+      'bundle',
+      'deleted',
+      'delta',
+    ]);
+  $insert_revision_query->from($citekey_revision_query);
+  $insert_revision_query->execute();
+
+  // Remove old field.
+  $schema = Database::getConnection()->schema();
+  $schema->dropField($table_name, 'bibcite_citekey');
+  $schema->dropField($revision_table_name, 'bibcite_citekey');
+
+  // Add action to regenerate citekey.
+  $config_name = 'system.action.bibcite_entity_reference_regenerate_citekey';
+  $config_factory = \Drupal::configFactory();
+  $module_path = \Drupal::moduleHandler()
+    ->getModule('bibcite_entity')
+    ->getPath();
+  $path = $module_path . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
+  $file_storage = new FileStorage($path);
+
+  $config = $config_factory->getEditable($config_name);
+  if ($config->isNew()) {
+    $data = $file_storage->read($config_name);
+    $config->setData($data);
+    $config->save(TRUE);
   }
 }

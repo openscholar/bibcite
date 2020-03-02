@@ -8,3 +8,4 @@ configure: bibcite_entity.reference.settings
 dependencies:
   - bibcite:bibcite
   - entity:entity
+  - token:token

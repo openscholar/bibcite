@@ -44,4 +44,14 @@ interface ReferenceInterface extends ContentEntityInterface, EntityChangedInterf
    */
   public function cite($style = NULL);
 
+  /**
+   * Generate citekey by pattern.
+   *
+   * @return string
+   *   Generated citekey.
+   *
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  public function generateCitekey();
+
 }

@@ -109,6 +109,13 @@ class ReferenceType extends ConfigEntityBundleBase implements ReferenceTypeInter
   protected $preview_mode = DRUPAL_OPTIONAL;
 
   /**
+   * Pattern for citekey generation.
+   *
+   * @var string
+   */
+  protected $citekey_pattern;
+
+  /**
    * The Reference fields configuration.
    *
    * @var array
@@ -149,6 +156,21 @@ class ReferenceType extends ConfigEntityBundleBase implements ReferenceTypeInter
    */
   public function setPreviewMode($preview_mode) {
     $this->preview_mode = $preview_mode;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCitekeyPattern() {
+    return $this->citekey_pattern;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setCitekeyPattern($citekey) {
+    $this->citekey_pattern = $citekey;
+    return $this;
   }
 
 }

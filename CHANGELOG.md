@@ -4,7 +4,21 @@
 ## [Unreleased]
 
 ### Important
-- [#3072148] by antongp: Reset admin views to default state on update due to recent updates in them
+- [#3117027] by antongp: Add an option to generate Citation Key field value in reference entities automatically  
+  Automatic generation of Citation key field values in reference entities is enabled by default on clean module's
+  installations. But it's not enabled on update for existing module's installations. So, if you update the module from
+  some older version and want to enable automatic generation of Citation key field values, navigate to the
+  References settings page (`/admin/structure/bibcite/reference/settings`) and enter needed pattern to the 
+  **Citation key pattern** field. Default pattern setting is `bibcite_[bibcite_reference:id]`.
+
+   **Bibliography & Citation - Entity** depends on the [Token](https://www.drupal.org/project/token) module now,
+   which has to be installed before performing an update.
+
+   Integration of the **Citation key** field with the core's Views module was updated and may require manual
+   actions to update. If you used this field in some views, you need to update these views manually: remove old field
+   which is shown as "Broken/missing handler" and then add Citation key field from the list.
+
+- [#3072148] by antongp: Reset admin views to default state on update due to recent updates in them  
    **Note: The following views will be reset to default state on update:**
    - References (Admin)
    - Contributors (Admin)
@@ -38,6 +52,7 @@
   module's functionality, just middle name constraint won't be removed (as requested in the issue).
 
 ### Added
+- [#3117027] by antongp: Add an option to generate Citation Key field value in reference entities automatically
 - [#3059565] by bsztreha: Preview functionality
 - [#3072839] by antongp: Contributor creation/edition form should allow to create or update contributor entity by entering full name
 - [#3108220] by antongp: Show Add Reference/Contributor/Keyword and Populate Reference menu items in Admin Toolbar
@@ -718,3 +733,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3111534]: https://www.drupal.org/node/3111534
 [#3072839]: https://www.drupal.org/node/3072839
 [#3059565]: https://www.drupal.org/node/3059565
+[#3117027]: https://www.drupal.org/node/3117027

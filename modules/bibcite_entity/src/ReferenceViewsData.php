@@ -45,47 +45,6 @@ class ReferenceViewsData extends EntityViewsData {
       ],
     ];
 
-    /*
-     * @todo Optimize structure of fields handlers.
-     */
-
-    $data['bibcite_reference__keywords'] = [
-      'keywords_target_id' => [
-        'title' => $this->t('Keywords'),
-        'field' => [
-          'id' => 'field',
-        ],
-        'argument' => [
-          'id' => 'numeric',
-        ],
-        'filter' => [
-          'id' => 'numeric',
-        ],
-        'sort' => [
-          'id' => 'standard',
-        ],
-        'entity field' => 'keywords',
-      ],
-      'table' => [
-        'group' => $this->t('Reference'),
-        'provider' => 'bibcite_entity',
-        'entity type' => 'bibcite_reference',
-        'join' => [
-          'bibcite_reference' => [
-            'left_field' => 'id',
-            'field' => 'entity_id',
-            'extra' => [
-              [
-                'field' => 'deleted',
-                'value' => 0,
-                'numeric' => TRUE,
-              ],
-            ],
-          ],
-        ],
-      ],
-    ];
-
     // @todo Use $this->entityTypeManager only, once Drupal 8.9.0 is released.
     $entity_manager = isset($this->entityTypeManager) ? $this->entityTypeManager : $this->entityManager;
     $entity_type = $entity_manager->getDefinition('bibcite_keyword');
@@ -97,73 +56,6 @@ class ReferenceViewsData extends EntityViewsData {
       'id' => 'standard',
     ];
 
-    $data['bibcite_reference__author'] = [
-      'author_target_id' => [
-        'title' => $this->t('Author'),
-        'field' => [
-          'id' => 'field',
-        ],
-        'argument' => [
-          'id' => 'numeric',
-        ],
-        'filter' => [
-          'id' => 'numeric',
-        ],
-        'sort' => [
-          'id' => 'standard',
-        ],
-        'entity field' => 'author',
-      ],
-      'author_category' => [
-        'title' => $this->t('Author (Category)'),
-        'field' => [
-          'id' => 'standard',
-        ],
-        'argument' => [
-          'id' => 'string',
-        ],
-        'filter' => [
-          'id' => 'string',
-        ],
-        'sort' => [
-          'id' => 'standard',
-        ],
-      ],
-      'author_role' => [
-        'title' => $this->t('Author (Role)'),
-        'field' => [
-          'id' => 'standard',
-        ],
-        'argument' => [
-          'id' => 'string',
-        ],
-        'filter' => [
-          'id' => 'string',
-        ],
-        'sort' => [
-          'id' => 'standard',
-        ],
-      ],
-      'table' => [
-        'group' => $this->t('Reference'),
-        'provider' => 'bibcite_entity',
-        'entity type' => 'bibcite_reference',
-        'join' => [
-          'bibcite_reference' => [
-            'left_field' => 'id',
-            'field' => 'entity_id',
-            'extra' => [
-              [
-                'field' => 'deleted',
-                'value' => 0,
-                'numeric' => TRUE,
-              ],
-            ],
-          ],
-        ],
-      ],
-    ];
-
     $entity_manager = isset($this->entityTypeManager) ? $this->entityTypeManager : $this->entityManager;
     $entity_type = $entity_manager->getDefinition('bibcite_contributor');
     $data['bibcite_reference__author']['author_target_id']['relationship'] = [
@@ -173,6 +65,28 @@ class ReferenceViewsData extends EntityViewsData {
       'title' => $entity_type->getLabel(),
       'id' => 'standard',
     ];
+
+    $data['bibcite_reference__bibcite_citekey']['bibcite_citekey'] = [
+      'title' => $this->t('Citation key'),
+      'field' => [
+        'id' => 'field',
+      ],
+      'argument' => [
+        'field' => 'bibcite_citekey_value',
+        'id' => 'string',
+      ],
+      'filter' => [
+        'field' => 'bibcite_citekey_value',
+        'id' => 'string',
+      ],
+      'sort' => [
+        'field' => 'bibcite_citekey_value',
+        'id' => 'standard',
+      ],
+      'entity field' => 'bibcite_citekey',
+    ];
+
+    $data['bibcite_reference_revision__bibcite_citekey']['bibcite_citekey'] = $data['bibcite_reference__bibcite_citekey']['bibcite_citekey'];
 
     return $data;
   }

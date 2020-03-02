@@ -80,4 +80,22 @@ interface ReferenceTypeInterface extends ConfigEntityInterface, RevisionableEnti
    */
   public function setPreviewMode($preview_mode);
 
+  /**
+   * Gets pattern for citekey generation.
+   *
+   * @return string
+   *   Pattern for citekey generation.
+   */
+  public function getCitekeyPattern();
+
+  /**
+   * Sets pattern for citekey generation.
+   *
+   * @param string $citekey
+   *   String of pattern.
+   *
+   * @return $this
+   */
+  public function setCitekeyPattern($citekey);
+
 }
