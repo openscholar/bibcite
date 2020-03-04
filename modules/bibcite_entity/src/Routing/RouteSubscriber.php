@@ -32,6 +32,10 @@ class RouteSubscriber extends RouteSubscriberBase {
    *   The route collection for adding routes.
    */
   protected function alterRoutes(RouteCollection $collection) {
+    if ($route = $collection->get('entity.bibcite_reference.revision')) {
+      $route->setDefault('_controller', '\Drupal\bibcite_entity\Controller\ReferenceViewController::viewRevision');
+      $route->setDefault('_title_callback', '\Drupal\bibcite_entity\Controller\ReferenceViewController::revisionTitle');
+    }
     if ($route = $collection->get('entity.bibcite_reference.canonical')) {
       $config = $this->configFactory->get('bibcite_entity.reference.settings');
       $view_mode = $config->get('display_override.reference_page_view_mode');

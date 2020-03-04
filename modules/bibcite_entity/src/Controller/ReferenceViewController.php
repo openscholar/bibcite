@@ -57,4 +57,25 @@ class ReferenceViewController extends EntityViewController {
     return parent::view($bibcite_reference, $view_mode);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function viewRevision(EntityInterface $_entity_revision, $view_mode = 'full') {
+    $view_mode = $this->config->get('display_override.reference_page_view_mode');
+    return parent::viewRevision($_entity_revision, $view_mode);
+  }
+
+  /**
+   * Page title callback for a reference revision.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $bibcite_reference_revision
+   *   The reference revision.
+   *
+   * @return string
+   *   The page title.
+   */
+  public function revisionTitle(EntityInterface $bibcite_reference_revision = NULL) {
+    return $bibcite_reference_revision->label();
+  }
+
 }

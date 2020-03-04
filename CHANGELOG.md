@@ -68,6 +68,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3117669] by antongp: Reference entity revision should be shown on its page in the same view mode as entity is shown on its canonical page
 - [#3096859] by Roderik de Langen: Remove middle name constraint following added option in ADCI/full-name-parser
 - [#3080569] by antongp, adci_contributor: More types and fields can be mapped to references in RIS format
 - [#3072164] by antongp: Page title should contain bundle name when editing reference entity
@@ -736,3 +737,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3059565]: https://www.drupal.org/node/3059565
 [#3117027]: https://www.drupal.org/node/3117027
 [#3117638]: https://www.drupal.org/node/3117638
+[#3117669]: https://www.drupal.org/node/3117669
