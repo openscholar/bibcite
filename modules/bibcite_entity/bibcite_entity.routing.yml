@@ -46,9 +46,12 @@ entity.bibcite_reference.revision_delete_form:
     _form: '\Drupal\bibcite_entity\Form\ReferenceRevisionDeleteForm'
     _title: 'Delete earlier revision'
   requirements:
-    _access_reference_revision: 'delete'
+    _entity_access_revision: bibcite_reference.delete
   options:
     _admin_route: TRUE
+    parameters:
+      bibcite_reference_revision:
+        type: entity_revision:bibcite_reference
 
 entity.bibcite_reference.collection:
   path: '/admin/content/bibcite/reference'

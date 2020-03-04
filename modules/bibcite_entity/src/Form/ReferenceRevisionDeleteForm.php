@@ -109,7 +109,7 @@ class ReferenceRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $bibcite_reference_revision = NULL) {
-    $this->revision = $this->referenceStorage->loadRevision($bibcite_reference_revision);
+    $this->revision = $bibcite_reference_revision;
     $form = parent::buildForm($form, $form_state);
 
     return $form;

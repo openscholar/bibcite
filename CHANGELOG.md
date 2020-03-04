@@ -83,6 +83,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3117638] by antongp: Cannot delete Reference entity revision via admin UI. Get access denied error
 - [#3111534] by antongp: There are differences in last installed entity schema between clean installation and updated installation
 - [#3108476] by antongp: Reference entity output on its page doesn't change when "Reference page view mode" setting is changed
 - [#3014068] by antongp, tostinni: Notice in AcademicPuma\CiteProc\Date->render() when rendering reference entity as citation
@@ -734,3 +735,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3072839]: https://www.drupal.org/node/3072839
 [#3059565]: https://www.drupal.org/node/3059565
 [#3117027]: https://www.drupal.org/node/3117027
+[#3117638]: https://www.drupal.org/node/3117638
