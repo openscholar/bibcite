@@ -38,8 +38,28 @@ field.formatter.settings.bibcite_contributor_label:
   label: 'Label'
   mapping:
     role:
-      type: bool
+      type: boolean
       label: 'Show role'
     category:
-      type: bool
+      type: boolean
       label: 'Show category'
+    link:
+      type: boolean
+      label: 'Link label to the referenced author'
+
+field.widget.settings.bibcite_contributor_widget:
+  type: mapping
+  label: 'Contributor autocomplete (Tags style) display format settings'
+  mapping:
+    match_operator:
+      type: string
+      label: 'Autocomplete matching'
+    match_limit:
+      type: integer
+      label: 'Maximum number of autocomplete suggestions.'
+    size:
+      type: integer
+      label: 'Size of textfield'
+    placeholder:
+      type: label
+      label: 'Placeholder'

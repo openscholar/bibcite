@@ -112,7 +112,6 @@ class ReferenceTypeForm extends BundleEntityFormBase {
         $this->t('Field name'),
         $this->t('Label'),
         $this->t('Hint'),
-        $this->t('Visible'),
         $this->t('Required'),
       ],
       '#tree' => TRUE,
@@ -163,10 +162,6 @@ class ReferenceTypeForm extends BundleEntityFormBase {
           '#type' => 'textfield',
           '#size' => 30,
           '#default_value' => isset($field_configuration['hint']) ? $field_configuration['hint'] : $field->getDescription(),
-        ],
-        'visible' => [
-          '#type' => 'checkbox',
-          '#default_value' => isset($field_configuration['visible']) ? $field_configuration['visible'] : TRUE,
         ],
         'required' => [
           '#type' => 'checkbox',

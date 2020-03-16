@@ -35,6 +35,9 @@ class UIOverrideProvider {
    *   Entity type manager service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Config factory service.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config_factory) {
     $this->typeStorage = $entity_type_manager->getStorage('bibcite_reference_type');
@@ -54,10 +57,6 @@ class UIOverrideProvider {
     if (($bundle = $this->typeStorage->load($bundle_id)) && $bundle->isRequiredOverride()) {
       foreach ($bundle->getFields() as $field_name => $field_config) {
         if (isset($element[$field_name])) {
-          if (!$field_config['visible']) {
-            $element[$field_name]['#access'] = FALSE;
-          }
-
           if (!empty($field_config['label'])) {
             $this->setFormElementParameter($element[$field_name], '#title', $field_config['label']);
           }
@@ -87,10 +86,6 @@ class UIOverrideProvider {
     if (($bundle = $this->typeStorage->load($bundle_id)) && $bundle->isRequiredOverride()) {
       foreach ($bundle->getFields() as $field_name => $field_config) {
         if (isset($element[$field_name])) {
-          if (!$field_config['visible']) {
-            $element[$field_name]['#access'] = FALSE;
-          }
-
           if (!empty($field_config['label'])) {
             $element[$field_name]['#title'] = $field_config['label'];
           }
@@ -204,6 +199,7 @@ class UIOverrideProvider {
         'title' => $this->t('Abstract'),
         'elements' => [
           'bibcite_abst_e',
+          'bibcite_abst_f',
         ],
       ],
       'publication' => [
@@ -272,7 +268,6 @@ class UIOverrideProvider {
         'elements' => [
           'keywords',
           'bibcite_other_author_affiliations',
-          'bibcite_abst_f',
           'bibcite_custom1',
           'bibcite_custom2',
           'bibcite_custom3',

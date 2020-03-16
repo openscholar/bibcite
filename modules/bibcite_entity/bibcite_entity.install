@@ -8,6 +8,7 @@
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Symfony\Component\Yaml\Yaml;
 
@@ -1110,5 +1111,85 @@ function bibcite_entity_update_8024() {
     $data = $file_storage->read($config_name);
     $config->setData($data);
     $config->save(TRUE);
+  }
+}
+
+/**
+ * Update reference entity type display modes to reflect visibility settings.
+ * Remove module's custom visibility settings.
+ */
+function bibcite_entity_update_8025() {
+  /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display_repository */
+  $entity_display_repository = \Drupal::service('entity_display.repository');
+  $reference_type_storage = \Drupal::entityTypeManager()->getStorage('bibcite_reference_type');
+
+  $module_path = \Drupal::moduleHandler()->getModule('bibcite_entity')->getPath();
+  $path = $module_path . '/' . InstallStorage::CONFIG_OPTIONAL_DIRECTORY;
+  $file_storage = new FileStorage($path);
+
+  $form_modes = array_keys($entity_display_repository->getFormModeOptions('bibcite_reference'));
+  $view_modes = array_keys($entity_display_repository->getViewModeOptions('bibcite_reference'));
+  /** @var \Drupal\bibcite_entity\Entity\ReferenceTypeInterface $reference_type */
+  foreach ($reference_type_storage->loadMultiple() as $reference_type) {
+    if ($reference_type->isRequiredOverride()) {
+      $bundle = $reference_type->id();
+      $fields = $reference_type->getFields();
+
+      // Update fields visibility in view modes according to visibility settings.
+      foreach ($view_modes as $view_mode) {
+        $view_display = $entity_display_repository
+          ->getViewDisplay('bibcite_reference', $bundle, $view_mode);
+        if (!$view_display->isNew()) {
+          foreach ($fields as $field_name => $field) {
+            // Move field to hidden in display mode if Visible checkbox was
+            // unchecked on the settings page.
+            if (!$field['visible']) {
+              $view_display->removeComponent($field_name);
+            }
+          }
+          $view_display->save();
+        }
+      }
+
+      // Update fields visibility in form modes according to visibility settings.
+      foreach ($form_modes as $form_mode) {
+        $form_display = $entity_display_repository
+          ->getFormDisplay('bibcite_reference', $bundle, $form_mode);
+        if (!$form_display->isNew()) {
+          foreach ($fields as $field_name => $field) {
+            // Move field to hidden in display mode if Visible checkbox was
+            // unchecked on the settings page.
+            if (!$field['visible']) {
+              $form_display->removeComponent($field_name);
+            }
+          }
+          $form_display->save();
+        }
+        // Create default form mode config from config file if it doesn't exist.
+        elseif ($form_mode === EntityDisplayRepositoryInterface::DEFAULT_DISPLAY_MODE) {
+          $config_factory = \Drupal::configFactory();
+          $config_name = "core.entity_form_display.bibcite_reference.{$bundle}.default";
+          $config = $config_factory->getEditable($config_name);
+          $data = ['uuid' => \Drupal::service('uuid')->generate()]
+            + $file_storage->read($config_name);
+          $config->setData($data);
+          $config->save(TRUE);
+        }
+      }
+    }
+  }
+
+  // Do cleanup of reference type configurations to remove obsolete "visible" setting.
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('bibcite_entity.bibcite_reference_type.') as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+    $fields = $config->get('fields');
+    if ($fields) {
+      foreach ($fields as $field_name => $field) {
+        unset($fields[$field_name]['visible']);
+      }
+      $config->set('fields', $fields);
+      $config->save(TRUE);
+    }
   }
 }

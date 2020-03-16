@@ -68,6 +68,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3120017] by antongp: Remove "Visible" setting for fields on a reference type config form and use entity view and form display settings instead
 - [#3117669] by antongp: Reference entity revision should be shown on its page in the same view mode as entity is shown on its canonical page
 - [#3096859] by Roderik de Langen: Remove middle name constraint following added option in ADCI/full-name-parser
 - [#3080569] by antongp, adci_contributor: More types and fields can be mapped to references in RIS format
@@ -738,3 +739,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3117027]: https://www.drupal.org/node/3117027
 [#3117638]: https://www.drupal.org/node/3117638
 [#3117669]: https://www.drupal.org/node/3117669
+[#3120017]: https://www.drupal.org/node/3120017

@@ -30,9 +30,6 @@ bibcite_entity.bibcite_reference_type.*:
         type: mapping
         label: 'Field'
         mapping:
-          visible:
-            type: boolean
-            label: 'Visible'
           required:
             type: boolean
             label: 'Required'
