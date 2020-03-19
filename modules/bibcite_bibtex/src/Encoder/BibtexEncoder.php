@@ -54,6 +54,14 @@ class BibtexEncoder implements EncoderInterface, DecoderInterface {
       unset($entry['raw']);
       unset($entry['lines']);
       $parsed[$i] = $entry;
+      // BibtexParser library treat "editor" field as regular string instead
+      // of array as it does with "author" field.
+      // Hotfix "editor" field so it behaves the same as "author" field.
+      // @todo Remove this hotfix once used library is fixed or different library is used.
+      if (isset($parsed[$i]['editor'])) {
+        $parsed[$i]['editor'] = explode(' and ', $parsed[$i]['editor']);
+      }
+
     }
 
     $keys = array_keys($parsed);
@@ -141,6 +149,10 @@ class BibtexEncoder implements EncoderInterface, DecoderInterface {
   protected function buildEntry(array $data) {
     if (empty($data['reference'])) {
       $data['reference'] = $data['type'];
+    }
+    // Hotfix "editor" field so it behaves the same as "author" field.
+    if (isset($data['editor'])) {
+      $data['editor'] = implode(' and ', $data['editor']);
     }
 
     $entry = $this->buildStart($data['type'], $data['reference']);

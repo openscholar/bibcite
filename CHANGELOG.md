@@ -85,6 +85,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3116100] by u_tiwari: Bibtex Encoder disregards `editor` key for use as Author with editor role when importing Bibtex content
 - [#3117638] by antongp: Cannot delete Reference entity revision via admin UI. Get access denied error
 - [#3111534] by antongp: There are differences in last installed entity schema between clean installation and updated installation
 - [#3108476] by antongp: Reference entity output on its page doesn't change when "Reference page view mode" setting is changed
@@ -740,3 +741,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3117638]: https://www.drupal.org/node/3117638
 [#3117669]: https://www.drupal.org/node/3117669
 [#3120017]: https://www.drupal.org/node/3120017
+[#3116100]: https://www.drupal.org/node/3116100
