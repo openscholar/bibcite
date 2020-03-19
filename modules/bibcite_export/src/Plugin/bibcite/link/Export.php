@@ -52,6 +52,10 @@ class Export extends BibciteLinkPluginBase implements ContainerFactoryPluginInte
    * {@inheritdoc}
    */
   public function buildUrl(ReferenceInterface $reference) {
+    if ($reference->isNew()) {
+      return NULL;
+    }
+
     $format_id = $this->pluginDefinition['export_format'];
     $definition = $this->formatManager->getDefinition($format_id);
 

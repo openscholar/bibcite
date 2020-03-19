@@ -31,7 +31,7 @@ abstract class BibciteLinkPluginBase extends PluginBase implements BibciteLinkPl
    */
   public function build(ReferenceInterface $reference) {
     if ($url = $this->buildUrl($reference)) {
-      return Link::fromTextAndUrl($this->getLabel(), $this->buildUrl($reference))->toRenderable();
+      return Link::fromTextAndUrl($this->getLabel(), $url)->toRenderable();
     }
 
     return NULL;
