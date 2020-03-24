@@ -85,6 +85,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3121957] by antongp: Cannot add new reference type
 - [#3120806] by antongp: Preview of a reference entity throws an error when entity is new and Bibliography & Citation - Export module and some of formats are installed
 - [#3116100] by u_tiwari: Bibtex Encoder disregards `editor` key for use as Author with editor role when importing Bibtex content
 - [#3117638] by antongp: Cannot delete Reference entity revision via admin UI. Get access denied error
@@ -744,3 +745,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3120017]: https://www.drupal.org/node/3120017
 [#3116100]: https://www.drupal.org/node/3116100
 [#3120806]: https://www.drupal.org/node/3120806
+[#3121957]: https://www.drupal.org/node/3121957

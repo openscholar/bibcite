@@ -237,10 +237,10 @@ class ReferenceTypeForm extends BundleEntityFormBase {
     $reference_type = $this->entity;
     $reference_type->setNewRevision($form_state->getValue('revision'));
     $fields = $this->entityFieldManager->getFieldDefinitions('bibcite_reference', $reference_type->id());
+    $status = $reference_type->save();
     $fields['status']->getConfig($reference_type->id())
       ->setDefaultValue($form_state->getValue('status'))
       ->save();
-    $status = $reference_type->save();
 
     switch ($status) {
       case SAVED_NEW:
