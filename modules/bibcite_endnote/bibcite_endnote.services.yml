@@ -15,7 +15,7 @@ services:
     class: Drupal\bibcite_endnote\Normalizer\EndnoteReferenceNormalizer
     tags:
       - { name: normalizer, priority: 5 }
-    arguments: ['@entity_type.manager', '@config.factory']
+    arguments: ['@entity_type.manager', '@config.factory', '@entity_type.repository', '@entity_field.manager']
     calls:
       - [setFormat, [['endnote7','endnote8','tagged']]]
     properties:
