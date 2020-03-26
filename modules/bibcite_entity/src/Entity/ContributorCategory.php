@@ -31,6 +31,11 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "edit-form" = "/admin/structure/bibcite/contributor/settings/category/{bibcite_contributor_category}",
  *     "delete-form" = "/admin/structure/bibcite/contributor/settings/category/{bibcite_contributor_category}/delete",
  *     "collection" = "/admin/structure/bibcite/contributor/settings/category"
+ *   },
+ *   config_export = {
+ *     "id",
+ *     "label",
+ *     "weight",
  *   }
  * )
  */

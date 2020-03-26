@@ -1193,3 +1193,38 @@ function bibcite_entity_update_8025() {
     }
   }
 }
+
+/**
+ * Add config_export property to config entities.
+ */
+function bibcite_entity_update_8026() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  // Update Reference Type entity.
+  $bibcite_reference_type = $definition_update_manager->getEntityType('bibcite_reference_type');
+  $bibcite_reference_type->set('config_export', [
+    'id',
+    'label',
+    'description',
+    'new_revision',
+  ]);
+  $definition_update_manager->updateEntityType($bibcite_reference_type);
+
+  // Update Contributor Role entity.
+  $bibcite_contributor_role = $definition_update_manager->getEntityType('bibcite_contributor_role');
+  $bibcite_contributor_role->set('config_export', [
+    'id',
+    'label',
+    'weight',
+  ]);
+  $definition_update_manager->updateEntityType($bibcite_contributor_role);
+
+  // Update Contributor Category entity.
+  $bibcite_contributor_category = $definition_update_manager->getEntityType('bibcite_contributor_category');
+  $bibcite_contributor_category->set('config_export', [
+    'id',
+    'label',
+    'weight',
+  ]);
+  $definition_update_manager->updateEntityType($bibcite_contributor_category);
+}

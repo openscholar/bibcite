@@ -35,3 +35,27 @@ function bibcite_update_8001() {
   $config->clear('links');
   $config->save(TRUE);
 }
+
+/**
+ * Add config_export property to CSL style config entity.
+ */
+function bibcite_update_8002() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  // Update CSL style entity.
+  $bibcite_csl_style = $definition_update_manager->getEntityType('bibcite_csl_style');
+  $bibcite_csl_style->set('config_export', [
+    'id',
+    'parent',
+    'label',
+    'csl',
+    'updated',
+    'custom',
+    'url_id',
+    'override',
+    'preview_mode',
+    'citekey_pattern',
+    'fields',
+  ]);
+  $definition_update_manager->updateEntityType($bibcite_csl_style);
+}

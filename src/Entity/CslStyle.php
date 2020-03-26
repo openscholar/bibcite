@@ -34,6 +34,15 @@ use Drupal\Core\Entity\EntityStorageInterface;
  *     "edit-form" = "/admin/config/bibcite/settings/csl_style/{bibcite_csl_style}",
  *     "delete-form" = "/admin/config/bibcite/settings/csl_style/{bibcite_csl_style}/delete",
  *     "collection" = "/admin/config/bibcite/settings/csl_style"
+ *   },
+ *   config_export = {
+ *     "id",
+ *     "parent",
+ *     "label",
+ *     "csl",
+ *     "updated",
+ *     "custom",
+ *     "url_id",
  *   }
  * )
  */

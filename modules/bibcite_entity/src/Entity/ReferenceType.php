@@ -32,6 +32,16 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     "edit-form" = "/admin/structure/bibcite/reference/settings/types/{bibcite_reference_type}",
  *     "delete-form" = "/admin/structure/bibcite/reference/settings/types/{bibcite_reference_type}/delete",
  *     "collection" = "/admin/structure/bibcite/reference/settings/types"
+ *   },
+ *   config_export = {
+ *     "id",
+ *     "label",
+ *     "description",
+ *     "new_revision",
+ *     "override",
+ *     "preview_mode",
+ *     "citekey_pattern",
+ *     "fields",
  *   }
  * )
  */
