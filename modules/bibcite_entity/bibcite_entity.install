@@ -439,9 +439,14 @@ function bibcite_entity_update_8012() {
 }
 
 /**
- * Make Reference entity type revisionable.
+ * Make Reference entity type revisionable. Enable Entity module.
  */
 function bibcite_entity_update_8013() {
+  // Enable Entity module.
+  /** @var \Drupal\Core\Extension\ModuleInstallerInterface $module_installer */
+  $module_installer = \Drupal::service('module_installer');
+  $module_installer->install(['entity']);
+
   $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
 
   // Add the published entity key and revisionable metadata fields to the

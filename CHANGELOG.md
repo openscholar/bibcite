@@ -68,6 +68,7 @@
 - [#3064397] by antongp: Use autocomplete widget for Keywords filter in Views
 
 ### Changed
+- [#3122792] by antongp: bibcite_entity_update_8013() should attempt to install the Entity module
 - [#3120017] by antongp: Remove "Visible" setting for fields on a reference type config form and use entity view and form display settings instead
 - [#3117669] by antongp: Reference entity revision should be shown on its page in the same view mode as entity is shown on its canonical page
 - [#3096859] by Roderik de Langen: Remove middle name constraint following added option in ADCI/full-name-parser
@@ -752,3 +753,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3122162]: https://www.drupal.org/node/3122162
 [#3122519]: https://www.drupal.org/node/3122519
 [#3122751]: https://www.drupal.org/node/3122751
+[#3122792]: https://www.drupal.org/node/3122792
