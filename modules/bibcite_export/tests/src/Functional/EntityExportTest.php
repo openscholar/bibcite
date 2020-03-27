@@ -12,9 +12,17 @@ use Symfony\Component\Yaml\Yaml;
  */
 class EntityExportTest extends BrowserTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = [
     'bibcite_export_test',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stable';
 
   /**
    * Test user.

@@ -12,9 +12,17 @@ use Symfony\Component\Yaml\Yaml;
  */
 class BibciteTest extends BrowserTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = [
     'bibcite',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stable';
 
   /**
    * Test user.

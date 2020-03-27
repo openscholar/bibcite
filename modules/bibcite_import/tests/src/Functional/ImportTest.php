@@ -12,9 +12,17 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ImportTest extends BrowserTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = [
     'bibcite_import_test',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stable';
 
   /**
    * Test user.

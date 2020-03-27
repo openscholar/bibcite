@@ -85,6 +85,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3122751] by antongp: Make tests compatible with Drupal 9
 - [#3122519] by antongp: Get an error when trying to install Bibliography & Citation - Entity module on Drupal 9
 - [#3122162] by antongp: Get an error when trying to install Bibliography & Citation module on Drupal 9
 - [#3121957] by antongp: Cannot add new reference type
@@ -750,3 +751,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3121957]: https://www.drupal.org/node/3121957
 [#3122162]: https://www.drupal.org/node/3122162
 [#3122519]: https://www.drupal.org/node/3122519
+[#3122751]: https://www.drupal.org/node/3122751
