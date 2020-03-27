@@ -150,6 +150,8 @@ class MappingForm extends FormBase {
       'revision_log_message',
       'status',
       'revision_default',
+      'path',
+      'metatag',
     ];
     $options = array_map(function ($field) {
       /** @var \Drupal\Core\Field\FieldDefinitionInterface $field */

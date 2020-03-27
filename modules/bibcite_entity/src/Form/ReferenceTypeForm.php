@@ -131,6 +131,8 @@ class ReferenceTypeForm extends BundleEntityFormBase {
       'revision_log_message',
       'status',
       'revision_default',
+      'path',
+      'metatag',
     ];
 
     $fields_configuration = $reference_type->getFields();
