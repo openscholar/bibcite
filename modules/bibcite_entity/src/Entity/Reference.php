@@ -242,6 +242,8 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
       ->setDisplayConfigurable('view', TRUE)
       ->setSettings([
         'handler' => 'default:bibcite_keyword',
+        'target_bundles' => ['bibcite_keyword'],
+        'auto_create' => TRUE,
         'handler_settings' => [
           'target_bundles' => ['bibcite_keyword'],
           'auto_create' => TRUE,

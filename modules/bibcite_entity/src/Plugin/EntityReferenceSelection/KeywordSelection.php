@@ -20,47 +20,11 @@ use Drupal\Core\Entity\Plugin\EntityReferenceSelection\DefaultSelection;
 class KeywordSelection extends DefaultSelection {
 
   /**
-   * Builds an EntityQuery to get referenceable entities without bundles.
-   *
-   * @param string|null $match
-   *   (Optional) Text to match the label against. Defaults to NULL.
-   * @param string $match_operator
-   *   (Optional) The operation the matching should be done with. Defaults
-   *   to "CONTAINS".
-   *
-   * @return \Drupal\Core\Entity\Query\QueryInterface
-   *   The EntityQuery object with the basic conditions and sorting applied to
-   *   it.
+   * {@inheritdoc}
    */
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
-    $target_type = $this->configuration['target_type'];
-    $handler_settings = $this->configuration['handler_settings'];
-    // @todo Use $this->entityTypeManager only, once Drupal 8.9.0 is released.
-    $entity_manager = isset($this->entityTypeManager) ? $this->entityTypeManager : $this->entityManager;
-    $entity_type = $entity_manager->getDefinition($target_type);
-
-    $query = $entity_manager->getStorage($target_type)->getQuery();
-
-    if (isset($match) && $label_key = $entity_type->getKey('label')) {
-      $query->condition($label_key, $match, $match_operator);
-    }
-
-    // Add entity-access tag.
-    $query->addTag($target_type . '_access');
-
-    // Add the Selection handler for system_query_entity_reference_alter().
-    $query->addTag('entity_reference');
-    $query->addMetaData('entity_reference_selection_handler', $this);
-
-    // Add the sort option.
-    if (!empty($handler_settings['sort'])) {
-      $sort_settings = $handler_settings['sort'];
-      if ($sort_settings['field'] != '_none') {
-        $query->sort($sort_settings['field'], $sort_settings['direction']);
-      }
-    }
-
-    return $query;
+    $this->configuration['target_bundles'] = NULL;
+    return parent::buildEntityQuery($match, $match_operator);
   }
 
 }

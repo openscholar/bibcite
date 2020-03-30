@@ -1233,3 +1233,28 @@ function bibcite_entity_update_8026() {
   ]);
   $definition_update_manager->updateEntityType($bibcite_contributor_category);
 }
+
+/**
+ * Update Keyword field settings.
+ */
+function bibcite_entity_update_8027(&$sandbox) {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $last_installed_schema_repository = \Drupal::service('entity.last_installed_schema.repository');
+
+  $bibcite_reference = $definition_update_manager->getEntityType('bibcite_reference');
+  $field_storage_definitions = $last_installed_schema_repository->getLastInstalledFieldStorageDefinitions('bibcite_reference');
+  /** @var BaseFieldDefinition $keywords */
+  $keywords = $field_storage_definitions['keywords'];
+  $keywords_settings = $keywords->getSettings();
+  $keywords_settings += [
+    'target_bundles' => ['bibcite_keyword'],
+    'auto_create' => TRUE,
+  ];
+  $keywords->setSettings($keywords_settings);
+  $field_storage_definitions['keywords'] = $keywords;
+  $definition_update_manager->updateFieldableEntityType(
+    $bibcite_reference,
+    $field_storage_definitions,
+    $sandbox
+  );
+}
