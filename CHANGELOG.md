@@ -87,6 +87,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3124920] by lomasr, u_tiwari: hook_ENTITY_TYPE_access is getting called in /bibcite/reference/add/{type}
 - [#3122552] by antongp: PHP Notice is thrown when using autocomplete widget with keywords on Drupal 9
 - [#3122751] by antongp: Make tests compatible with Drupal 9
 - [#3122519] by antongp: Get an error when trying to install Bibliography & Citation - Entity module on Drupal 9
@@ -758,3 +759,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3122792]: https://www.drupal.org/node/3122792
 [#3122802]: https://www.drupal.org/node/3122802
 [#3122552]: https://www.drupal.org/node/3122552
+[#3124920]: https://www.drupal.org/node/3124920
