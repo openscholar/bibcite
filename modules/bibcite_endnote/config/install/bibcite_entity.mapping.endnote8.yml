@@ -68,6 +68,8 @@ fields:
   electronic-resource-num: bibcite_doi
   pages: bibcite_pages
   volume: bibcite_volume
+  issue: bibcite_issue
+  edition: bibcite_edition
   number: bibcite_number
   section: bibcite_section
   abstract: bibcite_abst_e

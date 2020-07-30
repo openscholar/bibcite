@@ -47,6 +47,18 @@ function bibcite_endnote_update_8001() {
 }
 
 /**
+ * Add new issue and edition fields to the EndNote X3 XML format mapping.
+ */
+function bibcite_endnote_update_8002() {
+  $config = \Drupal::configFactory()->getEditable('bibcite_entity.mapping.endnote8');
+  $fields = $config->get('fields');
+  $fields['issue'] = 'bibcite_issue';
+  $fields['edition'] = 'bibcite_edition';
+  $config->set('fields', $fields);
+  $config->save(TRUE);
+}
+
+/**
  * Implements hook_uninstall().
  */
 function bibcite_endnote_uninstall() {
