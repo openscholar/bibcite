@@ -152,7 +152,7 @@ function bibcite_export_batch_finished($success, array $results, $operations) {
 
         $data = $tempstorage->get('export_files');
         $data = !empty($data) ? $data : [];
-        $data[] = array_unshift($data, $file_data);
+        array_unshift($data, $file_data);
         $tempstorage->set('export_files', $data);
       }
 
