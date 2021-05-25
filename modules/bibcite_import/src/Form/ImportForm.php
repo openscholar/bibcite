@@ -72,6 +72,7 @@ class ImportForm extends FormBase {
       '#options' => array_map(function ($definition) {
         return $definition['label'];
       }, $this->formatManager->getImportDefinitions()),
+      '#required' => TRUE,
     ];
 
     $form['actions'] = ['#type' => 'actions'];

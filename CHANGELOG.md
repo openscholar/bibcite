@@ -52,6 +52,7 @@
   module's functionality, just middle name constraint won't be removed (as requested in the issue).
 
 ### Added
+- [#3006969] by mtift, plepe: Provide permissions for using import functionality
 - [#3117027] by antongp: Add an option to generate Citation Key field value in reference entities automatically
 - [#3059565] by bsztreha: Preview functionality
 - [#3072839] by antongp: Contributor creation/edition form should allow to create or update contributor entity by entering full name
@@ -87,6 +88,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3198552] by xopoc: Warning: array_flip(): Can only flip STRING and INTEGER values!
 - [#3151063] by u_tiwari: Edition, Issue fields and mappings missing for EndNote8
 - [#3124920] by lomasr, u_tiwari: hook_ENTITY_TYPE_access is getting called in /bibcite/reference/add/{type}
 - [#3122552] by antongp: PHP Notice is thrown when using autocomplete widget with keywords on Drupal 9
@@ -762,3 +764,5 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3122552]: https://www.drupal.org/node/3122552
 [#3124920]: https://www.drupal.org/node/3124920
 [#3151063]: https://www.drupal.org/node/3151063
+[#3006969]: https://www.drupal.org/node/3006969
+[#3198552]: https://www.drupal.org/node/3198552

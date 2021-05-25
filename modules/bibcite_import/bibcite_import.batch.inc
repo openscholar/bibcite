@@ -19,9 +19,11 @@ use Drupal\bibcite\Plugin\BibciteFormatInterface;
  *   The batch context array, passed by reference.
  */
 function bibcite_import_batch_callback(array $entries, BibciteFormatInterface $format, array &$context) {
-  if (!isset($context['results'])) {
+  if (empty($context['results'])) {
+    $context['success'] = FALSE;
     $context['results']['success'] = [];
     $context['results']['errors'] = [];
+    $context['results']['inaccessible_entities'] = 0;
   }
 
   /** @var \Symfony\Component\Serializer\Serializer $serializer */
@@ -34,18 +36,30 @@ function bibcite_import_batch_callback(array $entries, BibciteFormatInterface $f
   ];
 
   foreach ($entries as $entry) {
+    $entity = '';
     /** @var \Drupal\Core\Entity\EntityInterface $entity */
     try {
       $entity = $serializer->denormalize($entry, Reference::class, $format->getPluginId(), $denormalize_context);
     }
     catch (UnexpectedValueException $e) {
-      // Skip import for this row.
+      $message = [
+        t('Entry has not been parsed.'),
+        $e->getMessage(),
+      ];
+      \Drupal::logger('bibcite_import')
+        ->error(implode("\n", $message));
+      $context['results']['errors'][] = implode("\n", $message);
     }
 
     if (!empty($entity)) {
+      if (!$entity->access('create')) {
+        $context['results']['inaccessible_entities']++;
+        continue;
+      }
       try {
         if ($entity->save()) {
           $context['results']['success'][] = $entity->id() . ' : ' . $entity->label();
+          $context['success'] = TRUE;
         }
       }
       catch (Exception $e) {
@@ -56,7 +70,8 @@ function bibcite_import_batch_callback(array $entries, BibciteFormatInterface $f
           $e->getMessage(),
           '</pre>',
         ];
-        \Drupal::logger('bibcite_import')->error(implode("\n", $message));
+        \Drupal::logger('bibcite_import')
+          ->error(implode("\n", $message));
         $context['results']['errors'][] = $entity->label();
       }
 
@@ -75,20 +90,51 @@ function bibcite_import_batch_callback(array $entries, BibciteFormatInterface $f
  * @param array|bool $operations
  *   If $success is FALSE, contains the operations that remained unprocessed.
  */
-function bibcite_import_batch_finished($success, $results, $operations) {
+function bibcite_import_batch_finished(bool $success, array $results, $operations) {
   $messenger = \Drupal::messenger();
   if ($success) {
-    $message = \Drupal::translation()->formatPlural(count($results['success']), 'One entity processed.', '@count entities processed.');
-
-    if (!empty($results['errors'])) {
-      $error_message = \Drupal::translation()->formatPlural(count($results['errors']), 'One entry has not been processed.', '@count entries has not been processed.');
-      $messenger->addError($error_message);
+    if (!empty($results['success'])) {
+      $message = \Drupal::translation()
+        ->formatPlural(
+          count($results['success']),
+          'One entity has been processed.',
+          '@count entities have been processed.'
+        );
+      $messenger->addStatus($message);
+    }
+    else {
+      $message = \Drupal::translation()
+        ->translate('Entities have not been found. Please check file and format.');
+      $messenger->addWarning($message);
     }
   }
   else {
-    $message = t('Finished with an error.');
+    $message = t('Import has been finished with an error.');
+    $messenger->addError($message);
   }
 
-  // @todo Shouldn't it be of error type?
-  $messenger->addStatus($message);
+  if (!empty($results['errors'])) {
+    $error_count_message = \Drupal::translation()
+      ->formatPlural(
+        count($results['errors']),
+        'One entry has not been processed:',
+        '@count entries have not been processed:'
+      );
+    $last_ten_errors = array_slice($results['errors'], -10);
+    $error_message = [
+      $error_count_message,
+      implode("\n", $last_ten_errors),
+    ];
+    $messenger->addError(implode("\n", $error_message));
+  }
+  if (!empty($results['inaccessible_entities'])) {
+    $inaccessible_entities = $results['inaccessible_entities'];
+    $messenger->addWarning(\Drupal::translation()
+      ->formatPlural(
+        $inaccessible_entities,
+        "@count reference has not been created because you do not have the necessary permissions.",
+        "@count references have not been created because you do not have the necessary permissions."
+      )
+    );
+  }
 }

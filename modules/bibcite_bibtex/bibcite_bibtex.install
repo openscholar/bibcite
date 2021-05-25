@@ -37,3 +37,10 @@ function bibcite_bibtex_update_8001() {
   $config->set('fields', $fields);
   $config->save(TRUE);
 }
+
+/**
+ * Implements hook_uninstall().
+ */
+function bibcite_bibtex_uninstall() {
+  Drupal::configFactory()->getEditable('bibcite_entity.mapping.bibtex')->delete();
+}

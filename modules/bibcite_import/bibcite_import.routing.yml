@@ -12,7 +12,7 @@ bibcite_import.import:
     _form: '\Drupal\bibcite_import\Form\ImportForm'
     _title: 'Import'
   requirements:
-    _permission: 'administer bibcite'
+    _permission: 'bibcite import+administer bibcite'
 
 bibcite_import.populate:
   path: '/admin/content/bibcite/reference/populate'
@@ -20,4 +20,4 @@ bibcite_import.populate:
     _form: '\Drupal\bibcite_import\Form\PopulateForm'
     _title: 'Populate reference values'
   requirements:
-    _permission: 'administer bibcite'
+    _permission: 'bibcite populate+administer bibcite'
