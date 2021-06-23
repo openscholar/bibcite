@@ -24,7 +24,8 @@ class DownloadFileAccess implements AccessInterface {
    *   Access checking result.
    */
   public function access(AccountInterface $account, FileInterface $file) {
-    return AccessResult::allowedIf($account->hasPermission('administer bibcite')
+    return AccessResult::allowedIf(($account->hasPermission('administer bibcite')
+      || $account->hasPermission('access bibcite export'))
       && ($file->getOwnerId() == $account->id()));
   }
 

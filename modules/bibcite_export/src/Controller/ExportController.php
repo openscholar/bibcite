@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -99,6 +100,9 @@ class ExportController extends ControllerBase {
    *   Response object contains serialized reference data.
    */
   public function export(BibciteFormatInterface $bibcite_format, $entity_type, EntityInterface $entity) {
+    if (!$entity->access('view')) {
+      throw new AccessDeniedHttpException();
+    }
     if (!$bibcite_format->isExportFormat()) {
       throw new NotFoundHttpException();
     }

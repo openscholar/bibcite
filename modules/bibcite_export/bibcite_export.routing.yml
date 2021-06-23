@@ -5,6 +5,7 @@ bibcite_export.export:
     _title: 'BibCite Export'
   requirements:
     _permission: 'access bibcite export'
+    _entity_access: 'entity.view'
   options:
     parameters:
       bibcite_format:
@@ -26,7 +27,7 @@ bibcite_export.export_all:
     _form: '\Drupal\bibcite_export\Form\ExportAllForm'
     _title: 'Export all references'
   requirements:
-    _permission: 'administer bibcite'
+    _permission: 'administer bibcite+access bibcite export'
 
 bibcite_export.download:
   path: '/admin/content/bibcite/reference/export/download/{file}'

@@ -52,6 +52,7 @@
   module's functionality, just middle name constraint won't be removed (as requested in the issue).
 
 ### Added
+- [#3220269] by hxdef: Provide permissions for using export functionality
 - [#3006969] by mtift, plepe: Provide permissions for using import functionality
 - [#3117027] by antongp: Add an option to generate Citation Key field value in reference entities automatically
 - [#3059565] by bsztreha: Preview functionality
@@ -766,3 +767,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3151063]: https://www.drupal.org/node/3151063
 [#3006969]: https://www.drupal.org/node/3006969
 [#3198552]: https://www.drupal.org/node/3198552
+[#3220269]: https://www.drupal.org/node/3220269

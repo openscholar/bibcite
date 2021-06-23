@@ -8,6 +8,7 @@
 use Drupal\bibcite_entity\Entity\ReferenceType;
 use Drupal\bibcite_entity\Form\ReferencePreviewForm;
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -88,6 +89,57 @@ function bibcite_entity_theme($existing, $type, $theme, $path) {
       'render element' => 'elements',
     ],
   ];
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function bibcite_entity_query_bibcite_reference_access_alter(AlterableInterface $query) {
+  // Read meta-data from query, if provided.
+  if (!$account = $query->getMetaData('account')) {
+    $account = \Drupal::currentUser();
+  }
+  if (!$op = $query->getMetaData('op')) {
+    $op = 'view';
+  }
+  // Not alter query if admin or if operation isn't 'view'.
+  if ($account->hasPermission('administer bibcite') || $op !== 'view') {
+    return;
+  }
+
+  $base_table = $query->getMetaData('base_table');
+  if ($base_table) {
+    if ($account->hasPermission('view own unpublished bibcite_reference')) {
+      $allow_unpublished = TRUE;
+      // Construct condition to get unpublished References created by current user (unpublished own condition in next comments).
+      $unpublished_condition = $query->andConditionGroup()
+        ->condition('base_table.status', 0)
+        ->condition('base_table.uid', $account->id());
+    }
+    if ($account->hasPermission('view bibcite_reference')) {
+      $allow_published = TRUE;
+    }
+
+    if ($allow_unpublished && $allow_published) {
+      // Add conditions to query to get published and unpublished own References.
+      $query->condition($query->orConditionGroup()
+        ->condition('base_table.status', 1)
+        ->condition($unpublished_condition));
+    }
+    elseif ($allow_published) {
+      // Add condition to get only published References.
+      $query->condition('base_table.status', 1);
+    }
+    elseif ($allow_unpublished) {
+      // Add condition to get unpublished own References.
+      $query->condition($unpublished_condition);
+    }
+    else {
+      // Return nothing by limit 0 if user has no permissions.
+      $query->range(0, 0);
+    }
+  }
+
 }
 
 /**
