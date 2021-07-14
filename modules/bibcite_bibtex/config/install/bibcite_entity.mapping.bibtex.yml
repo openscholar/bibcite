@@ -6,7 +6,7 @@ types:
   conference: conference_paper
   inbook: book_chapter
   incollection:
-  inproceedings:
+  inproceedings: conference_paper
   manual:
   mastersthesis:
   misc: miscellaneous
