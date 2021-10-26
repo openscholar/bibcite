@@ -90,6 +90,7 @@
 - [#3065955] by antongp: Improve Contributors (Admin) views
 
 ### Fixed
+- [#3221900] by AardWolf, ash2303: Improve Code Standard
 - [#3198552] by xopoc: Warning: array_flip(): Can only flip STRING and INTEGER values!
 - [#3151063] by u_tiwari: Edition, Issue fields and mappings missing for EndNote8
 - [#3124920] by lomasr, u_tiwari: hook_ENTITY_TYPE_access is getting called in /bibcite/reference/add/{type}
@@ -770,3 +771,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3198552]: https://www.drupal.org/node/3198552
 [#3220269]: https://www.drupal.org/node/3220269
 [#3215139]: https://www.drupal.org/node/3215139
+[#3221900]: https://www.drupal.org/node/3221900
