@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [Unreleased]
+## [2.0.0-beta1] - 2021-10-26
 
 ### Important
 - [#3117027] by antongp: Add an option to generate Citation Key field value in reference entities automatically  
@@ -563,6 +563,7 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [8.x-1.0-alpha8]: https://www.drupal.org/project/bibcite/releases/8.x-1.0-alpha8
 [8.x-1.0-alpha9]: https://www.drupal.org/project/bibcite/releases/8.x-1.0-alpha9
 [8.x-1.0-alpha10]: https://www.drupal.org/project/bibcite/releases/8.x-1.0-alpha10
+[2.0.0-beta1]: https://www.drupal.org/project/bibcite/releases/2.0.0-beta1
 
 
 [//]: # "Issues links alpha1"
