@@ -14,7 +14,7 @@
     "academicpuma/citeproc-php": "~1.0",
     "adci/full-name-parser": "^0.2.4",
     "technosophos/libris": "~2.0",
-    "audiolabs/bibtexparser": "dev-master",
+    "audiolabs/bibtexparser": "^1.0",
     "caseyamcl/php-marc21": "~1.0",
     "drupal/entity": "^1.0",
     "drupal/token": "^1.0"

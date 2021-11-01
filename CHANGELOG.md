@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [Unreleased]
+
+### Fixed
+- [#3212586] by Eric_A: Require audiolabs/bibtexparser:^1.0 instead of audiolabs/bibtexparser:dev-master
+
 ## [2.0.0-beta1] - 2021-10-26
 
 ### Important
@@ -713,7 +718,7 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3055944]: https://www.drupal.org/node/3055944
 
 
-[//]: # "Issues links dev"
+[//]: # "Issues links beta1"
 [#2832974]: https://www.drupal.org/node/2832974
 [#3061462]: https://www.drupal.org/node/3061462
 [#3015616]: https://www.drupal.org/node/3015616
@@ -773,3 +778,7 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3220269]: https://www.drupal.org/node/3220269
 [#3215139]: https://www.drupal.org/node/3215139
 [#3221900]: https://www.drupal.org/node/3221900
+
+
+[//]: # "Issues links dev"
+[#3212586]: https://www.drupal.org/node/3212586
