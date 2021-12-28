@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### Changed
+- [#3256203]: Use EntityOwnerTrait method instead the custom one for setting default value
 - [#3079282] by lakeloafer: PubMed abst_e field - contains basic html
 
 ### Fixed
@@ -786,3 +787,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [//]: # "Issues links dev"
 [#3212586]: https://www.drupal.org/node/3212586
 [#3079282]: https://www.drupal.org/node/3079282
+[#3256203]: https://www.drupal.org/node/3256203

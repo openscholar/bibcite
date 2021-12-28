@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EditorialContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\user\EntityOwnerTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -87,7 +88,7 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
 
   use EntityChangedTrait;
   use EntityPublishedTrait;
-  // @todo Also use \Drupal\user\EntityOwnerTrait ?
+  use EntityOwnerTrait;
 
   /**
    * Whether the reference is being previewed or not.
@@ -192,7 +193,7 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
       ->setDescription(t('The username of the content author.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
-      ->setDefaultValueCallback('Drupal\bibcite_entity\Entity\Reference::getCurrentUserId')
+      ->setDefaultValueCallback('Drupal\bibcite_entity\Entity\Reference::getDefaultEntityOwner')
       ->setDisplayOptions('form', [
         'type' => 'entity_reference_autocomplete',
         'weight' => 100,
