@@ -9,6 +9,7 @@
 - [#3079282] by lakeloafer: PubMed abst_e field - contains basic html
 
 ### Fixed
+- [#3256210]: Custom fields are displayed under the action buttons on the Reference form
 - [#3212586] by Eric_A: Require audiolabs/bibtexparser:^1.0 instead of audiolabs/bibtexparser:dev-master
 
 ## [2.0.0-beta1] - 2021-10-26
@@ -790,3 +791,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3079282]: https://www.drupal.org/node/3079282
 [#3256203]: https://www.drupal.org/node/3256203
 [#3256207]: https://www.drupal.org/node/3256207
+[#3256210]: https://www.drupal.org/node/3256210

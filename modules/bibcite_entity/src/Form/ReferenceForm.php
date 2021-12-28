@@ -2,8 +2,13 @@
 
 namespace Drupal\bibcite_entity\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
+use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form controller for Reference edit forms.
@@ -11,6 +16,55 @@ use Drupal\Core\Form\FormStateInterface;
  * @ingroup bibcite_entity
  */
 class ReferenceForm extends ContentEntityForm {
+
+  /**
+   * The Current User object.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
+   * {@inheritDoc}
+   */
+  public function __construct(
+    EntityRepositoryInterface $entity_repository,
+    AccountInterface $current_user,
+    EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL,
+    TimeInterface $time = NULL
+  ) {
+    parent::__construct($entity_repository, $entity_type_bundle_info, $time);
+    $this->currentUser = $current_user;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    /** @var EntityRepositoryInterface $entity_repository */
+    $entity_repository = $container->get('entity.repository');
+    /** @var AccountInterface $current_user */
+    $current_user = $container->get('current_user');
+    /** @var EntityTypeBundleInfoInterface $entity_type_bundle_info */
+    $entity_type_bundle_info = $container->get('entity_type.bundle.info');
+    /** @var TimeInterface $time */
+    $time = $container->get('datetime.time');
+    return new static(
+      $entity_repository,
+      $current_user,
+      $entity_type_bundle_info,
+      $time
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildForm($form, $form_state);
+    $form['actions']['#weight'] = 500;
+    return $form;
+  }
 
   /**
    * {@inheritdoc}
@@ -50,6 +104,37 @@ class ReferenceForm extends ContentEntityForm {
       '@type' => $this->getBundleEntity()->label(),
       '@title' => $this->getEntity()->label(),
     ]);
+
+    $form['footer']['#weight'] = 550;
+
+    $form['advanced']['#weight'] = 480;
+    $form['status_container'] = [
+      'type' => 'container',
+      '#weight' => 490,
+      'status' => $form['status'],
+    ];
+    unset($form['status']);
+
+    // Reference author information for administrators.
+    $form['authoring'] = [
+      '#type' => 'details',
+      '#title' => t('Authoring information'),
+      '#group' => 'advanced',
+      '#attributes' => [
+        'class' => ['reference-form-author'],
+      ],
+      '#weight' => 480,
+      '#optional' => TRUE,
+    ];
+
+    if (isset($form['uid'])) {
+      $form['uid']['#group'] = 'authoring';
+    }
+
+    if (isset($form['created'])) {
+      $form['created']['#group'] = 'authoring';
+    }
+
     return $form;
   }
 
