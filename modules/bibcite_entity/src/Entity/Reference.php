@@ -316,11 +316,32 @@ class Reference extends EditorialContentEntityBase implements ReferenceInterface
         ->setDisplayConfigurable('view', TRUE);
     };
 
+    $default_text_long = function ($label, $rows = 1, $hint = '') use (&$weight) {
+      $weight++;
+      return BaseFieldDefinition::create('text_long')
+        ->setLabel($label)
+        ->setDescription($hint)
+        ->setRevisionable(TRUE)
+        ->setDisplayOptions('view', [
+          'type' => 'text_default',
+          'weight' => $weight,
+        ])
+        ->setDisplayOptions('form', [
+          'type' => 'text_textarea',
+          'settings' => [
+            'rows' => $rows,
+          ],
+          'weight' => $weight,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
+    };
+
     /*
      * Text fields.
      */
-    $fields['bibcite_abst_e'] = $default_string_long(t('Abstract'), 4);
-    $fields['bibcite_abst_f'] = $default_string_long(t('French Abstract'), 4);
+    $fields['bibcite_abst_e'] = $default_text_long(t('Abstract'), 4);
+    $fields['bibcite_abst_f'] = $default_text_long(t('French Abstract'), 4);
     $fields['bibcite_notes'] = $default_string_long(t('Notes'), 4);
     $fields['bibcite_custom1'] = $default_string_long(t('Custom 1'));
     $fields['bibcite_custom2'] = $default_string_long(t('Custom 2'));

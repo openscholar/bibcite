@@ -3,6 +3,9 @@
 
 ## [Unreleased]
 
+### Changed
+- [#3079282] by lakeloafer: PubMed abst_e field - contains basic html
+
 ### Fixed
 - [#3212586] by Eric_A: Require audiolabs/bibtexparser:^1.0 instead of audiolabs/bibtexparser:dev-master
 
@@ -782,3 +785,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 
 [//]: # "Issues links dev"
 [#3212586]: https://www.drupal.org/node/3212586
+[#3079282]: https://www.drupal.org/node/3079282

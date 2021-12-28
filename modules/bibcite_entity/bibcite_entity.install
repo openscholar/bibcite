@@ -1258,3 +1258,80 @@ function bibcite_entity_update_8027(&$sandbox) {
     $sandbox
   );
 }
+
+/**
+ * Converts bibcite_abst_e and bibcite_abst_f fields Text (long) to Text
+ * (formatted, long).
+ */
+function bibcite_entity_update_8028() {
+  $bundle_of = 'bibcite_reference';
+
+  $database = \Drupal::database();
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType($bundle_of);
+  $table_name = $entity_type->getBaseTable();
+  $revision_table_name = $entity_type->getRevisionTable();
+
+  // Create a new field definition.
+  $text_long = function ($label, $hint = '') {
+    return BaseFieldDefinition::create('text_long')
+      ->setLabel($label)
+      ->setDescription($hint)
+      ->setRevisionable(TRUE)
+      ->setDisplayOptions('view', [
+        'type' => 'text_default',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'text_textarea',
+        'settings' => [
+          'rows' => 4,
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+  };
+
+  // Add the definition for temporary storage.
+  $definition_update_manager->installFieldStorageDefinition('temp_bibcite_abst_e', $bundle_of, $bundle_of, $text_long(t('Abstract')));
+  $definition_update_manager->installFieldStorageDefinition('temp_bibcite_abst_f', $bundle_of, $bundle_of, $text_long(t('French Abstract')));
+
+  // Migrate Abstract fields data.
+  $database->update($table_name)
+    ->expression('temp_bibcite_abst_e__value', 'bibcite_abst_e')
+    ->expression('temp_bibcite_abst_f__value', 'bibcite_abst_f')
+    ->execute();
+
+  $database->update($revision_table_name)
+    ->expression('temp_bibcite_abst_e__value', 'bibcite_abst_e')
+    ->expression('temp_bibcite_abst_f__value', 'bibcite_abst_f')
+    ->execute();
+
+  // Uninstall the field.
+  $field_storage_definition = $definition_update_manager->getFieldStorageDefinition('bibcite_abst_e', $bundle_of);
+  $definition_update_manager->uninstallFieldStorageDefinition($field_storage_definition);
+  $field_storage_definition = $definition_update_manager->getFieldStorageDefinition('bibcite_abst_f', $bundle_of);
+  $definition_update_manager->uninstallFieldStorageDefinition($field_storage_definition);
+
+  // Install the new definition.
+  $definition_update_manager->installFieldStorageDefinition('bibcite_abst_e', $bundle_of, $bundle_of, $text_long(t('Abstract')));
+  $definition_update_manager->installFieldStorageDefinition('bibcite_abst_f', $bundle_of, $bundle_of, $text_long(t('French Abstract')));
+
+  // Migrate abstract field data.
+  $database->update($table_name)
+    ->expression('bibcite_abst_e__value', 'temp_bibcite_abst_e__value')
+    ->expression('bibcite_abst_f__value', 'temp_bibcite_abst_f__value')
+    ->fields(['bibcite_abst_e__format' => 'basic_html', 'bibcite_abst_f__format' => 'basic_html'])
+    ->execute();
+
+  $database->update($revision_table_name)
+    ->expression('bibcite_abst_e__value', 'temp_bibcite_abst_e__value')
+    ->expression('bibcite_abst_f__value', 'temp_bibcite_abst_f__value')
+    ->fields(['bibcite_abst_e__format' => 'basic_html', 'bibcite_abst_f__format' => 'basic_html'])
+    ->execute();
+
+  // Uninstall temp fields.
+  $field_storage_definition = $definition_update_manager->getFieldStorageDefinition('temp_bibcite_abst_e', $bundle_of);
+  $definition_update_manager->uninstallFieldStorageDefinition($field_storage_definition);
+  $field_storage_definition = $definition_update_manager->getFieldStorageDefinition('temp_bibcite_abst_f', $bundle_of);
+  $definition_update_manager->uninstallFieldStorageDefinition($field_storage_definition);
+}
