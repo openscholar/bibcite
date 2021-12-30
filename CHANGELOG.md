@@ -9,6 +9,7 @@
 - [#3079282] by lakeloafer: PubMed abst_e field - contains basic html
 
 ### Fixed
+- [#3256393]: Failed asserting that two strings are equal
 - [#3256391]: Drupal\Component\Plugin\Exception\PluginNotFoundException: The "field_item:text_long" plugin does not exist
 - [#3256210]: Custom fields are displayed under the action buttons on the Reference form
 - [#3212586] by Eric_A: Require audiolabs/bibtexparser:^1.0 instead of audiolabs/bibtexparser:dev-master
@@ -794,3 +795,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3256207]: https://www.drupal.org/node/3256207
 [#3256210]: https://www.drupal.org/node/3256210
 [#3256391]: https://www.drupal.org/node/3256391
+[#3256393]: https://www.drupal.org/node/3256393

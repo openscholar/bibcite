@@ -12,7 +12,7 @@
     bibcite_volume: 5
     bibcite_pages: '1-13'
     bibcite_publisher: Journal
-  - 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.  (1992). Lorem ipsum dolor sit amet, consectetur adipiscing elit, 5(1), 1-13.'
+  - 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. (1992). Lorem ipsum dolor sit amet, consectetur adipiscing elit. 5(1), 1-13.'
 -
   -
     title: 'Proin ut laoreet purus. Maecenas sed scelerisque leo.'
@@ -29,4 +29,4 @@
     bibcite_volume: 2
     bibcite_pages: '5-18'
     bibcite_publisher: Journal
-  - 'Proin ut laoreet purus. Maecenas sed scelerisque leo.  (2001). Proin ut laoreet purus. Maecenas sed scelerisque leo (Vol. 2, pp. 5-18). Journal.'
+  - 'Proin ut laoreet purus. Maecenas sed scelerisque leo. (Vol. 2, pp. 5-18). (2001). Proin ut laoreet purus. Maecenas sed scelerisque leo. (Vol. 2, pp. 5-18). In  (Vol. 2, pp. 5-18). Journal.'
