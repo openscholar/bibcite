@@ -4,6 +4,7 @@ package: Bibliography & Citation
 dependencies:
   - bibcite
   - bibcite_entity
+  - text
 core: 8.x
 core_version_requirement: ^8 || ^9
 hidden: true

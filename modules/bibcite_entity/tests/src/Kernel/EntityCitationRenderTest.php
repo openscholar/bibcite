@@ -16,6 +16,7 @@ class EntityCitationRenderTest extends KernelTestBase {
   public static $modules = [
     'system',
     'user',
+    'text',
     'serialization',
     'bibcite',
     'bibcite_entity',
