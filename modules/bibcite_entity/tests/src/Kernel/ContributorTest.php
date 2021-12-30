@@ -12,7 +12,7 @@ use Drupal\KernelTests\KernelTestBase;
  */
 class ContributorTest extends KernelTestBase {
 
-  public static $modules = [
+  protected static $modules = [
     'system',
     'field',
     'bibcite',

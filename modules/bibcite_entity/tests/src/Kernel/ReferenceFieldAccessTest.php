@@ -18,7 +18,7 @@ class ReferenceFieldAccessTest extends EntityKernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['serialization', 'bibcite', 'bibcite_entity'];
+  protected static $modules = ['serialization', 'bibcite', 'bibcite_entity'];
 
   /**
    * Fields that only users with administer references permissions can change.

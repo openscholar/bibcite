@@ -14,7 +14,7 @@ class ImportAccessTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'text',
     'bibcite',
     'bibcite_entity',

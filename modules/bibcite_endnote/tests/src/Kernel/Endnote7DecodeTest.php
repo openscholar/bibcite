@@ -16,7 +16,7 @@ class Endnote7DecodeTest extends FormatDecoderTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'user',
     'serialization',

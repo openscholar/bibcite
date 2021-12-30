@@ -16,7 +16,7 @@ class BibtexCaseDecodeTest extends FormatDecoderTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'user',
     'serialization',

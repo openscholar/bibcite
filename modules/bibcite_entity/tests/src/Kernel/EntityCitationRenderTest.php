@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class EntityCitationRenderTest extends KernelTestBase {
 
-  public static $modules = [
+  protected static $modules = [
     'system',
     'user',
     'text',

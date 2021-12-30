@@ -26,7 +26,7 @@ class ReferenceAccessTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'bibcite',
     'bibcite_entity',
     'serialization',

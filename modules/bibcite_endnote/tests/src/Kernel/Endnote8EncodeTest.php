@@ -16,7 +16,7 @@ class Endnote8EncodeTest extends FormatEncoderTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'user',
     'serialization',

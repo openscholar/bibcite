@@ -15,7 +15,7 @@ class BibciteEntityTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'bibcite_entity_test',
   ];
 

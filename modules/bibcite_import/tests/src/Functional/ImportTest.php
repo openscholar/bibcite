@@ -15,7 +15,7 @@ class ImportTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'bibcite_import_test',
   ];
 
