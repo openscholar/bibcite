@@ -48,7 +48,7 @@ class ImportBasicTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     $this->installEntitySchema('bibcite_keyword');

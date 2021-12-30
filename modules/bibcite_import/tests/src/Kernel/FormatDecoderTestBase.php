@@ -29,7 +29,7 @@ abstract class FormatDecoderTestBase extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     $this->formatManager = $this->container->get('plugin.manager.bibcite_format');

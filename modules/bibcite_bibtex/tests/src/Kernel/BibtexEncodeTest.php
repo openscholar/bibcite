@@ -28,7 +28,7 @@ class BibtexEncodeTest extends FormatEncoderTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     $this->installConfig([

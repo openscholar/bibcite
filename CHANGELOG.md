@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### Changed
+- [#3256402]: Declaring ::setUp without a void return typehint in Drupal\\Tests\\...\\...\\...Test is deprecated in drupal:9.0.0
 - [#3256207]: Update CSL to new revisions
 - [#3256203]: Use EntityOwnerTrait method instead the custom one for setting default value
 - [#3079282] by lakeloafer: PubMed abst_e field - contains basic html
@@ -796,3 +797,4 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3256210]: https://www.drupal.org/node/3256210
 [#3256391]: https://www.drupal.org/node/3256391
 [#3256393]: https://www.drupal.org/node/3256393
+[#3256402]: https://www.drupal.org/node/3256402

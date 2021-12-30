@@ -41,7 +41,7 @@ class BibciteEntityTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     $this->user = $this->drupalCreateUser([

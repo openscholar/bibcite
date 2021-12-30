@@ -28,7 +28,7 @@ class BibtexDecodeTest extends FormatDecoderTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     $this->installConfig([
