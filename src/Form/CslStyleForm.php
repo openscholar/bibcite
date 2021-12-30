@@ -122,6 +122,7 @@ class CslStyleForm extends EntityForm {
     $storage = $this->entityTypeManager->getStorage('bibcite_csl_style');
 
     $result = $storage->getQuery()
+      ->accessCheck()
       ->condition('url_id', $url_id)
       ->execute();
 

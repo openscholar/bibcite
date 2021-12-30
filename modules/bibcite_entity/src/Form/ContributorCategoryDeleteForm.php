@@ -26,7 +26,7 @@ class ContributorCategoryDeleteForm extends EntityConfirmFormBase {
    */
   private function checkInReference() {
     $storage = $this->entityTypeManager->getStorage('bibcite_reference');
-    $query = $storage->getQuery();
+    $query = $storage->getQuery()->accessCheck();
     return !empty($query->condition('author.category', $this->entity->id())->range(0, 1)->execute());
   }
 

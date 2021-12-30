@@ -66,7 +66,7 @@ function bibcite_export_batch_all($entity_type, BibciteFormatInterface $format, 
   if (empty($context['sandbox'])) {
     $context['sandbox']['progress'] = 0;
     $context['sandbox']['current_id'] = 0;
-    $context['sandbox']['max'] = $storage->getQuery()->count()->execute();
+    $context['sandbox']['max'] = $storage->getQuery()->accessCheck()->count()->execute();
   }
 
   if (empty($context['results'])) {
@@ -80,6 +80,7 @@ function bibcite_export_batch_all($entity_type, BibciteFormatInterface $format, 
 
   $limit = 50;
   $result = $storage->getQuery()
+    ->accessCheck()
     ->range(0, $limit)
     ->condition('id', $context['sandbox']['current_id'], '>')
     ->sort('id')

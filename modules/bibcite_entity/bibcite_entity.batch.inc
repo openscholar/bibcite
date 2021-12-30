@@ -43,12 +43,12 @@ function bibcite_entity_merge_entity($source_id, $target_id, $entity_type_id, $f
   if (empty($context['sandbox'])) {
     $context['sandbox']['progress'] = 0;
     $context['sandbox']['current_id'] = 0;
-    $context['sandbox']['max'] = $reference_storage->getQuery()->condition($field_name, $source_id)->count()->execute();
+    $context['sandbox']['max'] = $reference_storage->getQuery()->accessCheck()->condition($field_name, $source_id)->count()->execute();
 
     $context['results']['references_count'] += $context['sandbox']['max'];
   }
 
-  $query = $reference_storage->getQuery();
+  $query = $reference_storage->getQuery()->accessCheck();
   $query
     ->condition($field_name, $source_id)
     ->condition('id', $context['sandbox']['current_id'], '>')

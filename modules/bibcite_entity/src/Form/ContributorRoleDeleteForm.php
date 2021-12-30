@@ -26,7 +26,7 @@ class ContributorRoleDeleteForm extends EntityConfirmFormBase {
    */
   private function checkInReference() {
     $storage = $this->entityTypeManager->getStorage('bibcite_reference');
-    $query = $storage->getQuery();
+    $query = $storage->getQuery()->accessCheck();
     return !empty($query->condition('author.role', $this->entity->id())->range(0, 1)->execute());
   }
 

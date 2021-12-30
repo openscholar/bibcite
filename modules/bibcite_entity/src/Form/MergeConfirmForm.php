@@ -152,7 +152,7 @@ class MergeConfirmForm extends ConfirmFormBase {
 
     $range = 10;
 
-    $query = $storage->getQuery();
+    $query = $storage->getQuery()->accessCheck();
     $query->condition($this->fieldName, $this->source->id());
     $query->range(0, $range);
 

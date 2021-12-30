@@ -26,7 +26,7 @@ class ContributorNormalizer extends EntityNormalizer {
 
     if (!empty($context['contributor_deduplication'])) {
       $storage = $entity_manager->getStorage('bibcite_contributor');
-      $query = $storage->getQuery()->range(0, 1);
+      $query = $storage->getQuery()->accessCheck()->range(0, 1);
 
       foreach ($entity::getNameParts() as $name_part) {
         $value = $entity->{$name_part}->value;

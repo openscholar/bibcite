@@ -27,6 +27,7 @@ class KeywordNormalizer extends EntityNormalizer {
       $storage = $entity_manager->getStorage('bibcite_keyword');
       $label_key = $storage->getEntityType()->getKey('label');
       $query = $storage->getQuery()
+        ->accessCheck()
         ->condition($label_key, trim($entity->label()))
         ->range(0, 1);
 

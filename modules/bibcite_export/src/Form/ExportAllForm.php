@@ -164,7 +164,7 @@ class ExportAllForm extends FormBase {
     }
 
     $storage = \Drupal::entityTypeManager()->getStorage('bibcite_reference');
-    $total = $storage->getQuery()->count()->execute();
+    $total = $storage->getQuery()->accessCheck()->count()->execute();
     if (!$total) {
       $form_state->setError($form, $this->t('There is no data to export.'));
     }

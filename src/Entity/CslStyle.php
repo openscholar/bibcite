@@ -206,6 +206,7 @@ class CslStyle extends ConfigEntityBase implements CslStyleInterface {
       $storage = $this->entityTypeManager()->getStorage($this->getEntityTypeId());
 
       $result = $storage->getQuery()
+        ->accessCheck()
         ->condition('url_id', $parent_id)
         ->execute();
 
