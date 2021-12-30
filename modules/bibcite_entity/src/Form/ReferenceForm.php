@@ -109,7 +109,7 @@ class ReferenceForm extends ContentEntityForm {
 
     $form['advanced']['#weight'] = 480;
     $form['status_container'] = [
-      'type' => 'container',
+      '#type' => 'container',
       '#weight' => 490,
       'status' => $form['status'],
     ];
