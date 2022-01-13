@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [Unreleased]
+## [2.0.0-beta2] - 2022-01-13
 
 ### Changed
 - [#3256412]: Relying on entity queries to check access by default is deprecated in drupal:9.2.0 and an error will be thrown from drupal:10.0.0
@@ -580,6 +580,7 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [8.x-1.0-alpha9]: https://www.drupal.org/project/bibcite/releases/8.x-1.0-alpha9
 [8.x-1.0-alpha10]: https://www.drupal.org/project/bibcite/releases/8.x-1.0-alpha10
 [2.0.0-beta1]: https://www.drupal.org/project/bibcite/releases/2.0.0-beta1
+[2.0.0-beta2]: https://www.drupal.org/project/bibcite/releases/2.0.0-beta2
 
 
 [//]: # "Issues links alpha1"
@@ -791,7 +792,7 @@ Add description to reference types, prefill it with sensible defaults. On refere
 [#3221900]: https://www.drupal.org/node/3221900
 
 
-[//]: # "Issues links dev"
+[//]: # "Issues links beta2"
 [#3212586]: https://www.drupal.org/node/3212586
 [#3079282]: https://www.drupal.org/node/3079282
 [#3256203]: https://www.drupal.org/node/3256203
