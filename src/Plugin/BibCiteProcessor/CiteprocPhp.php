@@ -2,7 +2,7 @@
 
 namespace Drupal\bibcite\Plugin\BibCiteProcessor;
 
-use AcademicPuma\CiteProc\CiteProc;
+use Seboettg\CiteProc\CiteProc;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\bibcite\Plugin\BibCiteProcessorBase;
@@ -64,7 +64,7 @@ class CiteprocPhp extends BibCiteProcessorBase implements BibCiteProcessorInterf
       $data = json_decode(json_encode($data));
     }
 
-    return $cite_proc->render($data);
+    return $cite_proc->render([$data]);
   }
 
 }
