@@ -2,7 +2,7 @@ name: 'Bibliography & Citation - Import'
 type: module
 description: Import your bibliographic data
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 package: Bibliography & Citation
 configure: bibcite_import.settings
 dependencies:
