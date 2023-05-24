@@ -143,7 +143,7 @@ function bibcite_export_batch_finished($success, array $results, $operations) {
       'status' => 0,
     ]);
 
-    if ($file->save() && $file = file_move($file, $file_schema . $file_name)) {
+    if ($file->save() && $file = \Drupal::service('file.repository')->move($file, $file_schema . $file_name)) {
       if (!empty($results['save_storage'])) {
         $file_data = [
           'id' => $file->id(),
