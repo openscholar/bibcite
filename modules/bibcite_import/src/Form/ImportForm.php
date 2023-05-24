@@ -3,6 +3,7 @@
 namespace Drupal\bibcite_import\Form;
 
 use Drupal\bibcite\Plugin\BibciteFormatManagerInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -28,25 +29,42 @@ class ImportForm extends FormBase {
   protected $serializer;
 
   /**
+   * Extenstion list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $extensionList;
+
+  /**
    * Import form constructor.
    *
    * @param \Symfony\Component\Serializer\SerializerInterface $serializer
    *   Import plugins manager.
    * @param \Drupal\bibcite\Plugin\BibciteFormatManagerInterface $format_manager
    *   Bibcite format manager service.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list
+   *   Module extension list service
    */
-  public function __construct(SerializerInterface $serializer, BibciteFormatManagerInterface $format_manager) {
+  public function __construct(SerializerInterface $serializer, BibciteFormatManagerInterface $format_manager, ModuleExtensionList $extension_list) {
     $this->serializer = $serializer;
     $this->formatManager = $format_manager;
+    $this->extensionList = $extension_list;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
+    /** @var \Symfony\Component\Serializer\SerializerInterface $serializer */
+    $serializer = $container->get('serializer');
+    /** @var \Drupal\bibcite\Plugin\BibciteFormatManagerInterface $format_manager */
+    $format_manager = $container->get('plugin.manager.bibcite_format');
+    /** @var \Drupal\Core\Extension\ModuleExtensionList $extension_list */
+    $extension_list = $container->get('extension.list.module');
     return new static(
-      $container->get('serializer'),
-      $container->get('plugin.manager.bibcite_format')
+      $serializer,
+      $format_manager,
+      $extension_list
     );
   }
 
@@ -131,7 +149,7 @@ class ImportForm extends FormBase {
       'title' => t('Import reference data'),
       'operations' => [],
       'finished' => 'bibcite_import_batch_finished',
-      'file' => drupal_get_path('module', 'bibcite_import') . '/bibcite_import.batch.inc',
+      'file' => $this->extensionList->getPath('bibcite_import') . '/bibcite_import.batch.inc',
     ];
 
     foreach ($chunks as $chunk) {
