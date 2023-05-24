@@ -78,7 +78,7 @@ function bibcite_entity_update_8003() {
     $installer->installDefaultConfig('module', 'bibcite_entity');
   }
 
-  $path = drupal_get_path('module', 'bibcite_entity') . '/' . InstallStorage::CONFIG_OPTIONAL_DIRECTORY;
+  $path = \Drupal::service('extension.list.module')->getPath('bibcite_entity') . '/' . InstallStorage::CONFIG_OPTIONAL_DIRECTORY;
   $storage = new FileStorage($path);
   $installer->installOptionalConfig($storage);
 }

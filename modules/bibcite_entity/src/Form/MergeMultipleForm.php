@@ -2,10 +2,13 @@
 
 namespace Drupal\bibcite_entity\Form;
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\Core\Url;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,42 +23,49 @@ class MergeMultipleForm extends ConfirmFormBase {
    *
    * @var array
    */
-  protected $entityInfo = [];
+  protected array $entityInfo = [];
 
   /**
    * The tempstore object.
    *
    * @var \Drupal\Core\TempStore\PrivateTempStore
    */
-  protected $tempStore;
+  protected PrivateTempStore $tempStore;
 
   /**
    * The entity type manager service.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * The current user object.
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $currentUser;
+  protected AccountInterface $currentUser;
 
   /**
    * The entity type.
    *
    * @var \Drupal\Core\Entity\EntityTypeInterface
    */
-  protected $entityType;
+  protected EntityTypeInterface $entityType;
 
   /**
    * The field name for filtering.
    *
    * @var string
    */
-  protected $fieldName;
+  protected string $fieldName;
+
+  /**
+   * Extenstion list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $extensionList;
 
   /**
    * Constructs a DeleteMultiple form object.
@@ -66,21 +76,33 @@ class MergeMultipleForm extends ConfirmFormBase {
    *   The entity manager.
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user object.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list
+   *   Module extension list service
    */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $manager, AccountInterface $current_user) {
+  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $manager, AccountInterface $current_user, ModuleExtensionList $extension_list) {
     $this->tempStore = $temp_store_factory->get('bibcite_entity_merge_multiple');
     $this->entityTypeManager = $manager;
     $this->currentUser = $current_user;
+    $this->extensionList = $extension_list;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
+    /** @var \Drupal\Core\TempStore\PrivateTempStoreFactory $tempstore */
+    $tempstore = $container->get('tempstore.private');
+    /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $manager */
+    $manager = $container->get('entity_type.manager');
+    /** @var \Drupal\Core\Session\AccountInterface $current_user */
+    $current_user = $container->get('current_user');
+    /** @var \Drupal\Core\Extension\ModuleExtensionList $extension_list */
+    $extension_list = $container->get('extension.list.module');
     return new static(
-      $container->get('tempstore.private'),
-      $container->get('entity_type.manager'),
-      $container->get('current_user')
+      $tempstore,
+      $manager,
+      $current_user,
+      $extension_list
     );
   }
 
@@ -180,7 +202,7 @@ class MergeMultipleForm extends ConfirmFormBase {
       'title' => t('Merging'),
       'operations' => $operations,
       'finished' => 'bibcite_entity_merge_entity_finished',
-      'file' => drupal_get_path('module', 'bibcite_entity') . '/bibcite_entity.batch.inc',
+      'file' => $this->extensionList->getPath('bibcite_entity') . '/bibcite_entity.batch.inc',
     ];
 
     batch_set($batch);

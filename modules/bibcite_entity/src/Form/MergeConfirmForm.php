@@ -3,8 +3,12 @@
 namespace Drupal\bibcite_entity\Form;
 
 use Drupal\bibcite_entity\Entity\ReferenceInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -18,37 +22,59 @@ class MergeConfirmForm extends ConfirmFormBase {
    *
    * @var \Drupal\Core\Entity\EntityInterface
    */
-  protected $source;
+  protected EntityInterface $source;
 
   /**
    * Source entity will be merged to this one.
    *
    * @var \Drupal\Core\Entity\EntityInterface
    */
-  protected $target;
+  protected EntityInterface $target;
 
   /**
    * The field name for filtering.
    *
    * @var string
    */
-  protected $fieldName;
+  protected string $fieldName;
+
+  /**
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * Extenstion list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $extensionList;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('current_route_match'));
+    /** @var \Drupal\Core\Routing\CurrentRouteMatch $current_route */
+    $current_route = $container->get('current_route_match');
+    /** @var \Drupal\Core\Extension\ModuleExtensionList $extension_list */
+    $extension_list = $container->get('extension.list.module');
+    /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $manager */
+    $manager = $container->get('entity_type.manager');
+    return new static($current_route, $manager, $extension_list);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(RouteMatchInterface $route_match) {
+  public function __construct(RouteMatchInterface $route_match, EntityTypeManagerInterface $manager, ModuleExtensionList $extension_list) {
     $parameter_name = $route_match->getRouteObject()->getOption('_bibcite_entity_type_id');
 
     $this->source = $route_match->getParameter($parameter_name);
     $this->target = $route_match->getParameter("{$parameter_name}_target");
+    $this->entityTypeManager = $manager;
+    $this->extensionList = $extension_list;
   }
 
   /**
@@ -135,7 +161,7 @@ class MergeConfirmForm extends ConfirmFormBase {
         ],
       ],
       'finished' => 'bibcite_entity_merge_entity_finished',
-      'file' => drupal_get_path('module', 'bibcite_entity') . '/bibcite_entity.batch.inc',
+      'file' => $this->extensionList->getPath('bibcite_entity') . '/bibcite_entity.batch.inc',
     ];
 
     batch_set($batch);
@@ -148,7 +174,7 @@ class MergeConfirmForm extends ConfirmFormBase {
    *   Statistic data with first 10 objects and count of another references.
    */
   private function getAuthoredReferencesStatistic() {
-    $storage = \Drupal::entityTypeManager()->getStorage('bibcite_reference');
+    $storage = $this->entityTypeManager->getStorage('bibcite_reference');
 
     $range = 10;
 
