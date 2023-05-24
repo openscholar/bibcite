@@ -3,9 +3,11 @@
 namespace Drupal\bibcite_export\Form;
 
 use Drupal\bibcite\Plugin\BibciteFormatManagerInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\Core\Url;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,28 +22,35 @@ class ExportMultipleForm extends ConfirmFormBase {
    *
    * @var array
    */
-  protected $entityInfo = [];
+  protected array $entityInfo = [];
 
   /**
    * The tempstore object.
    *
    * @var \Drupal\Core\TempStore\PrivateTempStore
    */
-  protected $tempStore;
+  protected PrivateTempStore $tempStore;
 
   /**
    * The current user object.
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $currentUser;
+  protected AccountInterface $currentUser;
 
   /**
    * Bibcite format manager service.
    *
    * @var \Drupal\bibcite\Plugin\BibciteFormatManagerInterface
    */
-  protected $formatManager;
+  protected BibciteFormatManagerInterface $formatManager;
+
+  /**
+   * Extenstion list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $extensionList;
 
   /**
    * Construct new ExportMultipleForm object.
@@ -52,21 +61,33 @@ class ExportMultipleForm extends ConfirmFormBase {
    *   The bibcite format manager.
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user object.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list
+   *   Module extension list service
    */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, BibciteFormatManagerInterface $format_manager, AccountInterface $current_user) {
+  public function __construct(PrivateTempStoreFactory $temp_store_factory, BibciteFormatManagerInterface $format_manager, AccountInterface $current_user, ModuleExtensionList $extension_list) {
     $this->tempStore = $temp_store_factory->get('bibcite_export_multiple');
     $this->formatManager = $format_manager;
     $this->currentUser = $current_user;
+    $this->extensionList = $extension_list;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
+    /** @var \Drupal\Core\TempStore\PrivateTempStoreFactory $tempstore */
+    $tempstore = $container->get('tempstore.private');
+    /** @var \Drupal\bibcite\Plugin\BibciteFormatManagerInterface $format_manager */
+    $format_manager = $container->get('plugin.manager.bibcite_format');
+    /** @var \Drupal\Core\Session\AccountInterface $current_user */
+    $current_user = $container->get('current_user');
+    /** @var \Drupal\Core\Extension\ModuleExtensionList $extension_list */
+    $extension_list = $container->get('extension.list.module');
     return new static(
-      $container->get('tempstore.private'),
-      $container->get('plugin.manager.bibcite_format'),
-      $container->get('current_user')
+      $tempstore,
+      $format_manager,
+      $current_user,
+      $extension_list
     );
   }
 
@@ -148,7 +169,7 @@ class ExportMultipleForm extends ConfirmFormBase {
     $batch = [
       'title' => t('Export references'),
       'operations' => $operations,
-      'file' => drupal_get_path('module', 'bibcite_export') . '/bibcite_export.batch.inc',
+      'file' => $this->extensionList->getPath('bibcite_export') . '/bibcite_export.batch.inc',
       'finished' => 'bibcite_export_batch_finished',
     ];
 
