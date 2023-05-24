@@ -141,7 +141,7 @@ function _bibcite_entity_get_target_delta(array $field_value, $target_id) {
  *   Batch context array.
  */
 function bibcite_entity_merge_entity_delete($source_id, $entity_type_id, $field_name, array &$context) {
-  $count = \Drupal::entityQuery('bibcite_reference')->condition($field_name, $source_id)->count()->execute();
+  $count = \Drupal::entityQuery('bibcite_reference')->condition($field_name, $source_id)->count()->accessCheck()->execute();
 
   $storage = \Drupal::entityTypeManager()->getStorage($entity_type_id);
   $entity = $storage->load($source_id);
