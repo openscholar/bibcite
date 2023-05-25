@@ -102,7 +102,7 @@ class ReferenceForm extends ContentEntityForm {
     $form['#title'] = $this->t('<em>@operation @type</em> @title', [
       '@operation' => $operation !== 'default' ? ucfirst($operation) : $this->t('Create'),
       '@type' => $this->getBundleEntity()->label(),
-      '@title' => $this->getEntity()->label(),
+      '@title' => $this->getEntity()->label() ?: '',
     ]);
 
     $form['footer']['#weight'] = 550;
