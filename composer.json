@@ -11,7 +11,7 @@
     "source": "https://git.drupalcode.org/project/bibcite"
   },
   "require": {
-    "seboettg/citeproc-php": "^2.1",
+    "seboettg/citeproc-php": "^2.6",
     "adci/full-name-parser": "^0.2.4",
     "technosophos/libris": "~2.0",
     "audiolabs/bibtexparser": "^1.0",
